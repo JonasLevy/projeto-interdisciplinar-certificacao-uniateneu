@@ -15,69 +15,83 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import PeopleIcon from "@mui/icons-material/People";
 import { useTheme } from "@mui/material/styles";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 
 const menuItems = {
   sindico: [
     {
       label: "Apartamentos",
-      icon: <ApartmentIcon />,
+      icon: <ApartmentIcon className="text-slate-400" />,
     },
     {
       label: "Portaria",
-      icon: <MeetingRoomIcon />,
+      icon: <MeetingRoomIcon className="text-slate-400" />,
     },
     {
       label: "Serviços",
-      icon: <HomeWorkIcon />,
+      icon: <HomeWorkIcon className="text-slate-400" />,
     },
     {
       label: "Moradores",
-      icon: <PeopleIcon />
+      icon: <PeopleIcon className="text-slate-400" />
     },
     {
       label: "Reservas",
-      icon: <MeetingRoomIcon />
+      icon: <MeetingRoomIcon className="text-slate-400" />
     },
     {
       label: "Visitas",
-      icon: <PeopleIcon />
+      icon: <PeopleIcon className="text-slate-400" />
     },
-    {label: "Notificação",
-      icon: <PeopleIcon />
+    {
+      label: "Notificação",
+      icon: <PeopleIcon className="text-slate-400" />
     }
   ],
 
   morador: [
     {
-      label: "Reservas",
-      icon: <ApartmentIcon />,
-    },
-    {
-      label: "Portaria",
-      icon: <MeetingRoomIcon />,
-    }
-  ],
-
- portaria: [
-    {
-      label: "Portaria",
-      icon: <MeetingRoomIcon />,
-    },
-    {
-      label: "Serviços",
-      icon: <HomeWorkIcon />,
-    },
-    {
-      label: "Moradores",
-      icon: <PeopleIcon />
+      label: "Delivery",
+      icon: <PeopleIcon className="text-slate-400" />
     },
     {
       label: "Encomendas",
-      icon: <MeetingRoomIcon />
+      icon: <MeetingRoomIcon className="text-slate-400" />
+    },
+    {
+      label: "Serviços",
+      icon: <HomeWorkIcon className="text-slate-400" />
+    },
+    {
+      label: "Reservas",
+      icon: <ApartmentIcon className="text-slate-400" />,
     },
     {
       label: "Visitas",
-      icon: <PeopleIcon />
+      icon: <PeopleIcon className="text-slate-400" />
+    }
+  ],
+
+  portaria: [
+    {
+      label: "Portaria",
+      icon: <MeetingRoomIcon className="text-slate-400" />,
+    },
+    {
+      label: "Serviços",
+      icon: <HomeWorkIcon className="text-slate-400" />,
+    },
+    {
+      label: "Moradores",
+      icon: <PeopleIcon className="text-slate-400" />
+    },
+    {
+      label: "Encomendas",
+      icon: <MeetingRoomIcon className="text-slate-400" />
+    },
+    {
+      label: "Visitas",
+      icon: <PeopleIcon className="text-slate-400" />
     }
   ]
 };
@@ -91,21 +105,36 @@ const MenuAside = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
 
+  const clickMenu = (label) => {
+    const route = `/${path}/${label === "Serviços" ? "servicos" : label.toLowerCase()}`
+    setOpen(false);
+    navegate(route);
+  }
+
   const drawerContent = (
-    <div className="h-full w-64 bg-gray-900 text-white shadow-lg flex flex-col">
-      <div className="p-6 text-2xl font-bold tracking-wide border-b border-blue-800">
+    <div className="h-full w-64 bg-slate-900 text-white shadow-lg flex flex-col z-1">
+      <div className="p-6 text-2xl font-bold tracking-wide border-b border-blue-800 z-1">
         Menu
       </div>
       <nav className="flex-1">
         <List>
+          <ListItem
+              button
+            key={"Inicio"}
+              className="hover:bg-slate-200 transition-colors cursor-pointer text-white z-3"
+              onClick={() => clickMenu("/")}
+            >
+              <ListItemIcon ><HomeFilledIcon className="text-slate-400"/></ListItemIcon>
+              <ListItemText primary={"Inicio"} />
+            </ListItem>
           {menuItems[path].map((item) => (
             <ListItem
               button
               key={item.label}
-              className="hover:bg-blue-800 transition-colors cursor-pointer"
-              onClick={()=>navegate(`/${path}/${item.label.toLowerCase()}`)}
+              className="hover:bg-blue-600 transition-colors cursor-pointer "
+              onClick={() => clickMenu(item.label)}
             >
-              <ListItemIcon className="text-white">{item.icon}</ListItemIcon>
+              <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItem>
           ))}
@@ -120,8 +149,8 @@ const MenuAside = () => {
         <>
           <IconButton
             onClick={() => setOpen(!open)}
-            className="m-2 text-white"
-            sx={{ position: "fixed", top: 10, left: 10, zIndex: 1300 }}
+            className="m-2 text-white z-0"
+            sx={{ position: "fixed", top: 10, left: 10, zIndex: 0 }}
           >
             <MenuIcon />
           </IconButton>

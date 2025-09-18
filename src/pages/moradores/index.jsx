@@ -1,12 +1,35 @@
-import React from 'react';
+import ButtonPages from "../../componets/ButtonPages"
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import { useNavigate } from "react-router-dom";
 
-const Moradores = () => {
+const HomeMorador = () => {
     return (
-        <div>
-            <h1>Moradores</h1>
-            <p>Nenhum morador cadastrado.</p>
+        <div className="text-center">
+            Index Morador
+            <div
+                className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box pb-8"
+                style={{ maxWidth: "100vw" }}
+            >
+                <ButtonPages name="Delivery" click='/morador/delivery'>
+                    <DeliveryDiningIcon />
+                </ButtonPages>
+                <ButtonPages name="Encomendas" click={'/morador/encomendas'}>
+                    <MarkunreadMailboxIcon />
+                </ButtonPages>
+                <ButtonPages name="Serviços" click={'/morador/servicos'}>
+                    <HandymanIcon />
+                </ButtonPages>
+                <ButtonPages name="Reservas" click={'/morador/reservas'}>
+                    <HandymanIcon />
+                </ButtonPages>
+                <ButtonPages name="Visitas" click={'/morador/visitas'}>
+                    <HandymanIcon />
+                </ButtonPages>
+            </div>
         </div>
-    );
-};
+    )
+}
 
-export default Moradores;
+export default HomeMorador

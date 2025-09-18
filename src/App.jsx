@@ -9,9 +9,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="w-full h-screen flex p-0 m-0">
+    <div className="w-full h-svh flex p-0 m-0">
       <MenuAside />
-      <main className="flex-1 h-full">
+      <main className="flex-1 h-full p-6">
         <Outlet />
       </main>
     </div>
