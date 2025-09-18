@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import App from "../App"
 import Index from "../pages/sindico/index"
+import TelaLogin from "../componets/TelaLogin"
 import Reservas from "../pages/reservas/reservas"
 import Servico from "../pages/serviços"
 import Moradores from "../pages/moradores"
@@ -17,7 +18,7 @@ const Router = () => {
 
     return (
         <Routes>
-            <Route index element={<HomeMorador />} />
+            <Route index element={<TelaLogin/>} />
             <Route path="/sindico" element={<App />}>
                 <Route index element={<Index />} />
             </Route>
