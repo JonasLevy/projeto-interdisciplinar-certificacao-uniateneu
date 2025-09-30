@@ -17,12 +17,31 @@ const DeliveryMorador = () => {
             <div className="min-h-full w-full ">
                 <h1>Delivery</h1>
                 <ButtonModal click={() => setOpenModal(true)} />
-                <BasicModal openModal={openModal} title="Novo Pedido" close={() => setOpenModal(false)}>
+                <BasicModal openModal={openModal} title="Novo pedido" close={() => setOpenModal(false)}>
                     <form onSubmit={submitForm} className="flex flex-col gap-4">
-                        <TextField id="outlined-basic" label="Nome" variant="outlined" />
-                        <TextField id="outlined-basic" label="email" variant="outlined" />
-                        <Button variant="contained" type='submit'>Confirmar</Button>
+                        <TextField 
+                        id="outlined-basic" 
+                        label="Empresa" 
+                        variant="outlined" 
+                        />
+                        <TextField 
+                        id="outlined-basic" 
+                        label="Codigo da entrega" 
+                        variant="outlined" 
+                        />
 
+                        <TextField 
+                        id="outlined-basic" 
+                        label="Descrição" 
+                        variant="outlined" 
+                        />
+
+                        <Button 
+                        variant="contained" 
+                        type='submit'
+                        >
+                        Confirmar
+                        </Button>
                     </form>
                 </BasicModal>
 
