@@ -17,6 +17,15 @@ const Router = () => {
             <Route index element={<TelaLogin/>} />
             <Route path="/sindico" element={<App />}>
                 <Route index element={<Index />} />
+                <Route path="reservas" element={<ReservasMorador />} />
+                <Route path="servicos" element={<ServicosMorador />} />
+                <Route path="visitas" element={<VisitasMorador />} />
+                <Route path="delivery" element={<DeliveryMorador />} />
+                <Route path="encomendas" element={<EncomendasMorador />} />
+                <Route path="apartamentos" element={<EncomendasMorador />} />
+                <Route path="moradores" element={<EncomendasMorador />} />
+                <Route path="funcionarios" element={<EncomendasMorador />} />
+
             </Route>
             <Route path="morador" element={<App />}>
                 <Route index  element={<HomeMorador />} />
