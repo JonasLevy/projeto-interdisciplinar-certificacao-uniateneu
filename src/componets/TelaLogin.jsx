@@ -60,9 +60,30 @@ function TelaLogin() {
                     type='submit'
                     sx={{bgcolor:"rgb(30 64 175)"}} 
                     variant="contained">
-                    Entrar
+                        Morador
                 </Button>
             </form>
+                <div className='mt-2 w-full flex  gap-2' >
+
+                    <Button
+                        className='flex-1'
+                        type='submit'
+                        sx={{ bgcolor: "rgb(30 64 175)" }}
+                        variant="contained"
+                        onClick={() => navigate('/sindico')}
+                    >
+                        Sindico
+                    </Button>
+                    <Button
+                        className='flex-1'
+                        type='submit'
+                        sx={{ bgcolor: "rgb(30 64 175)" }}
+                        variant="contained"
+                        onClick={() => navigate('/portaria')}
+                    >
+                        Portaria
+                    </Button>
+                </div>
 
             </Box>
         </div>
