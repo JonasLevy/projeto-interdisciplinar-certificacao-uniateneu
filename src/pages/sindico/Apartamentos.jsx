@@ -5,7 +5,7 @@ import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { data } from 'react-router-dom';
 
-const EncomendasSindico = () => {
+const Apartamentos = () => {
     const [openModal, setOpenModal] = useState(false);
     const [dateType, setDateType] = useState("text");
     const [value, setValue] = useState("");
@@ -58,4 +58,4 @@ const EncomendasSindico = () => {
      );
 };
 
-export default EncomendasSindico;
+export default Apartamentos;
