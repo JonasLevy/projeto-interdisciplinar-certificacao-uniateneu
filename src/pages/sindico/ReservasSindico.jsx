@@ -22,6 +22,10 @@ const ReservasSindico = () => {
     const [reservaHoraEntrada, setReservaHoraEntrada] = useState(null);
     const [reservaHoraSaida, setReservaHoraSaida] = useState(null);
 
+    //Variaveis do Apt e torre
+    const [apt, setApt] = useState("");
+    const [torre, setTorre] = useState("");
+
     //Variavel descricao
     const [descricaoReserva, setDescricaoReserva] = useState("");
 
@@ -34,6 +38,8 @@ const ReservasSindico = () => {
         setDataReserva(null);
         setReservaHoraEntrada(null);
         setReservaHoraSaida(null);
+        setApt('');
+        setTorre('');
         setDescricaoReserva("");
 
         setOpenModal(false);
@@ -48,7 +54,7 @@ const ReservasSindico = () => {
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Reservas do Morador
+            <h1>Reservas do Sindico
                 <ButtonModal click={() => setOpenModal(true)} />
                 <BasicModal openModal={openModal} title="Fazer Reversa" close={() => setOpenModal(false)} >
                     <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
@@ -111,9 +117,27 @@ const ReservasSindico = () => {
 
                         <TextField
                             id="outlined-basic"
+                            label="Apartemento"
+                            variant="outlined"
+                            size='small'
+                            value={apt}
+                            onChange={(e) => setApt(e.target.value)}
+                        />
+
+                        <TextField
+                            id="outlined-basic"
+                            label="Torre"
+                            variant="outlined"
+                            size='small'
+                            value={torre}
+                            onChange={(e) => setTorre(e.target.value)}
+                        />
+
+                        <TextField
+                            id="outlined-basic"
                             label="Descrição da reserva" variant="outlined"
                             multiline
-                            maxRows={4}
+                            maxRows={3}
                             value={descricaoReserva}
                             onChange={(e) => setDescricaoReserva(e.target.value)}
                         />
