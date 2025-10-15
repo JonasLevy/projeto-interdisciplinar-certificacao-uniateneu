@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-const ReservasMorador = () => {
+const ReservasSindico = () => {
     const [openModal, setOpenModal] = useState(false);
 
     //Variavel do select espaco
@@ -132,4 +132,4 @@ const ReservasMorador = () => {
     );
 };
 
-export default ReservasMorador;
+export default ReservasSindico;
