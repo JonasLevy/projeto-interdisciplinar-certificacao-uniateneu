@@ -28,7 +28,14 @@ const VisitasMorador = () => {
     }
 
     const handleChangeTelefone = (e) => {
-        const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+        let digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+
+        if (digits.length <= 10) {
+            digits = digits.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+        } else {
+            digits = digits.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+        }
+
         setTelefone(digits);
     }
 

@@ -9,6 +9,9 @@ import ServicosMorador from "../pages/moradores/ServiçosMorador"
 import VisitasMorador from "../pages/moradores/VisitasMorador"
 import DeliveryMorador from "../pages/moradores/DeliveryMorador"
 import EncomendasMorador from "../pages/moradores/EncomendasMorador"
+import ServicosSindico from "../pages/sindico/ServiçosSindico"
+import MoradoresSindico from "../pages/sindico/MoradoresSindico"
+import ReservasSindico from "../pages/sindico/ReservasSindico"
 import Notificacoes from "../pages/sindico/Notificacoes"
 import PortariaSindico from "../pages/sindico/PortariaSindico"
 import Apartamentos from "../pages/sindico/Apartamentos"
@@ -21,11 +24,11 @@ const Router = () => {
             <Route path="/sindico" element={<App />}>
                 <Route index element={<Index />} />
                 <Route path="portaria" element={<PortariaSindico />} />
-                <Route path="reservas" element={<ReservasMorador />} />
-                <Route path="servicos" element={<ServicosMorador />} />
+                <Route path="reservas" element={<ReservasSindico />} />
+                <Route path="servicos" element={<ServicosSindico />} />
                 <Route path="visitas" element={<VisitasMorador />} />
                 <Route path="apartamentos" element={<Apartamentos />} />
-                <Route path="moradores" element={<EncomendasMorador />} />
+                <Route path="moradores" element={<MoradoresSindico />} />
                 <Route path="funcionarios" element={<EncomendasMorador />} />
                 <Route path="notificacao" element={<Notificacoes />} />
 

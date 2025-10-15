@@ -22,6 +22,10 @@ const ServicosSindico = () => {
     const [horaEntrada, setHoraEntrada] = useState(null);
     const [horaSaida, setHoraSaida] = useState(null);
 
+    //Variaveis Apt e torre
+    const [apt, setApt] = useState("");
+    const [torre, setTorre] = useState("");
+
     //Variavel da descrição do serviço
     const [descricao, setDescricao] = useState('');
 
@@ -38,6 +42,8 @@ const ServicosSindico = () => {
         setDataFim(null);
         setHoraEntrada(null);
         setHoraSaida(null);
+        setApt('');
+        setTorre('');
         setDescricao("");
 
         setOpenModal(false);
@@ -45,7 +51,7 @@ const ServicosSindico = () => {
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Serviços do Morador </h1>
+            <h1>Serviços do Sindico </h1>
             <ButtonModal click={() => setOpenModal(true)} />
             <BasicModal openModal={openModal} title="Adicionar Serviço" close={() => setOpenModal(false)}>
                 <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
@@ -64,7 +70,7 @@ const ServicosSindico = () => {
                             <DatePicker
                                 slotProps={{
                                     textField: {
-                                        size: 'small', 
+                                        size: 'small',
                                         sx: { width: '155px' }
                                     }
                                 }}
@@ -94,7 +100,7 @@ const ServicosSindico = () => {
                             <TimePicker
                                 slotProps={{
                                     textField: {
-                                        size: 'small', 
+                                        size: 'small',
                                         sx: { width: '150px' }
                                     }
                                 }}
@@ -109,7 +115,7 @@ const ServicosSindico = () => {
                             <TimePicker
                                 slotProps={{
                                     textField: {
-                                        size: 'small', 
+                                        size: 'small',
                                         sx: { width: '151px' }
                                     }
                                 }}
@@ -125,10 +131,28 @@ const ServicosSindico = () => {
                     </LocalizationProvider>
 
                     <TextField
+                        id="outlined-basic"
+                        label="Apartemento"
+                        variant="outlined"
+                        size='small'
+                        value={apt}
+                        onChange={(e) => setApt(e.target.value)}
+                    />
+
+                    <TextField
+                        id="outlined-basic"
+                        label="Torre"
+                        variant="outlined"
+                        size='small'
+                        value={torre}
+                        onChange={(e) => setTorre(e.target.value)}
+                    />
+
+                    <TextField
                         id="outlined-multiline-flexible"
                         label="Descrição do Serviço"
                         multiline
-                        maxRows={5}
+                        maxRows={3}
                         value={descricao}
                         onChange={(e) => setDescricao(e.target.value)}
                     />
