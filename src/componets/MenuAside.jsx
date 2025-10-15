@@ -123,17 +123,14 @@ const MenuAside = () => {
   }
 
   const drawerContent = (
-    <div className="h-full w-64 bg-slate-900 text-white shadow-lg flex flex-col z-1">
-      <div className="p-6 text-2xl font-bold tracking-wide border-b border-blue-800 z-1">
-        Menu
-      </div>
+    <div className="h-full w-64 bg-slate-900 text-white shadow-lg flex flex-col z-1 mt-16">
       <nav className="flex-1">
         <List>
           <ListItem
-              button
+            button
             key={"Inicio"}
-              className="hover:bg-slate-200 transition-colors cursor-pointer text-white z-3"
-              onClick={() => clickMenu("/")}
+            className="hover:bg-slate-200 hover:font-bold transition-colors cursor-pointer text-white z-3"
+            onClick={() => clickMenu("/")}
             >
               <ListItemIcon ><HomeFilledIcon className="text-slate-400"/></ListItemIcon>
               <ListItemText primary={"Inicio"} />
@@ -142,7 +139,7 @@ const MenuAside = () => {
             <ListItem
               button
               key={item.label}
-              className="hover:bg-blue-600 transition-colors cursor-pointer "
+              className="hover:bg-blue-600 hover:font-bold transition-colors cursor-pointer "
               onClick={() => clickMenu(item.label)}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
@@ -161,7 +158,7 @@ const MenuAside = () => {
           <IconButton
             onClick={() => setOpen(!open)}
             className="m-2 text-white z-0"
-            sx={{ position: "fixed", top: 10, left: 10, zIndex: 0 }}
+            sx={{ position: "fixed", top: 10, left: 10, zIndex: 30 }}
           >
             <MenuIcon />
           </IconButton>
