@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="w-full h-svh flex p-0 m-0">
       <MenuAside />
-      <main className="flex-1 h-full p-6">
+      <main className="flex-1 h-full p-6 bg-gray-100">
         <Outlet />
       </main>
     </div>

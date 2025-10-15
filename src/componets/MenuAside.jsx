@@ -16,6 +16,8 @@ import PeopleIcon from "@mui/icons-material/People";
 import { useTheme } from "@mui/material/styles";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
+import WcIcon from '@mui/icons-material/Wc';
+import CampaignIcon from '@mui/icons-material/Campaign';
 
 const menuItems = {
   sindico: [
@@ -45,7 +47,11 @@ const menuItems = {
     },
     {
       label: "Notificação",
-      icon: <PeopleIcon className="text-slate-400" />
+      icon: <CampaignIcon className="text-slate-400" />
+    },
+    {
+      label: "Funcionarios",
+      icon: <WcIcon className="text-slate-400" />
     }
   ],
 
@@ -106,7 +112,12 @@ const MenuAside = () => {
   const [open, setOpen] = useState(false);
 
   const clickMenu = (label) => {
-    const route = `/${path}/${label === "Serviços" ? "servicos" : label.toLowerCase()}`
+
+    let labelFormatada = label
+    labelFormatada = label == "Notificação" ? "notificacao" : labelFormatada.toLowerCase()
+    labelFormatada = label == "Serviços" ? "servicos" : labelFormatada.toLowerCase()
+
+    const route = `/${path}/${labelFormatada.toLowerCase()}`
     setOpen(false);
     navegate(route);
   }
