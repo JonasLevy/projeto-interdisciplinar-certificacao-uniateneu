@@ -3,6 +3,9 @@ import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
+import CardServico from '../../componets/CardServico';
+import SearchIcon from '@mui/icons-material/Search';
+import CardMorador from '../../componets/CardMorador';
 
 const MoradoresSindico = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -55,7 +58,30 @@ const MoradoresSindico = () => {
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Moradores</h1>
+
+            <div
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+            >
+                <h1>Moradores </h1>
+                <div className='flex gap-1'>
+                    <TextField
+                        id="outlined-basic"
+                        label="Apartamento"
+                        variant="outlined"
+                        size='small'
+                    //value={apt}
+                    // onChange={(e) => setApt(e.target.value)}
+                    />
+                    <Button variant="contained" aria-label="search" size='small' color='success'>
+                        <SearchIcon />
+                    </Button>
+                </div>
+            </div>
+            <section className='p-8'>
+                <CardMorador />
+
+            </section>
+
             <ButtonModal click={() => setOpenModal(true)} />
             <BasicModal openModal={openModal} title="Cadastrar Morador" close={() => setOpenModal(false)}>
                 <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">

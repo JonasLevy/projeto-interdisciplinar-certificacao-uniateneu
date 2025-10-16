@@ -8,6 +8,9 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { Button, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import SearchIcon from '@mui/icons-material/Search';
+import CardServico from '../../componets/CardServico';
+
 
 const ServicosMorador = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -73,7 +76,29 @@ const ServicosMorador = () => {
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Serviços do Morador </h1>
+            <div
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+            >
+                <h1>Serviços </h1>
+                <div className='flex gap-1'>
+                    <TextField
+                        id="outlined-basic"
+                        label="Apartamento"
+                        variant="outlined"
+                        size='small'
+                    //value={apt}
+                    // onChange={(e) => setApt(e.target.value)}
+                    />
+                    <Button variant="contained" aria-label="search" size='small' color='success'>
+                        <SearchIcon />
+                    </Button>
+                </div>
+            </div>
+
+            <section className='p-8'>
+                <CardServico />
+
+            </section>
             <ButtonModal click={() => setOpenModal(true)} />
             <BasicModal openModal={openModal} title="Adicionar Serviço" close={() => setOpenModal(false)}>
                 <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
