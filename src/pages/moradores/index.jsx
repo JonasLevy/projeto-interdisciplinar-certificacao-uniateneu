@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 const HomeMorador = () => {
     return (
         <div className="text-center">
-            Index Morador
             <div
-                className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box pb-8"
+                className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box p-8"
                 style={{ maxWidth: "100vw" }}
             >
                 <ButtonPages name="Delivery" click='/morador/delivery'>
