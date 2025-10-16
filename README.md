@@ -1,13 +1,51 @@
-# React + Vite
+# 🏢 eCondomínio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma web voltada para a **gestão inteligente de condomínios**, reunindo em um único ambiente funcionalidades que facilitam a administração, comunicação e controle de acesso de moradores e síndicos.
 
-Currently, two official plugins are available:
+🔗 **Acesse o projeto online:**  
+👉 [https://projeto-interdisciplinar-certificac.vercel.app/](https://projeto-interdisciplinar-certificac.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Sobre o Projeto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# projeto-interdisciplinar-certificacao-uniateneu
+O **eCondomínio** foi desenvolvido como parte de um **projeto interdisciplinar acadêmico**, com o objetivo de criar uma solução digital acessível e intuitiva para o gerenciamento de condomínios residenciais e comerciais.
+
+A plataforma permite a integração de diferentes áreas de gestão — administrativa, financeira e operacional — em um único sistema baseado em nuvem.
+
+---
+
+## 💡 Funcionalidades Principais
+
+- 🧾 **Gestão administrativa** — controle de moradores, unidades e documentos.  
+- 💬 **Comunicação interna** — envio de avisos, mensagens e notificações.  
+- 🔐 **Controle de acesso** — registro de visitantes, prestadores e reservas de áreas comuns.  
+- 📅 **Agendamentos** — reserva de espaços compartilhados como salão de festas, churrasqueira e academia.  
+- 📊 **Dashboard intuitivo** — visualização de informações essenciais de forma clara e prática.  
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+**Frontend:**  
+- React (Vite) ⚡  
+- JavaScript (ES6+)  
+- HTML5 & CSS3  
+- Tailwind CSS  
+- Axios (requisições HTTP)  
+
+**Backend (em desenvolvimento / integração futura):**  
+- Node.js (Express)  
+- MySQL  
+
+**Deploy:**  
+- [Vercel](https://vercel.com/)  
+
+---
+
+## 📦 Como Executar Localmente
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/econdominio.git
+
