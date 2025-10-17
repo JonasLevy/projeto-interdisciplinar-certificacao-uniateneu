@@ -1,15 +1,23 @@
 import { Button, Fab, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
-import { data } from 'react-router-dom';
 
 const Apartamentos = () => {
     const [openModal, setOpenModal] = useState(false);
-    const [dateType, setDateType] = useState("text");
-    const [value, setValue] = useState("");
-    
+
+    const [andar, setAndar] = useState('');
+    const [apartamento, setApartamento] = useState('');
+    const [torre, setTorre] = useState('');
+
+    const handleClick = () => {
+        setAndar(null);
+        setApartamento(null);
+        setTorre(null);
+
+        setOpenModal(false);
+    }
+
     const submitForm = (e) => {
         e.preventDefault();
         setOpenModal(false);
@@ -17,39 +25,45 @@ const Apartamentos = () => {
 
      return (
         <div className="min-h-full w-full ">
-            <h1>Encomendas</h1>
+            <h1>Apartamentos</h1>
             <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Nova encomenda" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className="flex flex-col gap-4">
-                    <TextField 
-                    id="outlined-basic" 
-                    label="Empresa" 
+            <BasicModal openModal={openModal} title="Cadastro de apartamento" close={() => setOpenModal(false)}>
+                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 ' 
+                style={{flexDirection: "row", padding: "10px", Radios: "0px"}}>
+                    
+                    <TextField
+                    id="outlined-basic"
+                    label="Andar"
+                    value={andar}
+                    onChange={(e) => setAndar(e.target.value)}
                     variant="outlined"
+                    sx={{width: 100}}
                     />
 
                     <TextField 
                     id="outlined-basic" 
-                    label="Descrição" 
+                    label="Numero AP" 
+                    value={apartamento}
+                    onChange={(e) => setApartamento(e.target.value)}
                     variant="outlined"
+                    sx={{width: 100}}
                     />
                     
                     <TextField 
                     id="outlined-basic" 
-                    label="Data de recebimento" 
-                    type={dateType}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    onFocus={() => setDateType("date")}
-                    onBlur={() => !value && setDateType("text")}
+                    label="Torre/bloco"
+                    value={torre}
+                    onChange={(e) => setTorre(e.target.value)}
+                    variant="outlined"
+                    sx={{width: 100}}
                     />
+                </form>
+
+                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
+                    style={{display: "flex", flexDirection: "row", gap: "70px"}}>
+                    <Button variant="contained" type='submit' color='success'>Confirmar</Button>
                     
-                    <Button 
-                    variant="contained" 
-                    type='submit'
-                    >
-                    Confirmar
-                    </Button>
-                    
+                    <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
                 </form>
             </BasicModal>
 

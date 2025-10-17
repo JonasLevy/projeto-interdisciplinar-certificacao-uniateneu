@@ -1,5 +1,4 @@
 import { Button, Fab, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
@@ -7,44 +6,54 @@ import BasicModal from '../../componets/Modal';
 const Notificacoes = () => {
     const [openModal, setOpenModal] = useState(false);
 
+    const [morador, setMorador] = useState('')
+    const [notificacao, setNotificacao] = useState('')
+
+    const handleClick = () => {
+        setMorador(null);
+        setNotificacao(null);
+
+        setOpenModal(false);
+    }
+
     const submitForm = (e) => {
         e.preventDefault();
-        // Lógica para enviar o formulário
         setOpenModal(false);
     }
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Delivery</h1>
+            <h1>Notificações</h1>
             <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Novo pedido" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className="flex flex-col gap-4">
+            <BasicModal openModal={openModal} title="Nova notificação" close={() => setOpenModal(false)}>
+                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
                     <TextField
                         id="outlined-basic"
-                        label="Empresa"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="Codigo da entrega"
+                        label="Morador"
+                        value={morador}
+                        onChange={(e) => setMorador(e.target.value)}
                         variant="outlined"
                     />
 
                     <TextField
                         id="outlined-basic"
-                        label="Descrição"
+                        label="Notificação"
+                        value={notificacao}
+                        onChange={(e) => setNotificacao(e.target.value)}
                         variant="outlined"
+                        multiline
+                        minRows={5}
+                        maxRows={10}
                     />
+                </form>
 
-                    <Button
-                        variant="contained"
-                        type='submit'
-                    >
-                        Confirmar
-                    </Button>
+                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
+                    style={{display: "flex", flexDirection: "row", gap: "70px"}}>
+                    <Button variant="contained" type='submit' color='success'>Confirmar</Button>
+                    
+                    <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
                 </form>
             </BasicModal>
-
         </div>
     );
 };
