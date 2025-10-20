@@ -10,9 +10,20 @@ import CardDelivery from '../../componets/CardDelivery';
 const DeliveryMorador = () => {
     const [openModal, setOpenModal] = useState(false);
 
+    const [empresa, setEmpresa] = useState('');
+    const [codEntrega, setCodEntrega] = useState('');
+    const [descricao, setDescricao] = useState('');
+
+    const handleClick = () => {
+        setEmpresa(null);
+        setCodEntrega(null);
+        setDescricao(null);
+
+        setOpenModal(false);
+    }
+
     const submitForm = (e) => {
         e.preventDefault();
-        // Lógica para enviar o formulário
         setOpenModal(false);
     }
 
@@ -42,33 +53,42 @@ const DeliveryMorador = () => {
                 </section>
                 <ButtonModal click={() => setOpenModal(true)} />
                 <BasicModal openModal={openModal} title="Novo pedido" close={() => setOpenModal(false)}>
-                    <form onSubmit={submitForm} className="flex flex-col gap-4">
+                    <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
                         <TextField 
                         id="outlined-basic" 
                         label="Empresa" 
+                        value={empresa}
+                        onChange={(e) => setEmpresa(e.target.value)}
                         variant="outlined" 
                         />
+
                         <TextField 
                         id="outlined-basic" 
                         label="Codigo da entrega" 
+                        value={codEntrega}
+                        onChange={(e) => setCodEntrega(e.target.value)}
                         variant="outlined" 
                         />
 
                         <TextField 
                         id="outlined-basic" 
                         label="Descrição" 
+                        value={descricao}
+                        onChange={(e) => setDescricao(e.target.value)}
                         variant="outlined" 
+                        multiline
+                        minRows={3}
+                        maxRows={10}
                         />
+                    </form>
 
-                        <Button 
-                        variant="contained" 
-                        type='submit'
-                        >
-                        Confirmar
-                        </Button>
+                    <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
+                        style={{display: "flex", flexDirection: "row", gap: "70px"}}>
+                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
+                        
+                        <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
                     </form>
                 </BasicModal>
-
             </div>
         );
     };
