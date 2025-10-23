@@ -230,7 +230,7 @@ const ServicosMorador = () => {
                         </form>
                     </BasicChildModal>
                     
-                    <div className='flex justify-between'>
+                    <div className='flex flex-row justify-between gap-4 md:flex-col'>
                         <Button variant="contained" type='submit'
                             color='success'>Confirmar</Button>
 

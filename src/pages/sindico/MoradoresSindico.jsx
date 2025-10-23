@@ -140,7 +140,7 @@ const MoradoresSindico = () => {
                         onChange={(e) => setTorre(e.target.value)}
                     />
 
-                    <div className='flex justify-between'>
+                    <div className='flex flex-row justify-between gap-4 md:flex-col'>
                         <Button variant="contained" type='submit' color='success'>Confirmar</Button>
 
                         <Button variant="contained" color='error' onClick={handleClick}> Cancelar

@@ -80,9 +80,8 @@ const Apartamentos = () => {
                         onChange={(e) => setTorre(e.target.value)}
                         variant="outlined"
                     />
-                    <div className='flex w-full justify-between'>
+                    <div className='flex flex-row justify-between gap-4 sm:flex-col'>
                         <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-
                         <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
                     </div>
                 </form>
