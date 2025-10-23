@@ -2,6 +2,9 @@ import { Button, Fab, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
+import SearchIcon from '@mui/icons-material/Search';
+import CardFuncionarios from '../../componets/CardFuncionarios';
+
 
 const FuncionariosSindico = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -29,10 +32,33 @@ const FuncionariosSindico = () => {
 
     return (
         <div className="min-h-full w-full ">
-            <h1>Funcionarios</h1>
+
+            <div
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+            >
+                <h1>Funcionarios</h1>
+                <div className='flex gap-1'>
+                    <TextField
+                        id="outlined-basic"
+                        label="Apartamento"
+                        variant="outlined"
+                        size='small'
+                    //value={apt}
+                    // onChange={(e) => setApt(e.target.value)}
+                    />
+                    <Button variant="contained" aria-label="search" size='small' color='success'>
+                        <SearchIcon />
+                    </Button>
+                </div>
+            </div>
+
+            <section className='p-8'>
+                <CardFuncionarios />
+            </section>
+
             <ButtonModal click={() => setOpenModal(true)} />
             <BasicModal openModal={openModal} title="Cadastro de funcionario" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className="flex flex-col gap-4">
+                <form onSubmit={submitForm} className="border flex flex-col gap-4 p-4">
                     <TextField
                         id="outlined-basic"
                         label="Nome"
@@ -40,7 +66,7 @@ const FuncionariosSindico = () => {
                         onChange={(e) => setNome(e.target.value)}
                         variant="outlined"
                     />
-                    
+
                     <TextField
                         id="outlined-basic"
                         label="Email"
@@ -73,13 +99,10 @@ const FuncionariosSindico = () => {
                         variant="outlined"
                     />
 
-                    <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
-                        style={{display: "flex", flexDirection: "row", gap: "70px"}}>
-                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-                    
-                        <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
-                    </form>
-                    
+                    <Button variant="contained" type='submit' color='success'>Confirmar</Button>
+
+                    <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
+
                 </form>
             </BasicModal>
 

@@ -15,6 +15,7 @@ import ReservasSindico from "../pages/sindico/ReservasSindico"
 import Notificacoes from "../pages/sindico/Notificacoes"
 import PortariaSindico from "../pages/sindico/PortariaSindico"
 import Apartamentos from "../pages/sindico/Apartamentos"
+import FuncionariosSindico from "../pages/sindico/FuncionariosSindico"
 
 const Router = () => {
 
@@ -29,7 +30,7 @@ const Router = () => {
                 <Route path="visitas" element={<VisitasMorador />} />
                 <Route path="apartamentos" element={<Apartamentos />} />
                 <Route path="moradores" element={<MoradoresSindico />} />
-                <Route path="funcionarios" element={<EncomendasMorador />} />
+                <Route path="funcionarios" element={<FuncionariosSindico />} />
                 <Route path="notificacao" element={<Notificacoes />} />
 
             </Route>
