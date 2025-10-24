@@ -99,9 +99,11 @@ const FuncionariosSindico = () => {
                         variant="outlined"
                     />
 
-                    <Button variant="contained" type='submit' color='success'>Confirmar</Button>
+                    <div className='flex flex-col justify-between gap-4'>
+                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
+                        <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
+                    </div>
 
-                    <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
 
                 </form>
             </BasicModal>
