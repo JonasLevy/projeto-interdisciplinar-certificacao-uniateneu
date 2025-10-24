@@ -59,11 +59,8 @@ const EncomendasMorador = () => {
                     multiline
                     minRows={3}
                     maxRows={10}
-                    />
-                </form>
+                     />
 
-                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
-                    style={{display: "flex", flexDirection: "row", gap: "70px"}}>
                     <Button variant="contained" type='submit' color='success'>Confirmar</Button>
                     
                     <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>

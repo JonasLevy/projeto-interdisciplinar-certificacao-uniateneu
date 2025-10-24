@@ -110,7 +110,7 @@ const VisitasSindico = () => {
                             />
                         </LocalizationProvider>
 
-                        <div className='flex flex-row justify-between gap-4 md:flex-col'>
+                        <div className='flex flex-col justify-between gap-4 '>
                             <Button variant="contained" type='submit' color='success'>Confirmar</Button>
 
                             <Button variant="contained" color='error' onClick={handleClick}> Cancelar
