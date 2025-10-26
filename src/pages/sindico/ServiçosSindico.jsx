@@ -2,6 +2,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
+import BasicChildModal from '../../componets/ChildModal';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { Button, IconButton, InputBase, TextField } from '@mui/material';
@@ -12,6 +13,7 @@ import CardServico from '../../componets/CardServico';
 
 const ServicosSindico = () => {
     const [openModal, setOpenModal] = useState(false);
+    const [openChildModal, setOpenChildModal] = useState(false);
 
     //Variavel nome da empresa
     const [nomeEmpresa, setNomeEmpresa] = useState("");
@@ -31,13 +33,24 @@ const ServicosSindico = () => {
     //Variavel da descrição do serviço
     const [descricao, setDescricao] = useState('');
 
-    const submitForm = (e) => {
-        e.preventDefault();
-        // Lógica para enviar o formulário
-        setOpenModal(false);
+    //Variaveis do prestador de serviço
+    const [telefone, setTelefone] = useState('');
+    const [nome, setNome] = useState('');
+    const [cpf, setCpf] = useState('');
 
+    //atualização da variavel CPF com Validação
+    const handleChangeCpf = (e) => {
+        const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+        setCpf(digits);
     }
 
+    //atualização da variavel telefone com Validação
+    const handleChangeTelefone = (e) => {
+        const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+        setTelefone(digits);
+    }
+
+    
     const handleClick = () => {
         setNomeEmpresa("");
         setDataInicio(null);
@@ -47,14 +60,28 @@ const ServicosSindico = () => {
         setApt('');
         setTorre('');
         setDescricao("");
-
+        
         setOpenModal(false);
     }
 
+    const clearChildModal = () => {
+        setNome('');
+        setCpf('');
+        setTelefone('');
+
+        setOpenChildModal(false);
+    }
+    
+    const submitForm = (e) => {
+        e.preventDefault();
+        // Lógica para enviar o formulário
+        setOpenModal(false);
+
+    }
     return (
         <div className="min-h-full w-full  gap-4 flex flex-col">
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Serviços </h1>
                 <div className='flex gap-1'>
@@ -183,7 +210,56 @@ const ServicosSindico = () => {
                         onChange={(e) => setDescricao(e.target.value)}
                     />
 
-                    <Button variant="outlined">Adicionar Prestador de Serviço</Button>
+                    <Button
+                        onClick={() => setOpenChildModal(true)}
+                        variant="outlined">Adicionar Prestador de Serviço</Button>
+
+                    <BasicChildModal
+                        openChildModal={openChildModal}
+                        title="Dados"
+                        closeChild={() => setOpenChildModal(false)}>
+                        <form className='border p-3 flex flex-col gap-5 mb-3'>
+                            <TextField
+                                id="outlined-basic"
+                                label="Nome"
+                                variant="outlined"
+                                size='small'
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                            />
+                            <TextField
+                                id="outlined-basic"
+                                label="CPF"
+                                size='small'
+                                variant="outlined"
+                                placeholder='Somente os numeros'
+                                value={cpf}
+                                onChange={handleChangeCpf}
+                            />
+                            <TextField
+                                label="Telefone"
+                                type='tel'
+                                size='small'
+                                variant="outlined"
+                                value={telefone}
+                                onChange={(handleChangeTelefone)}
+                            />
+                            <div className='flex justify-between'>
+                                <Button
+                                    onClick={() => setOpenChildModal(false)}
+                                    variant="contained"
+                                    color='success'
+                                >Confirmar</Button>
+
+                                <Button
+                                    onClick={clearChildModal}
+                                    variant="contained"
+                                    color='error'
+                                >
+                                Cancelar</Button>
+                            </div>
+                        </form>
+                    </BasicChildModal>
 
                     <div className='flex flex-col justify-between gap-4'>
                         <Button variant="contained" type='submit' color='success'>Confirmar</Button>
