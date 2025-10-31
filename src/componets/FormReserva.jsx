@@ -7,13 +7,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal }) => {
+const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
-
-
 
     //Variavel do select espaco
     const [espaco, setEspaco] = useState('');
@@ -52,6 +50,17 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal }) => {
         e.preventDefault();
         // Lógica para enviar o formulário
         fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
+        const reserva = {
+            espaco,
+            dataReserva: `${dataReserva.$D}/${dataReserva.$M + 1}/${dataReserva.$y}`,
+            reservaHoraEntrada: `${reservaHoraEntrada.$H}:${reservaHoraEntrada.$m}`,
+            reservaHoraSaida: `${reservaHoraSaida.$H}:${reservaHoraSaida.$m}`,
+            descricaoReserva,
+            apt,
+            torre
+        }
+
+        criarReserva(reserva)
     }
 
     // ## monta o formulario ao ser aberto o modal com os dados da reserva para editar
