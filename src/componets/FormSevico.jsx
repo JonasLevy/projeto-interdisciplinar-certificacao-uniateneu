@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
 
-const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal}) => {
+const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) => {
     const [openChildModal, setOpenChildModal] = useState(false);
 
     let editar = criarOuEditar === "Editar";
@@ -48,6 +48,17 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal}) => {
         fecharModal()
 
     }
+
+    useEffect(() => {
+            if (editar) {
+                setNomeEmpresa("LT - Construções");
+                setDataInicio(dayjs("01-01-2024"))
+                setDataFim(dayjs("10-02-2024"));
+                setHoraEntrada(dayjs().hour(7));
+                setHoraSaida(dayjs().hour(17));
+                setDescricao("Reforma das paredes dos apartamentos");
+            }
+        }, []);
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>

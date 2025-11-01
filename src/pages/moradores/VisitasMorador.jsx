@@ -48,7 +48,10 @@ const VisitasMorador = () => {
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
 
-            <BasicModal openModal={openModal} title="Cadastrar Visita" close={() => setOpenModal(false)}>
+            <BasicModal 
+                openModal={openModal} 
+                title={`${tipoModal} Visita`}
+                close={() => setOpenModal(false)}>
 
                 <FormVisita
                     tipoUsuario={"Morador"}

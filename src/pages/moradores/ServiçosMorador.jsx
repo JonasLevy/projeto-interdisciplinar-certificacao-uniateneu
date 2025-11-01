@@ -12,8 +12,15 @@ const ServicosMorador = () => {
 
     const [tipoModal, setTipoModal] = useState(null);
 
+    const [servico, setServico] = useState(null)
+
     const clickOpenModal = () => {
         setTipoModal("Criar");
+        setOpenModal(!openModal);
+    }
+
+    const clickEditar = (idReserva) => {
+        setTipoModal("Editar");
         setOpenModal(!openModal);
     }
 
@@ -39,13 +46,17 @@ const ServicosMorador = () => {
             </div>
 
             <section className='p-8'>
-                <CardServico />
+                <CardServico clickEditar={() => clickEditar()} />
 
             </section>
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
-            <BasicModal openModal={openModal} title="Adicionar Serviço" close={() => setOpenModal(false)}>
+            <BasicModal 
+                openModal={openModal} 
+                title={`${tipoModal} Servico`} 
+                close={() => setOpenModal(false)}>
                 <FormSevico
                     tipoUsuario={"Morador"}
+                    criarServico={servico}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
                 />
