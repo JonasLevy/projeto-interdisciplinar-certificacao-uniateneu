@@ -13,6 +13,13 @@ const ReservasMorador = () => {
 
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
     const [reserva, setReserva] = useState(null); // Quado u usuario clicar em editar, armazena o objeto da reserva
+    const [listaReservas, setListasReservas] = useState([])
+    console.log(listaReservas)
+
+    const criarReserva = (reserva) => {
+        alert("sdasd")
+        setListasReservas([...listaReservas, reserva])
+    }
 
     // ## Função para abrir o modal de criar ou editar reserva
     const clickOpenModal = () => {
@@ -49,8 +56,11 @@ const ReservasMorador = () => {
                     </Button>
                 </div>
             </div>
-            <section className='p-8'>
-                <CardReserva clickEditar={() => clickEditar()} />
+            <section className='p-8 gap-4 flex flex-col'>
+                {listaReservas?.map((reserva, i) => (
+                    <CardReserva reserva={reserva} key={reserva.id} clickEditar={() => clickEditar()} />
+                ))
+                }
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} /> {/* ##função  */}
@@ -63,6 +73,7 @@ const ReservasMorador = () => {
                 <FormReserva
                     tipoUsuario="Morador" // Passa o tipo de usuário para o formulário
                     objetoReserva={reserva}
+                    criarReserva={criarReserva}
                     criarOuEditar={tipoModal} // Indica se é para criar ou editar
                     fecharModal={() => setOpenModal(!openModal)} />
             </BasicModal >
