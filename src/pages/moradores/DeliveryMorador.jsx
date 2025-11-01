@@ -4,32 +4,22 @@ import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardDelivery from '../../componets/CardDelivery';
+import FormDelivey from '../../componets/FormDelivey';
 
 
 const DeliveryMorador = () => {
     const [openModal, setOpenModal] = useState(false);
 
-    const [empresa, setEmpresa] = useState('');
-    const [codEntrega, setCodEntrega] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [tipoModal, setTipoModal] = useState(null);
 
-    const handleClick = () => {
-        setEmpresa(null);
-        setCodEntrega(null);
-        setDescricao(null);
-
-        setOpenModal(false);
+    const clickOpenModal = () => {
+        setTipoModal("Criar");
+        setOpenModal(!openModal);
     }
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        setOpenModal(false);
-    }
-
     return (
         <div className="min-h-full w-full ">
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Delivery</h1>
                 <div className='flex gap-1'>
@@ -50,40 +40,13 @@ const DeliveryMorador = () => {
             <section className='p-8'>
                 <CardDelivery />
             </section>
-            <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Novo pedido" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
-                    <TextField
-                        id="outlined-basic"
-                        label="Empresa"
-                        value={empresa}
-                        onChange={(e) => setEmpresa(e.target.value)}
-                        variant="outlined"
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Codigo da entrega"
-                        value={codEntrega}
-                        onChange={(e) => setCodEntrega(e.target.value)}
-                        variant="outlined"
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Descrição"
-                        value={descricao}
-                        onChange={(e) => setDescricao(e.target.value)}
-                        variant="outlined"
-                        multiline
-                        minRows={3}
-                        maxRows={10}
-                    />
-                    <div className='flex flex-col justify-between gap-4 '>
-                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-                        <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
-                    </div>
-                </form>
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <BasicModal openModal={openModal} title={`${tipoModal} Delivery`} close={() => setOpenModal(false)}>
+                 <FormDelivey
+                    tipoUsuario="Morador"
+                    criarOuEditar={tipoModal}
+                    fecharModal={() => setOpenModal(!openModal)} 
+                 />
             </BasicModal>
         </div>
     );
