@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
 
-const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) => {
+const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
 
     let editar = criarOuEditar === "Editar";
@@ -27,6 +27,10 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) =>
     const [horaEntrada, setHoraEntrada] = useState(null);
     const [horaSaida, setHoraSaida] = useState(null);
 
+    //Variaveis Apt e torre
+    const [apt, setApt] = useState("");
+    const [torre, setTorre] = useState("");
+
     //Variavel da descrição do serviço
     const [descricao, setDescricao] = useState('');
 
@@ -37,6 +41,8 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) =>
         setDataFim(null);
         setHoraEntrada(null);
         setHoraSaida(null);
+        setApt('');
+        setTorre('');
         setDescricao("");
 
         fecharModal()
@@ -50,15 +56,17 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) =>
     }
 
     useEffect(() => {
-            if (editar) {
-                setNomeEmpresa("LT - Construções");
-                setDataInicio(dayjs("01-01-2024"))
-                setDataFim(dayjs("10-02-2024"));
-                setHoraEntrada(dayjs().hour(7));
-                setHoraSaida(dayjs().hour(17));
-                setDescricao("Reforma das paredes dos apartamentos");
-            }
-        }, []);
+        if (editar) {
+            setNomeEmpresa("LT - Construções");
+            setDataInicio(dayjs("01-01-2024"))
+            setDataFim(dayjs("10-02-2024"));
+            setHoraEntrada(dayjs().hour(7));
+            setHoraSaida(dayjs().hour(17));
+            setApt("101");
+            setTorre("A");
+            setDescricao("Reforma das paredes dos apartamentos");
+        }
+    }, []);
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
@@ -137,6 +145,30 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) =>
                 </div>
             </LocalizationProvider>
 
+            {sindico && (
+                <TextField
+                    id="outlined-basic"
+                    label="Apartemento"
+                    variant="outlined"
+                    size='small'
+                    value={apt}
+                    onChange={(e) => setApt(e.target.value)}
+                />
+            )}
+
+            {sindico && (
+                <TextField
+                    id="outlined-basic"
+                    label="Torre"
+                    variant="outlined"
+                    size='small'
+                    value={torre}
+                    onChange={(e) => setTorre(e.target.value)}
+                />
+            )}
+
+
+
             <TextField
                 id="outlined-multiline-flexible"
                 label="Descrição do Serviço"
@@ -152,15 +184,15 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico}) =>
             <BasicChildModal
                 openChildModal={openChildModal} title="Dados"
                 closeChild={() => setOpenChildModal(false)}>
-                 
-                 <FormPrestadorServico
+
+                <FormPrestadorServico
                     fecharChildModal={() => setOpenChildModal(!openChildModal)}
-                 />
+                />
             </BasicChildModal>
 
             <div className='flex flex-col justify-between gap-4'>
                 <Button variant="contained" type='submit'
-                    color='success'>{(editar && sindico)|| criarOuEditar== "Criar" ? "Salvar" : "Solicitar Edição"}</Button>
+                    color='success'>{(editar && sindico) || criarOuEditar == "Criar" ? "Salvar" : "Solicitar Edição"}</Button>
 
                 <Button variant="contained" color='error' onClick={handleClick}> Cancelar
                 </Button>
