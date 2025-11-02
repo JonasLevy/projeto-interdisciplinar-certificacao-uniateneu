@@ -3,64 +3,32 @@ import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
-import CardServico from '../../componets/CardServico';
 import SearchIcon from '@mui/icons-material/Search';
 import CardMorador from '../../componets/CardMorador';
+import FormMoradores from '../../componets/FormMoradores';
 
 const MoradoresSindico = () => {
     const [openModal, setOpenModal] = useState(false);
 
-    //Variaveis do morador
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [telefone, setTelefone] = useState('');
+    const [tipoModal, setTipoModal] = useState(null);
 
-    //Variaveis do Apt e torre
-    const [apt, setApt] = useState("");
-    const [torre, setTorre] = useState("");
+    const [morador, setMorador] = useState(null);
 
-    //Validação campo Cpf
-    const handleChangeCpf = (e) => {
-        const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-        setCpf(digits);
+    const clickOpenModal = () => {
+        setTipoModal("Criar");
+        setOpenModal(!openModal);
     }
 
-    //Validação compo telefone
-    const handleChangeTelefone = (e) => {
-        let digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-
-        if (digits.length <= 10) {
-            digits = digits.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
-        } else {
-            digits = digits.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
-        }
-
-        setTelefone(digits);
-    }
-
-    const handleClick = () => {
-        setNome('');
-        setCpf('');
-        setTelefone('');
-        setEmail('')
-        setApt('');
-        setTorre('');
-
-        setOpenModal(false);
-    }
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        // Lógica para enviar o formulário
-        setOpenModal(false);
+    const clickEditar = (idReserva) => {
+        setTipoModal("Editar");
+        setOpenModal(!openModal);
     }
 
     return (
         <div className="min-h-full w-full ">
 
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Moradores </h1>
                 <div className='flex gap-1'>
@@ -78,75 +46,19 @@ const MoradoresSindico = () => {
                 </div>
             </div>
             <section className='p-8'>
-                <CardMorador />
+                <CardMorador clickEditar={() => clickEditar()}/>
 
             </section>
 
-            <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Cadastrar Morador" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">
-                    <TextField
-                        id="outlined-basic"
-                        label="Nome"
-                        variant="outlined"
-                        size='small'
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Email"
-                        placeholder='Ex: MariaSilva@gmail.com'
-                        variant="outlined"
-                        size="small"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="CPF"
-                        size='small'
-                        variant="outlined"
-                        placeholder='Somente os numeros'
-                        value={cpf}
-                        onChange={handleChangeCpf}
-
-                    />
-                    <TextField
-                        label="Telefone"
-                        size='small'
-                        variant="outlined"
-                        value={telefone}
-                        onChange={(handleChangeTelefone)}
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Apartemento"
-                        variant="outlined"
-                        size='small'
-                        value={apt}
-                        onChange={(e) => setApt(e.target.value)}
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Torre"
-                        variant="outlined"
-                        size='small'
-                        value={torre}
-                        onChange={(e) => setTorre(e.target.value)}
-                    />
-
-                    <div className='flex flex-col justify-between gap-4'>
-                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-
-                        <Button variant="contained" color='error' onClick={handleClick}> Cancelar
-                        </Button>
-                    </div>
-                </form>
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
+                <FormMoradores 
+                    tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
+                    objetoReserva={morador}
+                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
+                    fecharModal={() => setOpenModal(!openModal)} 
+                
+                />
             </BasicModal>
 
         </div>

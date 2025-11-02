@@ -19,7 +19,7 @@ const ServicosSindico = () => {
     }
 
     const clickEditar = (idReserva) => {
-        setTipoModal("Editar");
+        setTipoModal("Editar ");
         setOpenModal(!openModal);
     }
 
@@ -50,8 +50,8 @@ const ServicosSindico = () => {
             </section>
 
 
-            <ButtonModal click={() => clickOpenModal()} />
-            <BasicModal openModal={openModal} title="Adicionar Serviço" close={() => setOpenModal(false)}>
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <BasicModal openModal={openModal} title={`${tipoModal} Serviço`} close={() => setOpenModal(false)}>
                 <FormSevico
                     tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
                     objetoReserva={servico}
