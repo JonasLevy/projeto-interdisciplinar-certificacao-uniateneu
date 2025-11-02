@@ -4,32 +4,31 @@ import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardApartamentos from '../../componets/CardApartamentos';
+import FormApt from '../../componets/FormApt';
 
 
 const Apartamentos = () => {
     const [openModal, setOpenModal] = useState(false);
 
-    const [andar, setAndar] = useState('');
-    const [apartamento, setApartamento] = useState('');
-    const [torre, setTorre] = useState('');
+    const [tipoModal, setTipoModal] = useState(null);
 
-    const handleClick = () => {
-        setAndar(null);
-        setApartamento(null);
-        setTorre(null);
+    const [apt, setApt] = useState(null);
 
-        setOpenModal(false);
+    const clickOpenModal = () => {
+        setTipoModal("Criar");
+        setOpenModal(!openModal);
     }
 
-    const submitForm = (e) => {
-        e.preventDefault();
-        setOpenModal(false);
+    const clickEditar = (idReserva) => {
+        setTipoModal("Editar");
+        setOpenModal(!openModal);
     }
+
 
     return (
         <div className="min-h-full w-full ">
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Apartamentos</h1>
                 <div className='flex gap-1'>
@@ -48,43 +47,19 @@ const Apartamentos = () => {
             </div>
 
             <section className='p-8'>
-                <CardApartamentos />
+                <CardApartamentos clickEditar={() => clickEditar()} />
             </section>
 
 
-            <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Cadastro de apartamento" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '
-                    style={{ flexDirection: "column", padding: "8px", Radios: "0px" }}>
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <BasicModal openModal={openModal} title={`${tipoModal} Apartamento`} close={() => setOpenModal(false)}>
+                <FormApt
+                    tipoUsuario="Sindico"
+                    objetoReserva={apt}
+                    criarOuEditar={tipoModal}
+                    fecharModal={() => setOpenModal(!openModal)}
+                />
 
-                    <TextField
-                        id="outlined-basic"
-                        label="Andar"
-                        value={andar}
-                        onChange={(e) => setAndar(e.target.value)}
-                        variant="outlined"
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Numero AP"
-                        value={apartamento}
-                        onChange={(e) => setApartamento(e.target.value)}
-                        variant="outlined"
-                    />
-
-                    <TextField
-                        id="outlined-basic"
-                        label="Torre/bloco"
-                        value={torre}
-                        onChange={(e) => setTorre(e.target.value)}
-                        variant="outlined"
-                    />
-                    <div className='flex flex-row justify-between gap-4 sm:flex-col'>
-                        <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-                        <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
-                    </div>
-                </form>
             </BasicModal>
 
         </div>
