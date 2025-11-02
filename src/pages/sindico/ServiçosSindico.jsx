@@ -19,7 +19,7 @@ const ServicosSindico = () => {
     }
 
     const clickEditar = (idReserva) => {
-        setTipoModal("Editar ");
+        setTipoModal("Editar");
         setOpenModal(!openModal);
     }
 
