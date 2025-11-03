@@ -1,6 +1,10 @@
 
 
-const CardApartamentos = ()=>{
+const CardApartamentos = ({clickEditar}) => {
+    const OnClickDetalhe = (id) => {
+        clickEditar(id);
+    }
+    
     return(
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
             <div className="flex items-center mb-4">
@@ -12,7 +16,7 @@ const CardApartamentos = ()=>{
             <p className="mb-4 text-gray-700">Situação:</p>
             <p className="mb-4 text-gray-700">Telefone:</p>
             <div className="flex justify-between items-center">
-                <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">Ver Detalhes</button>
+                <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" onClick={() => OnClickDetalhe("123")}>Editar</button>
             </div>
         </article>
     )

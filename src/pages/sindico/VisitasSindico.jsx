@@ -53,7 +53,7 @@ const VisitasSindico = () => {
             <h1>Visitas do Morador
                 <ButtonModal click={() => setOpenModal(true)} />
                 <BasicModal openModal={openModal} title="Cadastrar Visita" close={() => setOpenModal(false)}>
-                    <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
+                    {/* <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
                         <TextField
                             id="outlined-basic"
                             label="Nome"
@@ -117,7 +117,7 @@ const VisitasSindico = () => {
                             </Button>
                         </div>
 
-                    </form>
+                    </form> */}
 
 
                 </BasicModal>

@@ -39,7 +39,7 @@ const ReservasMorador = () => {
     return (
         <div className="min-h-full w-full ">
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between items-center'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Reservas</h1>
                 <div className='flex gap-1'>
