@@ -48,7 +48,7 @@ const ReservasSindico = () => {
             </div>
 
             <section className='p-8'>
-                <CardReserva clickEditar={() => clickEditar()} />
+                {/* <CardReserva clickEditar={() => clickEditar()} /> */}
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} /> {/* ##função  */}

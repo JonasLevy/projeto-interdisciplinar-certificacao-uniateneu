@@ -145,27 +145,26 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico }) =
                 </div>
             </LocalizationProvider>
 
-            {sindico && (
-                <TextField
-                    id="outlined-basic"
-                    label="Apartemento"
-                    variant="outlined"
-                    size='small'
-                    value={apt}
-                    onChange={(e) => setApt(e.target.value)}
-                />
-            )}
+            <TextField
+                id="outlined-basic"
+                label="Apartemento"
+                variant="outlined"
+                size='small'
+                value={apt}
+                onChange={(e) => setApt(e.target.value)}
+                disabled={!sindico}
+            />
 
-            {sindico && (
-                <TextField
-                    id="outlined-basic"
-                    label="Torre"
-                    variant="outlined"
-                    size='small'
-                    value={torre}
-                    onChange={(e) => setTorre(e.target.value)}
-                />
-            )}
+
+            <TextField
+                id="outlined-basic"
+                label="Torre"
+                variant="outlined"
+                size='small'
+                value={torre}
+                onChange={(e) => setTorre(e.target.value)}
+                disabled={!sindico}
+            />
 
 
 
