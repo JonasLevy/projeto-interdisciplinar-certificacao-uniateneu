@@ -7,7 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva }) => {
+const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, objetoReserva }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -52,9 +52,9 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva }) 
         fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
         const reserva = {
             espaco,
-            dataReserva: `${dataReserva.$D}/${dataReserva.$M + 1}/${dataReserva.$y}`,
-            reservaHoraEntrada: `${reservaHoraEntrada.$H}:${reservaHoraEntrada.$m}`,
-            reservaHoraSaida: `${reservaHoraSaida.$H}:${reservaHoraSaida.$m}`,
+            dataReserva,
+            reservaHoraEntrada,
+            reservaHoraSaida,
             descricaoReserva,
             apt,
             torre
@@ -68,12 +68,12 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva }) 
         if (editar) {
             setApt("202");
             setTorre("B");
-            setEspaco("Salao de festas");
-            setDataReserva(dayjs("2024-07-15"));
-            setReservaHoraEntrada(dayjs().hour(18).minute(30));
-            setReservaHoraSaida(dayjs().hour(22).minute(30));
-            setDescricaoReserva("Festa de aniversário - Trazer decoração e alimentos.");
-        }
+            setEspaco(objetoReserva.espaco);
+            setDataReserva(objetoReserva.dataReserva);
+            setReservaHoraEntrada(objetoReserva.reservaHoraEntrada);
+            setReservaHoraSaida(objetoReserva.reservaHoraSaida);
+            setDescricaoReserva(objetoReserva.descricaoReserva);
+        } 
     }, []);
 
 
