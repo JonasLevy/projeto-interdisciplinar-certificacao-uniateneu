@@ -6,7 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-const FormVisita = ({tipoUsuario, criarOuEditar, fecharModal}) => {
+const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visita }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -55,16 +55,25 @@ const FormVisita = ({tipoUsuario, criarOuEditar, fecharModal}) => {
         e.preventDefault();
         // Lógica para enviar o formulário
         fecharModal();
+        const visita = {
+            nome,
+            cpf,
+            telefone,
+            dataVisita,
+            horaVisita
+        }
+
+        criarVisita(visita)
 
     }
 
     useEffect(() => {
         if(editar) {
-            setNome('Fulano de Tal');
-            setCpf('0895695485');
-            setTelefone('85992965840');
-            setDataVisita(dayjs("2024-07-15"));
-            setHoraVisita(dayjs().hour(18).minute(30));
+            setNome(visita.nome);
+            setCpf(visita.cpf);
+            setTelefone(visita.telefone);
+            setHoraVisita(visita.horaVisita);
+            setDataVisita(visita.dataVisita);
         }
     }, [])
 

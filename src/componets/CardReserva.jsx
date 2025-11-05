@@ -4,8 +4,8 @@ import { formatHora } from '../hooks/formatHora';
 
 export default function CardReserva({ clickEditar, reserva }) {
 
-    const OnClickDetalhe = (id) => {
-        clickEditar(id);
+    const OnClickDetalhe = () => {
+        clickEditar();
     }
 
     const { espaco, dataReserva, reservaHoraEntrada, reservaHoraSaida, descricaoReserva, apt, torre } = reserva
@@ -25,7 +25,7 @@ export default function CardReserva({ clickEditar, reserva }) {
                 <span className="text-sm text-gray-500">Apartamento: 202 - Torre B</span>
                 <button
                     className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
-                    onClick={() => OnClickDetalhe("123")}
+                    onClick={OnClickDetalhe}
                 >
                     Editar
                 </button>
