@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
 
-const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico }) => {
+const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
 
     let editar = criarOuEditar === "Editar";
@@ -51,20 +51,30 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico }) =
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
+        const servico = {
+            nomeEmpresa,
+            dataInicio,
+            dataFim,
+            horaEntrada,
+            horaSaida,
+            apt,
+            torre,
+            descricao
+        }
+        criarServico(servico)
         fecharModal()
-
     }
 
     useEffect(() => {
         if (editar) {
-            setNomeEmpresa("LT - Construções");
-            setDataInicio(dayjs("01-01-2024"))
-            setDataFim(dayjs("10-02-2024"));
-            setHoraEntrada(dayjs().hour(7));
-            setHoraSaida(dayjs().hour(17));
+            setNomeEmpresa(servico.nomeEmpresa);
+            setDataInicio(dayjs(servico.dataInicio))
+            setDataFim(dayjs(servico.dataFim));
+            setHoraEntrada(servico.horaEntrada);
+            setHoraSaida(servico.horaSaida);
             setApt("101");
             setTorre("A");
-            setDescricao("Reforma das paredes dos apartamentos");
+            setDescricao(servico.descricao);
         }
     }, []);
 

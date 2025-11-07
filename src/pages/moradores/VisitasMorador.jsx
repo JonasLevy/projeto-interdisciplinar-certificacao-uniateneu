@@ -12,15 +12,25 @@ const VisitasMorador = () => {
 
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
 
+    const [listaVisitasRenderizacao, setListaVisitasRenderizacao] = useState([])
+    const [visitaTemp, setVisitaTemp] = useState(null) //variavel temporaria para armazenar a visita  especifica para edição
+
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
+        setVisitaTemp(listaVisitasRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
+
+    const criarVisita = (visita) => {
+        setListaVisitasRenderizacao([visita, ...listaVisitasRenderizacao])
+    }
+
+    console.log(visitaTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -42,21 +52,27 @@ const VisitasMorador = () => {
                     </Button>
                 </div>
             </div>
-            <section className='p-8'>
-                <CardVisita clickEditar={() => clickEditar()}  />
+            <section className='p-8 flex flex-col gap-4'>
+                {listaVisitasRenderizacao?.map((visita, i) => (
+                    <CardVisita visita={visita} clickEditar={() => clickEditar(i)} />
+                ))
+                }
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
 
-            <BasicModal 
-                openModal={openModal} 
+            <BasicModal
+                openModal={openModal}
                 title={`${tipoModal} Visita`}
                 close={() => setOpenModal(false)}>
 
                 <FormVisita
                     tipoUsuario={"Morador"}
                     criarOuEditar={tipoModal}
-                    fecharModal={() => setOpenModal(!openModal)} />
+                    fecharModal={() => setOpenModal(!openModal)}
+                    criarVisita={criarVisita}
+                    visita={visitaTemp}
+                />
             </BasicModal>
         </div>
     );

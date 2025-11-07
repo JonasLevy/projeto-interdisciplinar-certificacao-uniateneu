@@ -28,8 +28,9 @@ const ReservasMorador = () => {
     }
 
     // ## Função para abrir o modal no modo editar reserva
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
         setTipoModal("Editar");
+        setReserva(listaReservas[id])
         setOpenModal(!openModal);
     // fazer logica para buscar a reserva pelo idReserva
     //setIdReserva(idReserva);
@@ -58,7 +59,7 @@ const ReservasMorador = () => {
             </div>
             <section className='p-8 gap-4 flex flex-col'>
                 {listaReservas?.map((reserva, i) => (
-                    <CardReserva reserva={reserva} key={reserva.id} clickEditar={() => clickEditar()} />
+                    <CardReserva reserva={reserva} key={reserva.id} clickEditar={() => clickEditar(i)} />
                 ))
                 }
             </section>

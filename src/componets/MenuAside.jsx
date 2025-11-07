@@ -26,7 +26,7 @@ const menuItems = {
       icon: <ApartmentIcon className="text-slate-400" />,
     },
     {
-      label: "Portaria",
+      label: "Encomendas",
       icon: <MeetingRoomIcon className="text-slate-400" />,
     },
     {
@@ -57,10 +57,6 @@ const menuItems = {
 
   morador: [
     {
-      label: "Delivery",
-      icon: <PeopleIcon className="text-slate-400" />
-    },
-    {
       label: "Encomendas",
       icon: <MeetingRoomIcon className="text-slate-400" />
     },
@@ -69,7 +65,7 @@ const menuItems = {
       icon: <HomeWorkIcon className="text-slate-400" />
     },
     {
-      label: "Reservas",
+      label: "Moradores",
       icon: <ApartmentIcon className="text-slate-400" />,
     },
     {

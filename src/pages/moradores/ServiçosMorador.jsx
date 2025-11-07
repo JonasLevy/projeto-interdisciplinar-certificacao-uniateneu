@@ -13,21 +13,27 @@ const ServicosMorador = () => {
     const [tipoModal, setTipoModal] = useState(null);
 
     const [servico, setServico] = useState(null)
+    const [listaServicoRenderizacao, setListaServicoRenderizacao] = useState([])
+
+    const adicionarServico = (servico) => {
+        setListaServicoRenderizacao([servico, ...listaServicoRenderizacao])
+    }
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
         setTipoModal("Editar");
-        setOpenModal(!openModal);
+        setServico(listaServicoRenderizacao[id])
+        setOpenModal(!openModal)
     }
 
     return (
-        <div className="min-h-full w-full ">
+        <div className="min-h-full max-h-full w-full overflow-y-auto ">
             <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
+                className='flex  h-16 bg-slate-300 p-3 items-center justify-between sticky top-0'
             >
                 <h1>Serviços </h1>
                 <div className='flex gap-1'>
@@ -45,20 +51,26 @@ const ServicosMorador = () => {
                 </div>
             </div>
 
-            <section className='p-8'>
-                <CardServico clickEditar={() => clickEditar()} />
+            <section className='p-8 flex flex-col gap-4 '>
+                {listaServicoRenderizacao?.map((servico, i) => (
+                    <CardServico
+                        clickEditar={() => clickEditar(i)}
+                        servico={servico} />
+
+                ))}
 
             </section>
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
-            <BasicModal 
-                openModal={openModal} 
-                title={`${tipoModal} Servico`} 
+            <BasicModal
+                openModal={openModal}
+                title={`${tipoModal} Servico`}
                 close={() => setOpenModal(false)}>
                 <FormSevico
                     tipoUsuario={"Morador"}
-                    criarServico={servico}
+                    criarServico={adicionarServico}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
+                    servico={servico}
                 />
 
             </BasicModal >
