@@ -1,7 +1,7 @@
 import { Button,TextField } from '@mui/material';
 import { useState } from 'react';
 
-const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt }) => {
+const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -22,6 +22,14 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt }) => {
     const submitForm = (e) => {
         e.preventDefault();
         fecharModal()
+
+        const apt = {
+            andar,
+            apartamento,
+            torre
+        }
+
+        criarApt(apt);
     }
 
     return (

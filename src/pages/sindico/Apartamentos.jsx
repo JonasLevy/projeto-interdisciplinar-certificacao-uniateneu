@@ -12,16 +12,23 @@ const Apartamentos = () => {
 
     const [tipoModal, setTipoModal] = useState(null);
 
-    const [apt, setApt] = useState(null);
+    const [listaAptRenderizacao,
+    setListaAptRenderizacao] = useState([]);
+    const [aptTemp, setAptTemp] = useState(null);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
+        setAptTemp(listaAptRenderizacao[id]);
         setTipoModal("Editar");
         setOpenModal(!openModal);
+    }
+
+    const criarApt = (apt) => {
+        setListaAptRenderizacao([apt, ...listaAptRenderizacao])
     }
 
 
@@ -47,7 +54,9 @@ const Apartamentos = () => {
             </div>
 
             <section className='p-8'>
-                <CardApartamentos clickEditar={() => clickEditar()} />
+                {listaAptRenderizacao?.map((apt, i) => (
+                    <CardApartamentos apt={apt} clickEditar={() => clickEditar(i)} />
+                ))}
             </section>
 
 
@@ -55,9 +64,11 @@ const Apartamentos = () => {
             <BasicModal openModal={openModal} title={`${tipoModal} Apartamento`} close={() => setOpenModal(false)}>
                 <FormApt
                     tipoUsuario="Sindico"
-                    objetoReserva={apt}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
+                    criarApt={criarApt}
+                    apt={aptTemp}
+
                 />
 
             </BasicModal>
