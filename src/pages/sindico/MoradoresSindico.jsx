@@ -12,17 +12,25 @@ const MoradoresSindico = () => {
 
     const [tipoModal, setTipoModal] = useState(null);
 
-    const [morador, setMorador] = useState(null);
+    const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
+    const [moradorTemp, setMoradorTemp] = useState(null);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
+        setMoradorTemp(listaMoradorRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
+
+    const criarMorador = (morador) => {
+        setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
+    }
+
+    console.log(moradorTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -46,18 +54,21 @@ const MoradoresSindico = () => {
                 </div>
             </div>
             <section className='p-8'>
-                <CardMorador clickEditar={() => clickEditar()}/>
+                {listaMoradorRenderizacao?.map((morador, i) => (
+                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)}/>
+                ))
+                }
 
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
                 <FormMoradores 
-                    tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
-                    objetoReserva={morador}
-                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
-                    fecharModal={() => setOpenModal(!openModal)} 
-                
+                    tipoUsuario="Sindico"
+                    criarOuEditar={tipoModal}
+                    fecharModal={() => setOpenModal(!openModal)}
+                    criarMorador={criarMorador}
+                    inquilino={moradorTemp}
                 />
             </BasicModal>
 

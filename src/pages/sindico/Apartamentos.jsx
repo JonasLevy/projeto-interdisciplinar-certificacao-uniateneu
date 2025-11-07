@@ -31,6 +31,8 @@ const Apartamentos = () => {
         setListaAptRenderizacao([apt, ...listaAptRenderizacao])
     }
 
+    console.log(aptTemp);
+
 
     return (
         <div className="min-h-full w-full ">
