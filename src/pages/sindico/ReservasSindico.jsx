@@ -10,7 +10,9 @@ import FormReserva from '../../componets/FormReserva';
 const ReservasSindico = () => {
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
-    const [reserva, setReserva] = useState(null); // Quado u usuario clicar em editar, armazena o objeto da reserva
+    
+    const [listaReservaRenderizacao, setListaReservaRenderizacao] = useState([]);
+    const [reservaTemp, setReservaTemp] = useState(null);
 
     // ## Função para abrir o modal de criar ou editar reserva
     const clickOpenModal = () => {
@@ -19,12 +21,19 @@ const ReservasSindico = () => {
     }
 
     // ## Função para abrir o modal no modo editar reserva
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
+        setReservaTemp(listaReservaRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     // fazer logica para buscar a reserva pelo idReserva
     //setIdReserva(idReserva);
     }
+
+    const criarReserva = (reserva) => {
+        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
+    }
+
+    console.log(reservaTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -48,7 +57,10 @@ const ReservasSindico = () => {
             </div>
 
             <section className='p-8'>
-                {/* <CardReserva clickEditar={() => clickEditar()} /> */}
+                {listaReservaRenderizacao?.map((reserva, i) => (
+                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(i)} />
+                ))}
+                
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} /> {/* ##função  */}
@@ -60,9 +72,11 @@ const ReservasSindico = () => {
             >
                 <FormReserva
                     tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
-                    objetoReserva={reserva}
                     criarOuEditar={tipoModal} // Indica se é para criar ou editar
-                    fecharModal={() => setOpenModal(!openModal)} />
+                    fecharModal={() => setOpenModal(!openModal)}
+                    criarReserva={criarReserva}
+                    reserva={reservaTemp}
+                 />
             </BasicModal >
         </div >
     );
