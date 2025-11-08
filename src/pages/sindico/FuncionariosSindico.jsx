@@ -12,17 +12,25 @@ const FuncionariosSindico = () => {
 
     const [tipoModal, setTipoModal] = useState(null);
 
-    const [funcionario, setFuncionario] = useState(null);
+    const [listaFuncionarioRenderizacao, setListaFuncionarioRenderizacao] = useState([]);
+    const [funcionarioTemp, setFuncionarioTemp] = useState(null);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
+        setFuncionarioTemp(listaFuncionarioRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
+
+   const criarFuncionario = (funcionario) => {
+        setListaFuncionarioRenderizacao([funcionario, ...listaFuncionarioRenderizacao])
+    }
+
+    console.log(funcionarioTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -47,16 +55,20 @@ const FuncionariosSindico = () => {
             </div>
 
             <section className='p-8'>
-                <CardFuncionarios clickEditar={() => clickEditar()} />
+                {listaFuncionarioRenderizacao?.map((funcionario, i) => (
+                    <CardFuncionarios funcionario={funcionario} clickEditar={() => clickEditar(i)} />
+                ))
+                }
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Funcionairo`} close={() => setOpenModal(false)}>
                 <FormFuncionarios 
                     tipoUsuario="Sindico"
-                    objetoReserva={funcionario}
                     criarOuEditar={tipoModal}
-                    fecharModal={() => setOpenModal(!openModal)} 
+                    fecharModal={() => setOpenModal(!openModal)}
+                    criarFuncionario={criarFuncionario}
+                    funcionario={funcionarioTemp} 
                 />
             </BasicModal>
 
