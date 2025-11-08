@@ -1,76 +1,73 @@
 import { Button, Fab, TextField } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
-import { data } from 'react-router-dom';
+import FormEncomendas from '../../componets/FormEncomendas';
+import CardEncomenda from '../../componets/CardEncomenda';
+// import { data } from 'react-router-dom';
 
 const EncomendasMorador = () => {
     const [openModal, setOpenModal] = useState(false);
-    const [dateType, setDateType] = useState("text");
 
-    const [empresa, setEmpresa] = useState('');
-    const [dataRecebimento, setDataRecebimento] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [tipoModal, setTipoModal] = useState(null);
 
-    const handleClick = () => {
-        setEmpresa(null);
-        setDataRecebimento(null);
-        setDescricao(null);
-
-        setOpenModal(false);
-    }
-    
-    const submitForm = (e) => {
-        e.preventDefault();
-        setOpenModal(false);
+    const clickOpenModal = () => {
+        setTipoModal("Criar");
+        setOpenModal(!openModal);
     }
 
-     return (
+    const clickEditar = () => {
+        // setVisitaTemp(listaVisitasRenderizacao[id])
+        setTipoModal("Editar");
+        setOpenModal(!openModal);
+    }
+
+    return (
         <div className="min-h-full w-full ">
-            <h1>Encomendas</h1>
-            <ButtonModal click={() => setOpenModal(true)} />
-            <BasicModal openModal={openModal} title="Nova encomenda" close={() => setOpenModal(false)}>
-                <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
-                    <TextField 
-                    id="outlined-basic" 
-                    label="Empresa" 
-                    value={empresa}
-                    onChange={(e) => setEmpresa(e.target.value)}
-                    variant="outlined"
+            <div className='flex  h-16 bg-slate-300 p-3 items-center justify-between'>
+                <h1>Encomendas</h1>
+
+                <div className='flex gap-1'>
+                    <TextField
+                        id="outlined-basic"
+                        label="Apartamento"
+                        variant="outlined"
+                        size='small'
+                    //value={apt}
+                    // onChange={(e) => setApt(e.target.value)}
                     />
+                    <Button variant="contained" aria-label="search" size='small' color='success'>
+                        <SearchIcon />
+                    </Button>
+                </div>
+            </div>
+            <section className='p-8 flex flex-col gap-4'> 
+                <CardEncomenda clickEditar={() => clickEditar()}/>
 
-                    <TextField 
-                    id="outlined-basic" 
-                    label="Data de recebimento" 
-                    type={dateType}
-                    value={dataRecebimento}
-                    onChange={(e) => setDataRecebimento(e.target.value)}
-                    onFocus={() => setDateType("date")}
-                    onBlur={() => !dataRecebimento && setDateType("text")}
-                    />
 
-                    <TextField 
-                    id="outlined-basic" 
-                    label="Descrição" 
-                    value={descricao}
-                    onChange={(e) => setDescricao(e.target.value)}
-                    variant="outlined"
-                    multiline
-                    minRows={3}
-                    maxRows={10}
-                     />
+            </section>
 
-                    <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-                    
-                    <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
-                </form>
 
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            
+            <BasicModal 
+                openModal={openModal}
+                title={`${tipoModal} Encomenda`} 
+                close={() => setOpenModal(false)}>
+                
+                <FormEncomendas 
+                    tipoUsuario={"Morador"}
+                    criarOuEditar={tipoModal}
+                    fecharModal={() => setOpenModal(!openModal)}
+                />
             </BasicModal>
 
         </div>
-        
-     );
+
+    );
 };
 
 export default EncomendasMorador;
