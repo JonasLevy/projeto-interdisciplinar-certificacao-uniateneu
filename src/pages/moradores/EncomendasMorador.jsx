@@ -14,16 +14,25 @@ const EncomendasMorador = () => {
 
     const [tipoModal, setTipoModal] = useState(null);
 
+    const[listaEncomendaRenderizacao, setListaEncomendaRenderizacao] = useState([]);
+    const [encomendaTemp, setEncomendaTemp] = useState(null);
+
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = () => {
-        // setVisitaTemp(listaVisitasRenderizacao[id])
+    const clickEditar = (id) => {
+        setEncomendaTemp(listaEncomendaRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
+
+    const criarEncomenda = (encomenda) => {
+        setListaEncomendaRenderizacao([encomenda, ...listaEncomendaRenderizacao]);
+    }
+
+    console.log(encomendaTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -45,11 +54,11 @@ const EncomendasMorador = () => {
                 </div>
             </div>
             <section className='p-8 flex flex-col gap-4'> 
-                <CardEncomenda clickEditar={() => clickEditar()}/>
-
+                {listaEncomendaRenderizacao?.map((encomenda, i) => (
+                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(i)}/>
+                ))}
 
             </section>
-
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             
@@ -62,9 +71,10 @@ const EncomendasMorador = () => {
                     tipoUsuario={"Morador"}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
+                    criarEncomenda={criarEncomenda}
+                    encomenda={encomendaTemp}
                 />
             </BasicModal>
-
         </div>
 
     );

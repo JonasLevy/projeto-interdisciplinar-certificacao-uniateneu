@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
-function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal}) {
+function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal, criarEncomenda, encomenda}) {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -23,6 +23,7 @@ function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal}) {
         setEmpresa(null);
         setDataRecebimento(null);
         setDescricao(null);
+        setCodigoEntrga(null);
 
         fecharModal()
     }
@@ -30,16 +31,25 @@ function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal}) {
     const submitForm = (e) => {
         e.preventDefault();
         fecharModal();
+
+        const encomenda = {
+            empresa,
+            dataRecebimento,
+            descricao,
+            codigoEntrega
+        }
+
+        criarEncomenda(encomenda)
     }
 
     useEffect(() => {
         if(editar) {
-            setEmpresa('Empresa');
-            setDataRecebimento('08/11/2025');
-            setCodigoEntrga('5845874585BR');
-            setDescricao('Breve descrição de entrega ou delivery');
+            setEmpresa(encomenda.empresa);
+            setDataRecebimento(encomenda.dataRecebimento);
+            setCodigoEntrga(encomenda.codigoEntrega);
+            setDescricao(encomenda.descricao);
         }
-    })
+    }, [])
 
 
     return (
@@ -66,7 +76,7 @@ function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal}) {
                     Delivery<Checkbox
                         checked={selectedValue === 'Delivery'}
                         onChange={handleChange}
-                        value="Delivey"
+                        value="Delivery"
                         name="opcaoEncomenda"
                     />
                 </p>
