@@ -12,15 +12,21 @@ const ServicosSindico = () => {
     const [tipoModal, setTipoModal] = useState(null);
 
     const [servico, setServico] = useState(null);
+    const [listaServicoRenderizacao, setListaServicoRenderizacao] = useState([]);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (idReserva) => {
+    const clickEditar = (id) => {
         setTipoModal("Editar");
+        setServico(listaServicoRenderizacao[id]);
         setOpenModal(!openModal);
+    }
+
+    const criarServico = (servico) => {
+        setListaServicoRenderizacao([servico, ...listaServicoRenderizacao]);
     }
 
     return (
@@ -45,7 +51,10 @@ const ServicosSindico = () => {
             </div>
 
             <section className='p-8'>
-                <CardServico clickEditar={() => clickEditar()} />
+                {listaServicoRenderizacao?.map((servico, i) => (
+                    <CardServico servico={servico} clickEditar={() => clickEditar(i)} />
+                ))}
+                
 
             </section>
 
@@ -53,10 +62,11 @@ const ServicosSindico = () => {
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Serviço`} close={() => setOpenModal(false)}>
                 <FormSevico
-                    tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
-                    objetoReserva={servico}
+                    tipoUsuario={"Sindico"} // Passa o tipo de usuário para o formulário
                     criarOuEditar={tipoModal} // Indica se é para criar ou editar
                     fecharModal={() => setOpenModal(!openModal)}
+                    criarServico={criarServico}
+                    servico={servico}
                 />
 
             </BasicModal >

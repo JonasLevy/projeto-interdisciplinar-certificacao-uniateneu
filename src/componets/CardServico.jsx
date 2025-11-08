@@ -3,11 +3,22 @@ import { formatData } from '../hooks/formatData';
 import { formatHora } from '../hooks/formatHora';
 
 const CardServico = ({ clickEditar, servico }) => {
-
-    const { nomeEmpresa, dataInicio, dataFim, horaEntrada, horaSaida, descricao, apt, bloco } = servico
-    const OnClickDetalhe = (id) => {
-        clickEditar(id);
+    
+    const OnClickDetalhe = () => {
+        clickEditar();
     }
+
+    const {
+        nomeEmpresa,
+        dataInicio,
+        dataFim,
+        horaEntrada,
+        horaSaida,
+        apt,
+        torre,
+        descricao
+    } = servico
+    
 
     return (
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
@@ -22,7 +33,7 @@ const CardServico = ({ clickEditar, servico }) => {
             </div>
             <p className="mb-4 text-gray-700">Descrição: {descricao}</p>
             <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Apartamento: {apt} - Torre {bloco}</span>
+                <span className="text-sm text-gray-500">Apartamento: {apt} - Torre {torre}</span>
                 <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" onClick={() => OnClickDetalhe("123")}>Editar</button>
             </div>
         </article>
