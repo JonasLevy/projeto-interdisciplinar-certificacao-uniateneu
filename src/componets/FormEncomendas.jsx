@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
-function FormEncomendas({ tipoUsuario, criarOuEditar, fecharModal, criarEncomenda, encomenda}) {
+const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomenda, encomenda}) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
