@@ -8,7 +8,7 @@ import BasicModal from '../../componets/Modal';
 import FormEncomendas from '../../componets/FormEncomendas';
 import CardEncomenda from '../../componets/CardEncomenda';
 
-const EncomendasMorador = () => {
+const EncomendasSindico = () => {
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -52,22 +52,23 @@ const EncomendasMorador = () => {
                     </Button>
                 </div>
             </div>
-            <section className='p-8 flex flex-col gap-4'> 
+
+            <section className='p-8 flex flex-col gap-4'>
                 {listaEncomendaRenderizacao?.map((encomenda, i) => (
-                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(i)}/>
+                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(i)} />
                 ))}
 
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
-            
-            <BasicModal 
+
+            <BasicModal
                 openModal={openModal}
-                title={`${tipoModal} Encomenda`} 
+                title={`${tipoModal} Encomenda`}
                 close={() => setOpenModal(false)}>
-                
-                <FormEncomendas 
-                    tipoUsuario={"Morador"}
+
+                <FormEncomendas
+                    tipoUsuario={"Sindico"}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
                     criarEncomenda={criarEncomenda}
@@ -75,8 +76,7 @@ const EncomendasMorador = () => {
                 />
             </BasicModal>
         </div>
+    )
+}
 
-    );
-};
-
-export default EncomendasMorador;
+export default EncomendasSindico
