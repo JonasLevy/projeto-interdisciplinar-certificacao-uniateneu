@@ -1,27 +1,35 @@
-import { Button, Card, Fab, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
+import { Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CardDelivery from '../../componets/CardDelivery';
-import FormDelivery from '../../componets/FormDelivey';
+import CardEncomenda from '../../componets/CardEncomenda';
+import FormEncomendas from '../../componets/FormEncomendas';
 
 
-const DeliveryMorador = () => {
+const RecebidosPortaria = () => {
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
+
+    const [Recebido, setRecebido] = useState(null);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
+
+    const clickEditar = (idReserva) => {
+        setTipoModal("Editar");
+        setOpenModal(!openModal);
+    }
+
     return (
         <div className="min-h-full w-full ">
             <div
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
-                <h1>Delivery</h1>
+                <h1>Recebidos</h1>
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
@@ -38,18 +46,23 @@ const DeliveryMorador = () => {
             </div>
 
             <section className='p-8'>
-                <CardDelivery />
+                <CardEncomenda clickEditar={() => clickEditar()} />
+
             </section>
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
-            <BasicModal openModal={openModal} title={`${tipoModal} Delivery`} close={() => setOpenModal(false)}>
-                 <FormDelivery
-                    tipoUsuario="Morador"
+            <BasicModal 
+                openModal={openModal} 
+                title={`${tipoModal} Recebido`} 
+                close={() => setOpenModal(false)}>
+                <FormEncomendas
+                    tipoUsuario={"Portaria"}
+                    criarServico={Recebido}
                     criarOuEditar={tipoModal}
-                    fecharModal={() => setOpenModal(!openModal)} 
-                 />
-            </BasicModal>
+                    fecharModal={() => setOpenModal(!openModal)}
+                />
+            </BasicModal >
         </div>
     );
 };
 
-export default DeliveryMorador;
+export default RecebidosPortaria;
