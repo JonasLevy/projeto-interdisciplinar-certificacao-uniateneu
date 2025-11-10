@@ -7,7 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, objetoReserva }) => {
+const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -68,11 +68,11 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, ob
         if (editar) {
             setApt("202");
             setTorre("B");
-            setEspaco(objetoReserva.espaco);
-            setDataReserva(objetoReserva.dataReserva);
-            setReservaHoraEntrada(objetoReserva.reservaHoraEntrada);
-            setReservaHoraSaida(objetoReserva.reservaHoraSaida);
-            setDescricaoReserva(objetoReserva.descricaoReserva);
+            setEspaco(reserva.espaco);
+            setDataReserva(reserva.dataReserva);
+            setReservaHoraEntrada(reserva.reservaHoraEntrada);
+            setReservaHoraSaida(reserva.reservaHoraSaida);
+            setDescricaoReserva(reserva.descricaoReserva);
         } 
     }, []);
 

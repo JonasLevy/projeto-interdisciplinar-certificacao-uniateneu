@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 
-const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador }) => {
+const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -51,7 +51,29 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador }
         e.preventDefault();
         // Lógica para enviar o formulário
         fecharModal();
+        const inquilino = {
+            nome, 
+            email, 
+            cpf,
+            telefone,
+            apt,
+            torre 
+        }
+
+        criarMorador(inquilino)
     }
+
+    useEffect(() => {
+        if(editar) {
+            setNome(inquilino.nome);
+            setEmail(inquilino.email);
+            setCpf(inquilino.cpf);
+            setTelefone(inquilino.telefone);
+            setApt(inquilino.apt);
+            setTorre(inquilino.torre);
+        }
+    })
+
 
     useEffect(() => {
         if (editar) {

@@ -1,15 +1,24 @@
 
 
-const CardApartamentos = ({clickEditar}) => {
-    const OnClickDetalhe = (id) => {
-        clickEditar(id);
+const CardApartamentos = ({clickEditar, apt}) => {
+    
+    const OnClickDetalhe = () => {
+        clickEditar();
     }
+
+    console.log(apt)
+
+    const {
+        andar,
+        apartamento,
+        torre 
+    } = apt
     
     return(
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 ">
                 <div className="">
-                    <h2 className="text-lg font-semibold text-gray-900">Ap-404 - Torre A</h2>
+                    <h2 className="text-lg font-semibold text-gray-900">Ap-{apartamento} - Torre {torre}</h2>
                     <p className="text-sm text-gray-500">Responsavel: Francisco</p>
                 </div>
             </div>

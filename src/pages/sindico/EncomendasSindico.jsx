@@ -1,19 +1,20 @@
 import { Button, Fab, TextField } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
-import SearchIcon from '@mui/icons-material/Search';
-import CardMorador from '../../componets/CardMorador';
-import FormMoradores from '../../componets/FormMoradores';
+import FormEncomendas from '../../componets/FormEncomendas';
+import CardEncomenda from '../../componets/CardEncomenda';
 
-const MoradoresSindico = () => {
+const EncomendasSindico = () => {
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
 
-    const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
-    const [moradorTemp, setMoradorTemp] = useState(null);
+    const [listaEncomendaRenderizacao, setListaEncomendaRenderizacao] = useState([]);
+    const [encomendaTemp, setEncomendaTemp] = useState(null);
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
@@ -21,24 +22,22 @@ const MoradoresSindico = () => {
     }
 
     const clickEditar = (id) => {
-        setMoradorTemp(listaMoradorRenderizacao[id])
+        setEncomendaTemp(listaEncomendaRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
 
-    const criarMorador = (morador) => {
-        setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
+    const criarEncomenda = (encomenda) => {
+        setListaEncomendaRenderizacao([encomenda, ...listaEncomendaRenderizacao]);
     }
 
-    console.log(moradorTemp)
+    console.log(encomendaTemp);
 
     return (
         <div className="min-h-full w-full ">
+            <div className='flex  h-16 bg-slate-300 p-3 items-center justify-between'>
+                <h1>Encomendas</h1>
 
-            <div
-                className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
-            >
-                <h1>Moradores </h1>
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
@@ -53,27 +52,31 @@ const MoradoresSindico = () => {
                     </Button>
                 </div>
             </div>
-            <section className='p-8'>
-                {listaMoradorRenderizacao?.map((morador, i) => (
-                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)}/>
-                ))
-                }
+
+            <section className='p-8 flex flex-col gap-4'>
+                {listaEncomendaRenderizacao?.map((encomenda, i) => (
+                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(i)} />
+                ))}
 
             </section>
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
-            <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
-                <FormMoradores 
-                    tipoUsuario="Sindico"
+
+            <BasicModal
+                openModal={openModal}
+                title={`${tipoModal} Encomenda`}
+                close={() => setOpenModal(false)}>
+
+                <FormEncomendas
+                    tipoUsuario={"Sindico"}
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
-                    criarMorador={criarMorador}
-                    inquilino={moradorTemp}
+                    criarEncomenda={criarEncomenda}
+                    encomenda={encomendaTemp}
                 />
             </BasicModal>
-
         </div>
-    );
-};
+    )
+}
 
-export default MoradoresSindico;
+export default EncomendasSindico

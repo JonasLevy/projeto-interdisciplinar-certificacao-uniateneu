@@ -1,7 +1,7 @@
 import { Button,TextField } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt }) => {
+const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -22,7 +22,24 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt }) => {
     const submitForm = (e) => {
         e.preventDefault();
         fecharModal()
+
+        const apt = {
+            andar,
+            apartamento,
+            torre
+        }
+
+        criarApt(apt);
     }
+
+    useEffect(() => {
+        if(editar) {
+            setAndar(apt.andar);
+            setApartamento(apt.apartamento);
+            setTorre(apt.torre)
+        }
+    }, [])
+    
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '

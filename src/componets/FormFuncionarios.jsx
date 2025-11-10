@@ -1,7 +1,7 @@
 import { Button, Fab, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
-const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva }) => {
+const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncionario, funcionario }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -26,15 +26,25 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserv
     const submitForm = (e) => {
         e.preventDefault();
         fecharModal();
+
+        const funcionario = {
+            nome,
+            email,
+            telefone,
+            cpf,
+            cargo
+        }
+
+        criarFuncionario(funcionario)
     }
 
     useEffect(() => {
         if (editar) {
-            setNome('Carlos de Almeida');
-            setEmail('CarlosAlmeida@hotmail.com');
-            setTelefone('(85)99534-7866');
-            setCpf('07689076566');
-            setCargo('Porteiro');
+            setNome(funcionario.nome);
+            setEmail(funcionario.email);
+            setTelefone(funcionario.telefone);
+            setCpf(funcionario.cpf);
+            setCargo(funcionario.cargo);
         }
     }, []);
 

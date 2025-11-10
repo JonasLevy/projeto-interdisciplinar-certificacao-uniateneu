@@ -37,7 +37,7 @@ const VisitasMorador = () => {
             <div
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
-                <h1>Delivery</h1>
+                <h1>Visitas</h1>
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
