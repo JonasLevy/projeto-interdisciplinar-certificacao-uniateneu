@@ -7,7 +7,7 @@ import CardVisita from '../../componets/CardVisita';
 import FormVisita from '../../componets/FormVisita';
 
 
-const VisitasMorador = () => {
+const VisitasPortaria = () => {
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
@@ -62,4 +62,4 @@ const VisitasMorador = () => {
     );
 };
 
-export default VisitasMorador;
+export default VisitasPortaria;

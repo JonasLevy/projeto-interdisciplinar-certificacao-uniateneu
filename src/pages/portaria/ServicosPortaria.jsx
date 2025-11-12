@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CardServico from '../../componets/CardServico';
 import FormSevico from '../../componets/FormSevico';
 
-const ServicosMorador = () => {
+const ServicosPortaria = () => {
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -64,4 +64,4 @@ const ServicosMorador = () => {
     );
 };
 
-export default ServicosMorador;
+export default ServicosPortaria;
