@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
-const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomenda, encomenda}) => {
+const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomenda, encomenda }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -11,12 +11,12 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
     const [dateType, setDateType] = useState("text");
     const [empresa, setEmpresa] = useState('');
     const [dataRecebimento, setDataRecebimento] = useState('');
-    const [selectedValue, setSelectValue] = React.useState('Delivery');
+    const [tipoEncomenda, setTipoEncomenda] = React.useState('Delivery');
     const [codigoEntrega, setCodigoEntrga] = useState('');
     const [descricao, setDescricao] = useState('');
 
     const handleChange = (e) => {
-        setSelectValue(e.target.value);
+        setTipoEncomenda(e.target.value);
     }
 
     const handleClick = () => {
@@ -30,20 +30,24 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
 
     const submitForm = (e) => {
         e.preventDefault();
-        fecharModal();
+         
 
         const encomenda = {
+            tipoEncomenda,
             empresa,
             dataRecebimento,
             descricao,
             codigoEntrega
         }
 
+        fecharModal();
         criarEncomenda(encomenda)
+
+        console.log(tipoEncomenda);
     }
 
     useEffect(() => {
-        if(editar) {
+        if (editar) {
             setEmpresa(encomenda.empresa);
             setDataRecebimento(encomenda.dataRecebimento);
             setCodigoEntrga(encomenda.codigoEntrega);
@@ -54,7 +58,25 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
+            <div className='flex justify-around'>
+                <p>
+                    Delivery<Checkbox
+                        checked={tipoEncomenda === 'Delivery'}
+                        onChange={handleChange}
+                        value="Delivery"
+                        name="opcaoEncomenda"
+                    />
+                </p>
+                <p>Entrega<Checkbox
+                    checked={tipoEncomenda === 'Entrega'}
+                    onChange={handleChange}
+                    value="Entrega"
+                    name="opcaoEncomenda"
+                /></p>
+            </div>
+
             <TextField
+                required
                 id="outlined-basic"
                 label="Empresa"
                 value={empresa}
@@ -63,6 +85,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Data de recebimento"
                 type={dateType}
@@ -71,22 +94,6 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
                 onFocus={() => setDateType("date")}
                 onBlur={() => !dataRecebimento && setDateType("text")}
             />
-            <div className='flex justify-around'>
-                <p>
-                    Delivery<Checkbox
-                        checked={selectedValue === 'Delivery'}
-                        onChange={handleChange}
-                        value="Delivery"
-                        name="opcaoEncomenda"
-                    />
-                </p>
-                <p>Entrega<Checkbox
-                    checked={selectedValue === 'Entrega'}
-                    onChange={handleChange}
-                    value="Entrega"
-                    name="opcaoEncomenda"
-                /></p>
-            </div>
 
             <TextField
                 id="outlined-basic"
@@ -94,10 +101,12 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
                 value={codigoEntrega}
                 onChange={(e) => setCodigoEntrga(e.target.value)}
                 variant="outlined"
-                disabled={selectedValue == 'Entrega'}
+                disabled={tipoEncomenda == 'Entrega'}
+                required={tipoEncomenda == 'Delivery'}
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Descrição"
                 value={descricao}
@@ -108,7 +117,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
                 maxRows={10}
             />
 
-            <Button variant="contained" type='submit' color='success'>{(editar && sindico)|| criarOuEditar== "Criar" ? "Salvar" : "Solicitar Edição"}</Button>
+            <Button variant="contained" type='submit' color='success'>{(editar && sindico) || criarOuEditar == "Criar" ? "Salvar" : "Solicitar Edição"}</Button>
 
             <Button variant="contained" color='error' onClick={handleClick} > Cancelar</Button>
         </form>

@@ -51,6 +51,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
     return (
         <form onSubmit={submitForm} className="border flex flex-col gap-4 p-4">
             <TextField
+                required
                 id="outlined-basic"
                 label="Nome"
                 value={nome}
@@ -59,6 +60,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Email"
                 value={email}
@@ -67,6 +69,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Telefone"
                 value={telefone}
@@ -75,6 +78,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="CPF"
                 value={cpf}
@@ -83,6 +87,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Cargo"
                 value={cargo}

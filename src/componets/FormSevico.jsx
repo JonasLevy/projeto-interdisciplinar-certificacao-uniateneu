@@ -81,6 +81,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
             <TextField
+                required
                 id="outlined-basic"
                 label="Empresa"
                 variant="outlined"
@@ -95,7 +96,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                     <DatePicker
                         slotProps={{
                             textField: {
-                                size: 'small',
+                                size: 'small', required:"true",
                                 sx: { width: '155px' }
                             }
                         }}
@@ -109,7 +110,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                     <DatePicker
                         slotProps={{
                             textField: {
-                                size: 'small',
+                                size: 'small', required:"true",
                                 sx: { width: '155px' }
                             }
                         }}
@@ -125,7 +126,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                     <TimePicker
                         slotProps={{
                             textField: {
-                                size: 'small',
+                                size: 'small', required:"true",
                                 sx: { width: '150px' }
                             }
                         }}
@@ -140,7 +141,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                     <TimePicker
                         slotProps={{
                             textField: {
-                                size: 'small',
+                                size: 'small', required:"true",
                                 sx: { width: '151px' }
                             }
                         }}
@@ -156,6 +157,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             </LocalizationProvider>
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Apartemento"
                 variant="outlined"
@@ -167,6 +169,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
 
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Torre"
                 variant="outlined"
@@ -179,6 +182,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
 
 
             <TextField
+                required
                 id="outlined-multiline-flexible"
                 label="Descrição do Serviço"
                 multiline

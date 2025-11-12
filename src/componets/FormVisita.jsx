@@ -80,6 +80,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
             <TextField
+                required
                 id="outlined-basic"
                 label="Nome"
                 variant="outlined"
@@ -88,6 +89,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                 onChange={(e) => setNome(e.target.value)}
             />
             <TextField
+                required
                 id="outlined-basic"
                 label="CPF"
                 size='small'
@@ -98,6 +100,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
 
             />
             <TextField
+                required
                 label="Telefone"
                 type='tel'
                 size='small'
@@ -109,7 +112,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker
                     slotProps={{
-                        textField: { size: 'small' }
+                        textField: { size: 'small', required:"true", }
                     }}
                     label='Horario Visita'
                     format="HH:mm"
@@ -123,7 +126,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
 
                 <DatePicker
                     slotProps={{
-                        textField: { size: 'small' }
+                        textField: { size: 'small',  required:"true", }
                     }}
                     label='Data Visita'
                     format='DD/MM/YYYY'

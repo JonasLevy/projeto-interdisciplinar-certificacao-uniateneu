@@ -80,6 +80,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
             <TextField
+                required
                 id="outlined-basic"
                 label="Apartemento"
                 variant="outlined"
@@ -90,6 +91,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Torre"
                 variant="outlined"
@@ -100,6 +102,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             />
 
             <TextField
+                required
                 select
                 label='Espaços'
                 size='small'
@@ -116,7 +119,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     slotProps={{
-                        textField: { size: 'small' }
+                        textField: { size: 'small',  required:"true", }
                     }}
                     label='Data Reversa'
                     format='DD/MM/YYYY'
@@ -128,7 +131,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
 
                 <TimePicker
                     slotProps={{
-                        textField: { size: 'small' }
+                        textField: { size: 'small',  required:"true", }
                     }}
                     label="Entrada"
                     format="HH:mm"
@@ -141,7 +144,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
 
                 <TimePicker
                     slotProps={{
-                        textField: { size: 'small' }
+                        textField: { size: 'small',  required:"true", }
                     }}
                     label="Saida"
                     format="HH:mm"
@@ -156,6 +159,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             </LocalizationProvider>
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Descrição da reserva" variant="outlined"
                 multiline

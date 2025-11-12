@@ -45,6 +45,7 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
             <TextField
+                required
                 select
                 label='Destinatario'
                 value={destinatario}
@@ -62,9 +63,11 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
                 onChange={(e) => setNomeMorador(e.target.value)}
                 variant="outlined"
                 disabled={destinatario === "Todos"}
+                required={destinatario === "Um"}
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Notificação"
                 value={mensagem}
