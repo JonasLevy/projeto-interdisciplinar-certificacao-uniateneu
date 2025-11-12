@@ -1,19 +1,21 @@
-import { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, Fab, TextField } from '@mui/material';
+import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CardMorador from '../../componets/CardMorador';
 
-
 const MoradoresPortaria = () => {
-    const [openModal, setOpenModal] = useState(false);
+    const [listaMoradorRenderizacao] = useState([]);
+    const [moradorTemp, setMoradorTemp] = useState(null);
 
-    const clickEditar = (idReserva) => {
-        setTipoModal("Editar");
-        setOpenModal(!openModal);
+    const clickEditar = (id) => {
+        setMoradorTemp(listaMoradorRenderizacao[id])
     }
+    
+    console.log(moradorTemp)
 
     return (
         <div className="min-h-full w-full ">
+
             <div
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
@@ -24,17 +26,17 @@ const MoradoresPortaria = () => {
                         label="Apartamento"
                         variant="outlined"
                         size='small'
-                    //value={apt}
-                    // onChange={(e) => setApt(e.target.value)}
                     />
                     <Button variant="contained" aria-label="search" size='small' color='success'>
                         <SearchIcon />
                     </Button>
                 </div>
             </div>
-
             <section className='p-8'>
-                <CardMorador clickEditar={() => clickEditar()}/>
+                {listaMoradorRenderizacao?.map((morador, i) => (
+                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)}/>
+                ))
+                }
             </section>
         </div>
     );
