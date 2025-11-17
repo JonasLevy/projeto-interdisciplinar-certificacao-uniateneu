@@ -17,6 +17,10 @@ import PortariaSindico from "../pages/sindico/PortariaSindico"
 import Apartamentos from "../pages/sindico/Apartamentos"
 import FuncionariosSindico from "../pages/sindico/FuncionariosSindico"
 import EncomendasSindico from "../pages/sindico/EncomendasSindico"
+import MoradoresPortaria from "../pages/portaria/MoradoresPortaria"
+import RecebidosPortaria from "../pages/portaria/RecebidosPortaria"
+import ServicosPortaria from "../pages/portaria/ServicosPortaria"
+import VisitasPortaria from "../pages/portaria/VisitasPortaria"
 
 const Router = () => {
 
@@ -46,6 +50,10 @@ const Router = () => {
             </Route>
             <Route path="portaria" element={<App />}>   
                 <Route index  element={<Portaria />} />
+                <Route path="moradores" element={<MoradoresPortaria />} />
+                <Route path="encomendas" element={<RecebidosPortaria />} />
+                <Route path="servicos" element={<ServicosPortaria />} />
+                <Route path="visitas" element={<VisitasPortaria />} />
             </Route>
             <Route path="*" element={<h1>Página não encontrada</h1>} />
         </Routes>

@@ -4,7 +4,7 @@ import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardDelivery from '../../componets/CardDelivery';
-import FormDelivey from '../../componets/FormDelivey';
+import FormDelivery from '../../componets/FormDelivey';
 
 
 const DeliveryMorador = () => {
@@ -42,7 +42,7 @@ const DeliveryMorador = () => {
             </section>
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Delivery`} close={() => setOpenModal(false)}>
-                 <FormDelivey
+                 <FormDelivery
                     tipoUsuario="Morador"
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)} 
