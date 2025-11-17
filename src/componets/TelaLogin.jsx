@@ -1,26 +1,47 @@
-import { useState, React } from 'react';
+import React, { use, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import axios from 'axios';
+import BASE_URL from "../BASE_URL"
+import api from '../api.js';
+import { AppContext } from '../context/AppContext.jsx';
 
 
 function TelaLogin() {
     const navigate = useNavigate();
+    const { setToken, setUsuario } = useContext(AppContext)
 
-    const [usuario, setUsuario] = useState("");
+
+    const [usuarioLocal, setUsuarioLocal] = useState("");
     const [senha, setSenha] = useState("");
     
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(`Usuario: ${usuario}`);
-        console.log(`Senha: ${senha}`);
+        const body = {
+            "email": usuarioLocal,
+            "senha": senha
+        }
+        api.post(`${BASE_URL}/auth/login`, body)
+            .then((resp) => {
+                const { access_token, refresh_token, usuario } = resp.data;
+                localStorage.setItem("access_token", access_token);
+                localStorage.setItem("refresh_token", refresh_token);
+                setUsuario(usuario)
+                console.log(usuario)
+                navigate(`${usuario.tipo}`)
 
-        navigate("/morador");
+                // opcional: setar header default
+                api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
     
     return (
@@ -37,11 +58,11 @@ function TelaLogin() {
 
                 <TextField 
                     id="outlined-basic" 
-                    label="Usuario" 
+                        label="UsuarioLocal" 
                     variant="outlined" 
                     sx={{minWidth:300}}
-                    value={usuario}
-                    onChange={(e) => setUsuario(e.target.value)}
+                        value={usuarioLocal}
+                        onChange={(e) => setUsuarioLocal(e.target.value)}
                     />
 
                 <TextField
