@@ -89,6 +89,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     return (
         <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">
             <TextField
+                required
                 id="outlined-basic"
                 label="Nome"
                 variant="outlined"
@@ -98,6 +99,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Email"
                 placeholder='Ex: MariaSilva@gmail.com'
@@ -108,6 +110,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="CPF"
                 size='small'
@@ -118,6 +121,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
 
             />
             <TextField
+                required
                 label="Telefone"
                 size='small'
                 variant="outlined"
@@ -126,6 +130,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Apartemento"
                 variant="outlined"
@@ -135,6 +140,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Torre"
                 variant="outlined"

@@ -9,6 +9,7 @@ const CardEncomenda = ({ clickEditar, encomenda }) => {
     console.log(encomenda);
 
     const {
+        tipoEncomenda,
         empresa, 
         dataRecebimento,
         descricao,
@@ -19,7 +20,7 @@ const CardEncomenda = ({ clickEditar, encomenda }) => {
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
             <div className="flex items-center mb-4">
                 <div className="">
-                    <h2 className="text-lg font-semibold text-gray-900">{empresa} </h2>
+                    <h2 className="text-lg font-semibold text-gray-900">{tipoEncomenda} - {empresa} </h2>
                 </div>
             </div>
             <p className="mb-4 text-gray-700">Data Recebimento: {dataRecebimento}</p>

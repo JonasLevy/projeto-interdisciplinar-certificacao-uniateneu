@@ -46,6 +46,7 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => 
             style={{ flexDirection: "column", padding: "8px", Radios: "0px" }}>
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Andar"
                 value={andar}
@@ -54,6 +55,7 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Numero AP"
                 value={apartamento}
@@ -62,6 +64,7 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => 
             />
 
             <TextField
+                required
                 id="outlined-basic"
                 label="Torre/bloco"
                 value={torre}

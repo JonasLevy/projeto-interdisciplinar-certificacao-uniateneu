@@ -32,6 +32,7 @@ const FormPrestadorServico = ({fecharChildModal}) => {
     return (
         <form className='border p-3 flex flex-col gap-5 mb-3 ' >
             <TextField
+                required
                 id="outlined-basic"
                 label="Nome"
                 variant="outlined"
@@ -40,6 +41,7 @@ const FormPrestadorServico = ({fecharChildModal}) => {
                 onChange={(e) => setNome(e.target.value)}
             />
             <TextField
+                required
                 id="outlined-basic"
                 label="CPF"
                 size='small'
@@ -49,6 +51,7 @@ const FormPrestadorServico = ({fecharChildModal}) => {
                 onChange={handleChangeCpf}
             />
             <TextField
+                required
                 label="Telefone"
                 type='tel'
                 size='small'

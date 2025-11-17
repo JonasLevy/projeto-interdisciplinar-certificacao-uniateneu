@@ -25,7 +25,7 @@ export default function CardReserva({ clickEditar, reserva }) {
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
             <div className="flex items-center mb-4">
                 <div className="">
-                    <h2 className="text-lg font-semibold text-gray-900">Reserva do {espaco}</h2>
+                    <h2 className="text-lg font-semibold text-gray-900">Reserva - {espaco}</h2>
                     <p className="text-sm text-gray-500">Reserva para {formatData(dataReserva)}</p>
                     <p className="text-sm text-gray-500">Horario: {formatHora(reservaHoraEntrada)} as {formatHora(reservaHoraSaida)}</p>
                 </div>
