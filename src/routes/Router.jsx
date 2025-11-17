@@ -51,7 +51,7 @@ const Router = () => {
             <Route path="portaria" element={<App />}>   
                 <Route index  element={<Portaria />} />
                 <Route path="moradores" element={<MoradoresPortaria />} />
-                <Route path="recebidos" element={<RecebidosPortaria />} />
+                <Route path="encomendas" element={<RecebidosPortaria />} />
                 <Route path="servicos" element={<ServicosPortaria />} />
                 <Route path="visitas" element={<VisitasPortaria />} />
             </Route>

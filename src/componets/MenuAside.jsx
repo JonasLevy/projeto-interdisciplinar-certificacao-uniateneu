@@ -76,10 +76,6 @@ const menuItems = {
 
   portaria: [
     {
-      label: "Portaria",
-      icon: <MeetingRoomIcon className="text-slate-400" />,
-    },
-    {
       label: "Serviços",
       icon: <HomeWorkIcon className="text-slate-400" />,
     },
