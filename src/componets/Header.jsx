@@ -1,10 +1,12 @@
-import React, { use, useContext } from 'react';
+import React, { use, useContext, } from 'react';
 import { AppContext } from '../context/AppContext';
-
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const { usuario } = useContext(AppContext)
+
     const { condominio, nome } = usuario
+
 
     return (
         <header className="w-full h-16 bg-slate-900 text-white shadow-lg flex items-center justify-between px-6 z-10 fixed">

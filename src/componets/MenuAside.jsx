@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   List,
   ListItem,
@@ -18,6 +18,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WcIcon from '@mui/icons-material/Wc';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { AppContext } from "../context/AppContext";
 
 const menuItems = {
   sindico: [
@@ -95,6 +97,8 @@ const menuItems = {
 };
 
 const MenuAside = () => {
+  const { setToken, setUsuario, usuario } = useContext(AppContext)
+
   const location = useLocation();
   const path = location.pathname.split("/")[1].toLowerCase();
   const navegate = useNavigate();
@@ -114,6 +118,13 @@ const MenuAside = () => {
     navegate(route);
   }
 
+  const logout = () => {
+    localStorage.clear()
+    navegate("/")
+    setUsuario(null)
+    return null
+  }
+
   const drawerContent = (
     <div className="h-full w-64 bg-slate-900 text-white shadow-lg flex flex-col z-1 mt-16">
       <nav className="flex-1">
@@ -123,10 +134,10 @@ const MenuAside = () => {
             key={"Inicio"}
             className="hover:bg-slate-200 hover:font-bold transition-colors cursor-pointer text-white z-3"
             onClick={() => clickMenu("/")}
-            >
-              <ListItemIcon ><HomeFilledIcon className="text-slate-400"/></ListItemIcon>
-              <ListItemText primary={"Inicio"} />
-            </ListItem>
+          >
+            <ListItemIcon ><HomeFilledIcon className="text-slate-400" /></ListItemIcon>
+            <ListItemText primary={"Inicio"} />
+          </ListItem>
           {menuItems[path].map((item) => (
             <ListItem
               button
@@ -138,6 +149,16 @@ const MenuAside = () => {
               <ListItemText primary={item.label} />
             </ListItem>
           ))}
+          <ListItem
+            button
+            key={"Sair"}
+            className="hover:bg-blue-600 hover:font-bold transition-colors cursor-pointer fixed bottom-0"
+            onClick={logout}
+          >
+            <ListItemIcon> <LogoutIcon className="text-slate-400" /> </ListItemIcon>
+            <ListItemText primary={"Sair"} />
+          </ListItem>
+
         </List>
       </nav>
     </div>

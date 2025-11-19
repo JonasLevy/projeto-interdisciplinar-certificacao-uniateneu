@@ -6,14 +6,12 @@ const CardMorador = ({ clickEditar, morador }) => {
         clickEditar();
     }
 
-    console.log(morador)
-
     const {
         nome,
         email,
         cpf,
         telefone,
-        apt,
+        apartamento,
         torre
     } = morador
 
@@ -22,7 +20,7 @@ const CardMorador = ({ clickEditar, morador }) => {
             <div className="flex items-center mb-4">
                 <div className="">
                     <h2 className="text-lg font-semibold text-gray-900">{nome} </h2>
-                    <p className="text-sm text-gray-500">Apartamento: {apt} - Torre {torre}</p>
+                    <p className="text-sm text-gray-500">Apartamento: {apartamento} - Torre {torre}</p>
                 </div>
             </div>
             <p className="mb-4 text-gray-700">Email: {email}</p>

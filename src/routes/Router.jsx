@@ -21,41 +21,59 @@ import MoradoresPortaria from "../pages/portaria/MoradoresPortaria"
 import RecebidosPortaria from "../pages/portaria/RecebidosPortaria"
 import ServicosPortaria from "../pages/portaria/ServicosPortaria"
 import VisitasPortaria from "../pages/portaria/VisitasPortaria"
+import PrivateRoute from "../componets/PrivateRoute"
+
 
 const Router = () => {
 
     return (
         <Routes>
-            <Route index element={<TelaLogin/>} />
-            <Route path="/sindico" element={<App />}>
-                <Route index element={<Index />} />
-                <Route path="portaria" element={<PortariaSindico />} />
-                <Route path="reservas" element={<ReservasSindico />} />
-                <Route path="servicos" element={<ServicosSindico />} />
-                <Route path="visitas" element={<VisitasMorador />} />
-                <Route path="encomendas" element={<EncomendasSindico />} />
-                <Route path="apartamentos" element={<Apartamentos />} />
-                <Route path="moradores" element={<MoradoresSindico />} />
-                <Route path="funcionarios" element={<FuncionariosSindico />} />
-                <Route path="notificacao" element={<Notificacoes />} />
+            <Route index element={<TelaLogin />} />
+            <Route
+                element={
+                    <PrivateRoute>
+                        <App />
+                    </PrivateRoute>
+                }
+            >
+                {/* SÍNDICO */}
+                <Route path="sindico">
+                    <Route index element={<Index />} />
+                    <Route path="portaria" element={<PortariaSindico />} />
+                    <Route path="reservas" element={<ReservasSindico />} />
+                    <Route path="servicos" element={<ServicosSindico />} />
+                    <Route path="visitas" element={<VisitasMorador />} />
+                    <Route path="encomendas" element={<EncomendasSindico />} />
+                    <Route path="apartamentos" element={<Apartamentos />} />
+                    <Route path="moradores" element={<MoradoresSindico />} />
+                    <Route path="funcionarios" element={<FuncionariosSindico />} />
+                    <Route path="notificacao" element={<Notificacoes />} />
+                </Route>
+
+                {/* MORADOR */}
+                <Route path="morador">
+                    <Route index element={<HomeMorador />} />
+                    <Route path="reservas" element={<ReservasMorador />} />
+                    <Route path="servicos" element={<ServicosMorador />} />
+                    <Route path="visitas" element={<VisitasMorador />} />
+                    <Route path="delivery" element={<DeliveryMorador />} />
+                    <Route path="encomendas" element={<EncomendasMorador />} />
+                </Route>
+
+                {/* PORTARIA */}
+                <Route path="portaria">
+                    <Route index element={<Portaria />} />
+                    <Route path="moradores" element={<MoradoresPortaria />} />
+                    <Route path="encomendas" element={<RecebidosPortaria />} />
+                    <Route path="servicos" element={<ServicosPortaria />} />
+                    <Route path="visitas" element={<VisitasPortaria />} />
+                </Route>
 
             </Route>
-            <Route path="morador" element={<App />}>
-                <Route index  element={<HomeMorador />} />
-                <Route path="reservas" element={<ReservasMorador />} />
-                <Route path="servicos" element={<ServicosMorador />} />
-                <Route path="visitas" element={<VisitasMorador />} />
-                <Route path="delivery" element={<DeliveryMorador /> } />
-                <Route path="encomendas" element={<EncomendasMorador/>} />
-            </Route>
-            <Route path="portaria" element={<App />}>   
-                <Route index  element={<Portaria />} />
-                <Route path="moradores" element={<MoradoresPortaria />} />
-                <Route path="encomendas" element={<RecebidosPortaria />} />
-                <Route path="servicos" element={<ServicosPortaria />} />
-                <Route path="visitas" element={<VisitasPortaria />} />
-            </Route>
+
             <Route path="*" element={<h1>Página não encontrada</h1>} />
+
+
         </Routes>
 
     )

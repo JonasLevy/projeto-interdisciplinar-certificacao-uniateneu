@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
+import api from "../api"
+import SelectSmall from './Select';
 
-const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
+const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino, listCondomonio }) => {
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -10,11 +12,13 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     //Variaveis do morador
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [idCondominio, setIdCondominio] = useState('');
 
     //Variaveis do Apt e torre
-    const [apt, setApt] = useState("");
+    const [apartamento, setApt] = useState("");
     const [torre, setTorre] = useState("");
 
     //Validação campo Cpf
@@ -36,6 +40,18 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
         setTelefone(digits);
     }
 
+    useEffect(() => {
+        if (editar) {
+            setNome(inquilino.nome);
+            setEmail(inquilino.email);
+            setCpf(inquilino.cpf);
+            setTelefone(inquilino.telefone);
+            setApt(inquilino.apartamento);
+            setTorre(inquilino.torre);
+
+        }
+    })
+
     const handleClick = () => {
         setNome('');
         setCpf('');
@@ -50,44 +66,31 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        fecharModal();
-        const inquilino = {
-            nome, 
-            email, 
+        const body = {
+            nome,
+            email,
+            senha,
             cpf,
             telefone,
-            apt,
-            torre 
+            idCondominio,
+            apartamento,
+            torre
         }
 
-        criarMorador(inquilino)
+        api.post("/sindico/criarmorador", body).then((res) => {
+            console.log(res.data)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        fecharModal()
+        //criarMorador(body)
     }
-
-    useEffect(() => {
-        if(editar) {
-            setNome(inquilino.nome);
-            setEmail(inquilino.email);
-            setCpf(inquilino.cpf);
-            setTelefone(inquilino.telefone);
-            setApt(inquilino.apt);
-            setTorre(inquilino.torre);
-        }
-    })
-
-
-    useEffect(() => {
-        if (editar) {
-            setNome("Antonio Nunes");
-            setEmail("AntonioNunes123@gmail.com");
-            setCpf("0878765433");
-            setTelefone("(85)99234-5540");
-            setApt('101');
-            setTorre('A');
-        }
-    }, []);
 
     return (
         <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">
+            <SelectSmall list={listCondomonio} change={setIdCondominio} />
+
             <TextField
                 required
                 id="outlined-basic"
@@ -107,6 +110,17 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                 size="small"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <TextField
+                required
+                id="outlined-basic"
+                label="Senha"
+                placeholder='senha'
+                variant="outlined"
+                size="small"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
             />
 
             <TextField
@@ -135,7 +149,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                 label="Apartemento"
                 variant="outlined"
                 size='small'
-                value={apt}
+                value={apartamento}
                 onChange={(e) => setApt(e.target.value)}
             />
 
@@ -154,7 +168,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                     variant="contained"
                     type='submit'
                     color='success'>
-                    {(editar && !sindico) || criarOuEditar == "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
 
                 <Button variant="contained" color='error' onClick={handleClick}> Cancelar

@@ -1,19 +1,33 @@
 import { Button, Fab, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardMorador from '../../componets/CardMorador';
 import FormMoradores from '../../componets/FormMoradores';
+import api from "../../api"
+import { AppContext } from '../../context/AppContext';
+import SelectSmall from '../../componets/Select';
 
 const MoradoresSindico = () => {
-    const [openModal, setOpenModal] = useState(false);
+    const { usuario } = useContext(AppContext)
+    const { sindicoCondominio } = usuario
+    const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoCondominio[0].id)
 
+    const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null);
 
     const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
     const [moradorTemp, setMoradorTemp] = useState(null);
+
+    useEffect(() => {
+        api.get(`/sindico/moradores/${condominioSelecionado}`).then((res) => {
+            setListaMoradorRenderizacao(res.data)
+        }).catch((err) => {
+            console.log(err.response)
+        })
+    }, [condominioSelecionado, usuario])
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
@@ -30,8 +44,6 @@ const MoradoresSindico = () => {
         setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
     }
 
-    console.log(moradorTemp)
-
     return (
         <div className="min-h-full w-full ">
 
@@ -39,6 +51,7 @@ const MoradoresSindico = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Moradores </h1>
+                <SelectSmall list={sindicoCondominio} change={setCondominioSelecionado} />
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
@@ -55,7 +68,7 @@ const MoradoresSindico = () => {
             </div>
             <section className='p-8'>
                 {listaMoradorRenderizacao?.map((morador, i) => (
-                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)}/>
+                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)} />
                 ))
                 }
 
@@ -63,12 +76,13 @@ const MoradoresSindico = () => {
 
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
-                <FormMoradores 
+                <FormMoradores
                     tipoUsuario="Sindico"
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
                     criarMorador={criarMorador}
                     inquilino={moradorTemp}
+                    listCondomonio={sindicoCondominio}
                 />
             </BasicModal>
 

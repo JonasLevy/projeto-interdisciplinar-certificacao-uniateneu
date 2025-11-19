@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import Header from './componets/Header'
 import { useMediaQuery } from '@mui/material';
 import { AppProvider } from './context/AppContext';
+import PrivateRoute from './componets/PrivateRoute';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <main className="flex-1 bg-gray-100 mt-16">
         <Outlet />
+
       </main>
     </div>
   )
