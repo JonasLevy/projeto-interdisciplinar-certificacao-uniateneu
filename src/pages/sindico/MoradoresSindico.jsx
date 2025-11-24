@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
-import CardMorador from '../../componets/CardMorador';
+import CardMorador from '../../componets/cards/CardMorador';
 import FormMoradores from '../../componets/FormMoradores';
 import api from "../../api"
 import { AppContext } from '../../context/AppContext';
@@ -12,7 +12,7 @@ import SelectSmall from '../../componets/Select';
 
 const MoradoresSindico = () => {
     const { usuario } = useContext(AppContext)
-    const { sindicoCondominio } = usuario
+    const { sindicoEmCondominiosList } = usuario
     const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoCondominio[0].id)
 
     const [openModal, setOpenModal] = useState(false);
@@ -29,13 +29,13 @@ const MoradoresSindico = () => {
         })
     }, [condominioSelecionado, usuario])
 
-    const clickOpenModal = () => {
+    const clickOpenModalCriar = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setMoradorTemp(listaMoradorRenderizacao[id])
+    const clickOpenModalEditar = (indice) => {
+        setMoradorTemp(listaMoradorRenderizacao[indice])
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -68,13 +68,13 @@ const MoradoresSindico = () => {
             </div>
             <section className='p-8'>
                 {listaMoradorRenderizacao?.map((morador, i) => (
-                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)} />
+                    <CardMorador morador={morador} clickEditar={() => clickOpenModalEditar(i)} />
                 ))
                 }
 
             </section>
 
-            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <ButtonModal click={() => clickOpenModalCriar()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
                 <FormMoradores
                     tipoUsuario="Sindico"

@@ -4,7 +4,7 @@ import BasicModal from '../../componets/Modal';
 import { Button, IconButton, InputBase, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FormSevico from '../../componets/FormSevico';
-import CardServico from '../../componets/CardServico';
+import CardServico from '../../componets/cards/CardServico';
 
 const ServicosSindico = () => {
     const [openModal, setOpenModal] = useState(false);

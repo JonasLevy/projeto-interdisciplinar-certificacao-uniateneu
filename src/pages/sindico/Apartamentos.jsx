@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
-import CardApartamentos from '../../componets/CardApartamentos';
+import CardApartamentos from '../../componets/cards/CardApartamentos';
 import FormApt from '../../componets/FormApt';
 
 

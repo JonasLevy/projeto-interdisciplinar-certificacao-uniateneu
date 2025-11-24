@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import FormNotificacoes from '../../componets/FormNotificacoes';
-import CardNotificacao from '../../componets/CardNotificacao';
+import CardNotificacao from '../../componets/cards/CardNotificacao';
 
 const Notificacoes = () => {
     const [openModal, setOpenModal] = useState(false);

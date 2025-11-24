@@ -50,80 +50,12 @@ const VisitasSindico = () => {
     }
     return (
         <div className="min-h-full w-full ">
-            <h1>Visitas do Morador
-                <ButtonModal click={() => setOpenModal(true)} />
-                <BasicModal openModal={openModal} title="Cadastrar Visita" close={() => setOpenModal(false)}>
-                    {/* <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
-                        <TextField
-                            id="outlined-basic"
-                            label="Nome"
-                            variant="outlined"
-                            size='small'
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                        />
-                        <TextField
-                            id="outlined-basic"
-                            label="CPF"
-                            size='small'
-                            variant="outlined"
-                            placeholder='Somente os numeros'
-                            value={cpf}
-                            onChange={handleChangeCpf}
+            <h1>Visitas do Morador</h1>
 
-                        />
-                        <TextField
-                            label="Telefone"
-                            type='tel'
-                            size='small'
-                            variant="outlined"
-                            value={telefone}
-                            onChange={(handleChangeTelefone)}
-                        />
+            <ButtonModal click={() => setOpenModal(true)} />
+            <BasicModal openModal={openModal} title="Cadastrar Visita" close={() => setOpenModal(false)}>
 
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker
-                                slotProps={{
-                                    textField: { size: 'small' }
-                                }}
-                                label='Horario Visita'
-                                format="HH:mm"
-                                ampm={false}
-                                value={horaVisita}
-                                onChange={(newValue) => setHoraVisita(newValue)}
-                                minTime={dayjs().hour(7).minute(50)}
-                                maxTime={dayjs().hour(22).minute(0)}
-
-                            />
-
-                            <DatePicker
-                                slotProps={{
-                                    textField: { size: 'small' }
-                                }}
-                                label='Data Visita'
-                                format='DD/MM/YYYY'
-                                value={dataVisita}
-                                onChange={(newValue) => setDataVisita(newValue)}
-                                disablePast
-                                minDate={dayjs()}
-
-                            />
-                        </LocalizationProvider>
-
-                        <div className='flex flex-col justify-between gap-4 '>
-                            <Button variant="contained" type='submit' color='success'>Confirmar</Button>
-
-                            <Button variant="contained" color='error' onClick={handleClick}> Cancelar
-                            </Button>
-                        </div>
-
-                    </form> */}
-
-
-                </BasicModal>
-
-
-            </h1>
+            </BasicModal>
         </div>
     );
 };

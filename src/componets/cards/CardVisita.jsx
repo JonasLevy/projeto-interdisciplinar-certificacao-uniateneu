@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatData } from '../hooks/formatData';
-import { formatHora } from '../hooks/formatHora';
+import { formatData } from '../../hooks/formatData';
+import { formatHora } from '../../hooks/formatHora';
 
 
 const CardVisita = ({ clickEditar, visita }) => {

@@ -5,10 +5,6 @@ import SelectSmall from './Select';
 
 const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino, listCondomonio }) => {
 
-    let editar = criarOuEditar === "Editar";
-    let sindico = tipoUsuario === "Sindico";
-    let morador = tipoUsuario === "Morador";
-
     //Variaveis do morador
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -41,7 +37,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     }
 
     useEffect(() => {
-        if (editar) {
+        if (criarOuEditar == "Editar") {
             setNome(inquilino.nome);
             setEmail(inquilino.email);
             setCpf(inquilino.cpf);
@@ -52,13 +48,15 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
         }
     })
 
-    const handleClick = () => {
+    const cancelar = () => {
         setNome('');
         setCpf('');
         setTelefone('');
         setEmail('')
         setApt('');
         setTorre('');
+        setSenha('')
+        setIdCondominio('')
 
         fecharModal();
     }
@@ -171,7 +169,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                     Salvar
                 </Button>
 
-                <Button variant="contained" color='error' onClick={handleClick}> Cancelar
+                <Button variant="contained" color='error' onClick={cancelar}> Cancelar
                 </Button>
             </div>
         </form>
