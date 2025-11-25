@@ -46,7 +46,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             setTorre(inquilino.torre);
 
         }
-    })
+    },[])
 
     const cancelar = () => {
         setNome('');

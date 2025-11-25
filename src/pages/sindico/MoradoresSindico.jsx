@@ -13,7 +13,9 @@ import SelectSmall from '../../componets/Select';
 const MoradoresSindico = () => {
     const { usuario } = useContext(AppContext)
     const { sindicoEmCondominiosList } = usuario
-    const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoCondominio[0].id)
+    console.log(sindicoEmCondominiosList)
+    console.log(usuario)
+    const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoEmCondominiosList[0]?.id)
 
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null);
@@ -51,7 +53,7 @@ const MoradoresSindico = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Moradores </h1>
-                <SelectSmall list={sindicoCondominio} change={setCondominioSelecionado} />
+                <SelectSmall list={sindicoEmCondominiosList} change={setCondominioSelecionado} />
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
@@ -82,7 +84,7 @@ const MoradoresSindico = () => {
                     fecharModal={() => setOpenModal(!openModal)}
                     criarMorador={criarMorador}
                     inquilino={moradorTemp}
-                    listCondomonio={sindicoCondominio}
+                    listCondomonio={sindicoEmCondominiosList}
                 />
             </BasicModal>
 

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import FormEncomendas from '../../componets/FormEncomendas';
-import CardEncomenda from '../../componets/CardEncomenda';
+import CardEncomenda from '../../componets/cards/CardEncomenda';
 
 const EncomendasMorador = () => {
     const [openModal, setOpenModal] = useState(false);

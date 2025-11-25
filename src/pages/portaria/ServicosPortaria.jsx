@@ -3,7 +3,7 @@ import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CardServico from '../../componets/CardServico';
+import CardServico from '../../componets/cards/CardServico';
 import FormSevico from '../../componets/FormSevico';
 
 

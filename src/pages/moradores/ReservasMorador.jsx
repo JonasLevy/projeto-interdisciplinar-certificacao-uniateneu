@@ -3,7 +3,7 @@ import { Button, Fab, TextField } from '@mui/material';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
-import CardReserva from '../../componets/CardReserva';
+import CardReserva from '../../componets/cards/CardReserva';
 import FormReserva from '../../componets/FormReserva';
 
 

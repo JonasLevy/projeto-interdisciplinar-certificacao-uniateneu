@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.8:8000",
+  baseURL: "http://10.0.0.237:8000",
 });
 
 api.interceptors.request.use((config) => {

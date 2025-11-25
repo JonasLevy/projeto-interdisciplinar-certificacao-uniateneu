@@ -1,7 +1,7 @@
 import { Button, Fab, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import CardMorador from '../../componets/CardMorador';
+import CardMorador from '../../componets/cards/CardMorador';
 
 const MoradoresPortaria = () => {
     const [listaMoradorRenderizacao] = useState([]);
