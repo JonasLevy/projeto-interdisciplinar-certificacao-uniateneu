@@ -9,6 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import DeckIcon from '@mui/icons-material/Deck';
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
@@ -38,6 +39,10 @@ const menuItems = {
     {
       label: "Moradores",
       icon: <PeopleIcon className="text-slate-400" />
+    },
+    {
+      label: "Ambientes",
+      icon: <DeckIcon className="text-slate-400" />
     },
     {
       label: "Reservas",
