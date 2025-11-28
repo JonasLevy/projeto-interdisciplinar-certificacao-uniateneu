@@ -9,6 +9,8 @@ import FormEncomendas from '../../componets/FormEncomendas';
 import CardEncomenda from '../../componets/CardEncomenda';
 
 const EncomendasMorador = () => {
+
+    // Estados para controle de modal e lista de encomendas
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
