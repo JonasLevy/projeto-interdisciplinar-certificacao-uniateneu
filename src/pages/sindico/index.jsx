@@ -24,6 +24,9 @@ const Index = () => {
                 <ButtonPages name="Moradores" click={'/sindico/moradores'}>
                     <HandymanIcon />
                 </ButtonPages>
+                <ButtonPages name="Ambientes" click={'/sindico/ambientes'}>
+                    <HandymanIcon />
+                </ButtonPages>
                 <ButtonPages name="Reservas" click={'/sindico/reservas'}>
                     <HandymanIcon />
                 </ButtonPages>

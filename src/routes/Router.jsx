@@ -11,6 +11,7 @@ import DeliveryMorador from "../pages/moradores/DeliveryMorador"
 import EncomendasMorador from "../pages/moradores/EncomendasMorador"
 import ServicosSindico from "../pages/sindico/ServiçosSindico"
 import MoradoresSindico from "../pages/sindico/MoradoresSindico"
+import AmbientesSindico from "../pages/sindico/AmbientesSindico"
 import ReservasSindico from "../pages/sindico/ReservasSindico"
 import Notificacoes from "../pages/sindico/Notificacoes"
 import PortariaSindico from "../pages/sindico/PortariaSindico"
@@ -43,6 +44,7 @@ const Router = () => {
                     <Route path="reservas" element={<ReservasSindico />} />
                     <Route path="servicos" element={<ServicosSindico />} />
                     <Route path="visitas" element={<VisitasMorador />} />
+                    <Route path="ambientes" element={<AmbientesSindico />} />
                     <Route path="encomendas" element={<EncomendasSindico />} />
                     <Route path="apartamentos" element={<Apartamentos />} />
                     <Route path="moradores" element={<MoradoresSindico />} />
