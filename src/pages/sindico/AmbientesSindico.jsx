@@ -21,10 +21,11 @@ const AmbientesSindico = () => {
     const [listaAmbienteRenderizacao, setlistaAmbienteRenderizacao] = useState([]);
     const [ambienteTemp, setAmbienteTemp] = useState(null);
 
+    
     useEffect(() => {
         if (!condominioSelecionado) return;
-        api.get(`/sindico/ambiente/${condominioSelecionado}`).then((res) => {
-            setlistaAmbienteRenderizacao(res.data)
+        api.get(`/sindico/ambientes/${condominioSelecionado}`).then((res) => {
+            setlistaAmbienteRenderizacao(res.data.ambientes)
         }).catch((err) => {
             console.log(err.response)
         })

@@ -5,23 +5,21 @@ import SelectSmall from './Select.jsx';
 
 const FormAmbientes = ({ criarOuEditar, fecharModal, inquilino, listCondomonio }) => {
 
-    let editar = criarOuEditar === "Editar";
-
     const [nome, setNome] = useState('');
     const [info, setInfo] = useState('');
     const [idCondominio, setIdCondominio] = useState('');
 
     useEffect(() => {
-        if (editar) {
+        if (criarOuEditar == "Editar") {
             setNome(inquilino.nome);
             setInfo(inquilino.info);
-
         }
-    })
+    },[])
 
     const handleClick = () => {
         setNome('');
         setInfo('');
+        setIdCondominio('')
 
         fecharModal();
     }
