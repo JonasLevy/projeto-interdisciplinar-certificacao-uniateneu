@@ -24,7 +24,7 @@ export const AppProvider = ({ children }) => {
 
     const [usuarios, setUsuarios] = useState(() => {
         const saved = localStorage.getItem("usuarios");
-        return saved ? JSON.parse(saved) : [admPadrao, porteiro]; 
+        return saved ? JSON.parse(saved) : [admPadrao, porteiroPadrao]; 
     });
 
     useEffect(() => {

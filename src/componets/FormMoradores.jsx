@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
+import { AppContext } from '../context/AppContext';
 
 const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
+
+    const { addUsuario } = useContext(AppContext);
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -11,6 +14,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [cpf, setCpf] = useState('');
+    const [senha, setSenha] = useState('');
     const [telefone, setTelefone] = useState('');
 
     //Variaveis do Apt e torre
@@ -52,22 +56,28 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
         // Lógica para enviar o formulário
         fecharModal();
         const inquilino = {
-            nome, 
-            email, 
+            nome,
+            email,
+            senha,
             cpf,
+            tipo: 'morador',
             telefone,
             apt,
-            torre 
+            torre
         }
 
-        criarMorador(inquilino)
+        criarMorador(inquilino);
+        addUsuario(inquilino);
+
+
     }
 
     useEffect(() => {
-        if(editar) {
+        if (editar) {
             setNome(inquilino.nome);
             setEmail(inquilino.email);
             setCpf(inquilino.cpf);
+            setSenha(inquilino.senha)
             setTelefone(inquilino.telefone);
             setApt(inquilino.apt);
             setTorre(inquilino.torre);
@@ -118,8 +128,21 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                 placeholder='Somente os numeros'
                 value={cpf}
                 onChange={handleChangeCpf}
-
             />
+
+            <TextField
+                required
+                id="outlined-password-input"
+                label="Senha"
+                size='small'
+                type="password"
+                autoComplete="current-password"
+                sx={{ minWidth: 300 }}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+            />
+
+
             <TextField
                 required
                 label="Telefone"
