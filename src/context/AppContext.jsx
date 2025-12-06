@@ -1,16 +1,43 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react";
 
-export const AppContext = createContext()
+export const AppContext = createContext();
 
-export const AppProvider = ({children})=>{
+export const AppProvider = ({ children }) => {
 
-    const [nome, setNome] = useState('Francisco')
-    const [condominio, setCodominio] = useState('UniAteneu')
+    const admPadrao = {
+        nome: "Pedro",
+        email: "pedro@gmail.com",
+        senha: "12345",
+        cpf: "203201256325",
+        tipo: "sindico",
+        condominio: "A",
+        apt: "123"
+    };
 
-    return(
-        <AppContext.Provider value={{nome, condominio}}>
+    const porteiroPadrao = {
+        nome: "Luis",
+        email: "luis@gmail.com",
+        senha: "1010",
+        cpf: "0325698544",
+        tipo: "porteiro",
+    }
+
+    const [usuarios, setUsuarios] = useState(() => {
+        const saved = localStorage.getItem("usuarios");
+        return saved ? JSON.parse(saved) : [admPadrao, porteiro]; 
+    });
+
+    useEffect(() => {
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    }, [usuarios]);
+
+    const addUsuario = (novoUsuario) => {
+        setUsuarios(prev => [...prev, novoUsuario]);
+    };
+
+    return (
+        <AppContext.Provider value={{ usuarios, addUsuario }}>
             {children}
         </AppContext.Provider>
-    )
-
-}
+    );
+};

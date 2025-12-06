@@ -3,8 +3,15 @@ import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import { useContext } from "react";
 
 const HomeMorador = () => {
+    
+    const {usuarios} = useContext(AppContext);
+    
+    console.log(usuarios.nome);
+
     return (
         <div className="text-center">
             <div

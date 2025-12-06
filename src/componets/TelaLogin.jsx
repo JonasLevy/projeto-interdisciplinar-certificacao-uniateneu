@@ -1,69 +1,122 @@
-import { useState, React } from 'react';
+import { useState, React, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { AppContext } from '../context/AppContext';
 
 
 function TelaLogin() {
+
     const navigate = useNavigate();
 
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
-    
+    const [tipoUsuario, setTipoUsuario] = useState("sindico");
+
+    const [validacao, setValidacao] = useState(null);
+
+    const { usuarios } = useContext(AppContext);
+
+    const login = () => {
+        const usuarioEncontrado = usuarios.find((user) => user.nome === usuario && user.senha === senha && user.tipo === tipoUsuario);
+
+        if (usuarioEncontrado && tipoUsuario === 'sindico') {
+            navigate("/sindico");
+        }
+
+        if (usuarioEncontrado && tipoUsuario === 'morador') {
+            navigate("/morador");
+        }
+
+        if (usuarioEncontrado && tipoUsuario === 'porteiro') {
+            navigate("/portaria");
+        }
+
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(`Usuario: ${usuario}`);
-        console.log(`Senha: ${senha}`);
+        login();
 
-        navigate("/morador");
     }
-    
+
     return (
         <div className='h-screen flex justify-center items-center  bg-gray-900'>
-            <Box component="section" sx={{ margin: 2, p: 2, border: '1px solid white', borderRadius:5, bgcolor:"#fff" }}>
-                <Typography variant="h3" sx={{marginBottom:4, textAlign: 'center'}}>
+            <Box component="section" sx={{ margin: 2, p: 2, border: '1px solid white', borderRadius: 5, bgcolor: "#fff" }}>
+                <Typography variant="h3" sx={{ marginBottom: 4, textAlign: 'center' }}>
                     Login
                 </Typography>
 
-                <form 
+                <form
                     className='flex flex-col justify-center gap-8'
                     onSubmit={handleSubmit}
                 >
 
-                <TextField 
-                    id="outlined-basic" 
-                    label="Usuario" 
-                    variant="outlined" 
-                    sx={{minWidth:300}}
-                    value={usuario}
-                    onChange={(e) => setUsuario(e.target.value)}
+                    <TextField
+                        id="outlined-basic"
+                        label="Usuario"
+                        variant="outlined"
+                        sx={{ minWidth: 300 }}
+                        value={usuario}
+                        onChange={(e) => setUsuario(e.target.value)}
                     />
 
-                <TextField
-                    id="outlined-password-input"
-                    label="Senha"
-                    type="password"
-                    autoComplete="current-password"
-                    sx={{minWidth:300}}
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
+                    <TextField
+                        id="outlined-password-input"
+                        label="Senha"
+                        type="password"
+                        autoComplete="current-password"
+                        sx={{ minWidth: 300 }}
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
                     />
 
-                <Link href="#">Esqueceu a senha</Link>
+                    <div className='flex justify-around'>
+                        <p>Sindico
+                            <Checkbox
+                                checked={tipoUsuario == 'sindico'}
+                                value="sindico"
+                                onChange={(e) => setTipoUsuario(e.target.value)}
+                                name='tipoUsuario'
+                            />
 
-                <Button
-                    type='submit'
-                    sx={{bgcolor:"rgb(30 64 175)"}} 
-                    variant="contained">
-                        Morador
-                </Button>
-            </form>
-                <div className='mt-2 w-full flex  gap-2' >
+                        </p>
+                        <p>Morador
+                            <Checkbox
+                                checked={tipoUsuario == 'morador'}
+                                value="morador"
+                                onChange={(e) => setTipoUsuario(e.target.value)}
+                                name='tipoUsuario'
+                            />
+
+                        </p>
+                        <p>Portaria
+                            <Checkbox
+                                checked={tipoUsuario == 'porteiro'}
+                                value="porteiro"
+                                onChange={(e) => setTipoUsuario(e.target.value)}
+                                name='tipoUsuario'
+                            />
+
+                        </p>
+                    </div>
+
+                    <Link href="#">Esqueceu a senha</Link>
+
+                    <Button
+                        type='submit'
+                        sx={{ bgcolor: "rgb(30 64 175)" }}
+                        variant="contained">
+                        Entrar
+                    </Button>
+                </form>
+                {/* <div className='mt-2 w-full flex  gap-2' >
 
                     <Button
                         className='flex-1'
@@ -83,7 +136,7 @@ function TelaLogin() {
                     >
                         Portaria
                     </Button>
-                </div>
+                </div> */}
 
             </Box>
         </div>

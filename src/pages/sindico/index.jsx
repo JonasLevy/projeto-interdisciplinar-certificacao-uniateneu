@@ -7,7 +7,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 const Index = () => {
     return (
         <div className="text-center">
-            Index Morador
+            Index Sindico
             <div
                 className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box pb-8"
                 style={{ maxWidth: "100vw" }}
