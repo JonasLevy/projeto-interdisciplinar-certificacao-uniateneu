@@ -14,6 +14,9 @@ const AmbientesSindico = () => {
     const { usuario } = useContext(AppContext);
     const { sindicoEmCondominiosList } = usuario;
     const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoEmCondominiosList[0]?.id);
+    console.log("usuario: ", usuario);
+    console.log("condominioSelecionado: ", condominioSelecionado);
+    
 
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null);
@@ -24,10 +27,10 @@ const AmbientesSindico = () => {
     
     useEffect(() => {
         if (!condominioSelecionado) return;
-        api.get(`/sindico/ambientes/${condominioSelecionado}`).then((res) => {
+        api.get(`/sindico/ambiente/${condominioSelecionado}`).then((res) => {
             setlistaAmbienteRenderizacao(res.data.ambientes)
         }).catch((err) => {
-            console.log(err.response)
+            console.log("err.response: ", err.response)
         })
     }, [condominioSelecionado, usuario])
 
@@ -40,10 +43,6 @@ const AmbientesSindico = () => {
         setAmbienteTemp(listaAmbienteRenderizacao[id])
         setTipoModal("Editar");
         setOpenModal(!openModal);
-    }
-
-    const criarAmbiente = (ambiente) => {
-        setlistaAmbienteRenderizacao([ambiente, ...listaAmbienteRenderizacao])
     }
 
     return (
@@ -77,10 +76,8 @@ const AmbientesSindico = () => {
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Ambiente`} close={() => setOpenModal(false)}>
                 <FormAmbientes
-                    tipoUsuario="Sindico"
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
-                    criarAmbiente={criarAmbiente}
                     inquilino={ambienteTemp}
                     listCondomonio={sindicoEmCondominiosList}
                 />

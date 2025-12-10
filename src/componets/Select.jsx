@@ -22,8 +22,8 @@ export default function SelectSmall({list, change}) {
                 label="Condominio"
                 onChange={handleChange}
             >
-                {list?.map((opcao, i)=>(
-                    <MenuItem value={opcao.id}>{opcao.nome}</MenuItem>      
+                {list?.map((opcao)=>(
+                    <MenuItem key={opcao.id} value={opcao.id}>{opcao.nome}</MenuItem>
                     )
                 )}
             </Select>

@@ -33,7 +33,7 @@ const FormAmbientes = ({ criarOuEditar, fecharModal, inquilino, listCondomonio }
             idCondominio,
         }
 
-        api.post("/sindico/criarambiente", body).then((res) => {
+        api.post("/sindico/ambiente", body).then((res) => {
             console.log(res.data)
         }).catch((err) => {
             console.log(err)

@@ -13,23 +13,31 @@ import SelectSmall from '../../componets/Select';
 const MoradoresSindico = () => {
     const { usuario } = useContext(AppContext)
     const { sindicoEmCondominiosList } = usuario
-    console.log(sindicoEmCondominiosList)
-    console.log(usuario)
+    console.log("sindicoEmCondominiosList: ",sindicoEmCondominiosList)
+    console.log("usuario: ", usuario)
     const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoEmCondominiosList[0]?.id)
+    console.log("condominioSelecionado: ", condominioSelecionado)
+
 
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null);
 
     const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
     const [moradorTemp, setMoradorTemp] = useState(null);
+    console.log("listaMoradorRenderizacao: ",listaMoradorRenderizacao)
+
+    console.log("moradorTemp: ",moradorTemp)
 
     useEffect(() => {
-        api.get(`/sindico/moradores/${condominioSelecionado}`).then((res) => {
+        if (!condominioSelecionado) return;
+        api.get(`/sindico/morador/${condominioSelecionado}`).then((res) => {
+            console.log("RES DATA:", res.data);
             setListaMoradorRenderizacao(res.data)
         }).catch((err) => {
-            console.log(err.response)
+            console.log("API error: ", err.response)
         })
     }, [condominioSelecionado, usuario])
+    
 
     const clickOpenModalCriar = () => {
         setTipoModal("Criar");
@@ -40,10 +48,6 @@ const MoradoresSindico = () => {
         setMoradorTemp(listaMoradorRenderizacao[indice])
         setTipoModal("Editar");
         setOpenModal(!openModal);
-    }
-
-    const criarMorador = (morador) => {
-        setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
     }
 
     return (
@@ -60,8 +64,6 @@ const MoradoresSindico = () => {
                         label="Apartamento"
                         variant="outlined"
                         size='small'
-                    //value={apt}
-                    // onChange={(e) => setApt(e.target.value)}
                     />
                     <Button variant="contained" aria-label="search" size='small' color='success'>
                         <SearchIcon />
@@ -73,16 +75,13 @@ const MoradoresSindico = () => {
                     <CardMorador morador={morador} clickEditar={() => clickOpenModalEditar(i)} />
                 ))
                 }
-
             </section>
 
             <ButtonModal click={() => clickOpenModalCriar()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Morador`} close={() => setOpenModal(false)}>
                 <FormMoradores
-                    tipoUsuario="Sindico"
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
-                    criarMorador={criarMorador}
                     inquilino={moradorTemp}
                     listCondomonio={sindicoEmCondominiosList}
                 />

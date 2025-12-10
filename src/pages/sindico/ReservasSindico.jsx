@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardReserva from '../../componets/cards/CardReserva';
 import FormReserva from '../../componets/FormReserva';
-
+import { AppContext } from '../../context/AppContext.jsx';
+import SelectSmall from '../../componets/Select.jsx';
+import api from "../../api.js"
 
 const ReservasSindico = () => {
+    const { usuario } = useContext(AppContext);
     const [openModal, setOpenModal] = useState(false);
-    const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
+    const [tipoModal, setTipoModal] = useState(null);
+
+    const { sindicoEmCondominiosList } = usuario;
+    const [condominioSelecionado, setCondominioSelecionado] = useState(sindicoEmCondominiosList[0]?.id);
+    
     
     const [listaReservaRenderizacao, setListaReservaRenderizacao] = useState([]);
     const [reservaTemp, setReservaTemp] = useState(null);
+    
+    console.log("condominioSelecionado: ", condominioSelecionado)
 
     // ## Função para abrir o modal de criar ou editar reserva
     const clickOpenModal = () => {
@@ -29,11 +38,22 @@ const ReservasSindico = () => {
     //setIdReserva(idReserva);
     }
 
-    const criarReserva = (reserva) => {
-        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
-    }
+    console.log("reservaTemp: ",reservaTemp);
 
-    console.log(reservaTemp);
+    useEffect(() => {
+        if (!condominioSelecionado) return;
+        api.get(`/sindico/reserva/${condominioSelecionado}`).then((res) => {
+            console.log("RESPONSE URL (Network):", `/sindico/reserva/${condominioSelecionado}`);
+            console.log("API returned (res.data):", res.data);
+            // detalhe por item
+            res.data?.forEach((r, idx) => {
+                console.log(idx, "-> idCondominio:", r?.ReservaAmbiente?.idCondominio, "idAmbiente:", r?.ReservaAmbiente?.idAmbiente);
+            });
+            setListaReservaRenderizacao(res.data);
+        }).catch((err) => {
+            console.log("API error:", err.response ?? err);
+        })
+    }, [condominioSelecionado, usuario])
 
     return (
         <div className="min-h-full w-full ">
@@ -41,14 +61,13 @@ const ReservasSindico = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Reservas</h1>
+                <SelectSmall list={sindicoEmCondominiosList} change={setCondominioSelecionado}/>
                 <div className='flex gap-1'>
                     <TextField
                         id="outlined-basic"
                         label="Apartamento"
                         variant="outlined"
                         size='small'
-                    //value={apt}
-                    // onChange={(e) => setApt(e.target.value)}
                     />
                     <Button variant="contained" aria-label="search" size='small' color='success'>
                         <SearchIcon />
@@ -58,26 +77,19 @@ const ReservasSindico = () => {
 
             <section className='p-8'>
                 {listaReservaRenderizacao?.map((reserva, i) => (
-                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(i)} />
+                    <CardReserva key={reserva.id ?? i} reserva={reserva} clickEditar={() => clickEditar(i)} />
                 ))}
-                
             </section>
 
-            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} /> {/* ##função  */}
-
-            <BasicModal
-                openModal={openModal}
-                title={`${tipoModal} Reserva`} // Título dinâmico conforme o tipo de modal
-                close={() => setOpenModal(false)}
-            >
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
+            <BasicModal openModal={openModal} title={`${tipoModal} Reserva`} close={() => setOpenModal(false)}>
                 <FormReserva
-                    tipoUsuario="Sindico" // Passa o tipo de usuário para o formulário
-                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
+                    criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
-                    criarReserva={criarReserva}
                     reserva={reservaTemp}
-                 />
-            </BasicModal >
+                    listCondomonio={sindicoEmCondominiosList}
+                />
+            </BasicModal>
         </div >
     );
 };

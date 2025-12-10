@@ -3,7 +3,7 @@ import { Button, Fab, TextField } from '@mui/material';
 import api from "../api"
 import SelectSmall from './Select';
 
-const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino, listCondomonio }) => {
+const FormMoradores = ({ criarOuEditar, fecharModal, inquilino, listCondomonio }) => {
 
     //Variaveis do morador
     const [nome, setNome] = useState('');
@@ -75,7 +75,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             torre
         }
 
-        api.post("/sindico/criarmorador", body).then((res) => {
+        api.post("/sindico/morador", body).then((res) => {
             console.log(res.data)
         }).catch((err) => {
             console.log(err)

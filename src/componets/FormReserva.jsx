@@ -6,120 +6,88 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import SelectSmall from './Select.jsx';
+import api from "../api.js"
 
-const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
+const FormReserva = ({ listCondomonio, criarOuEditar, fecharModal, reserva }) => {
 
-    let editar = criarOuEditar === "Editar";
-    let sindico = tipoUsuario === "Sindico";
-    let morador = tipoUsuario === "Morador";
-
-    //Variavel do select espaco
-    const [espaco, setEspaco] = useState('');
-
-    //Variavel data reserva
+    const [idCondominio, setIdCondominio] = useState('');
+    const [listaAmbientes, setListaAmbientes] = useState([]);
+    const [idAmbiente, setIdAmbiente] = useState('');
     const [dataReserva, setDataReserva] = useState(null);
+    const [horaInicio, setHoraInicio] = useState(null);
+    const [horaFim, setHoraFim] = useState(null);
+    const [statusReserva, setStatusReserva] = useState("");
+    const [infoReserva, setInfoReserva] = useState("");
 
-    //Variaveis do horario
-    const [reservaHoraEntrada, setReservaHoraEntrada] = useState(null);
-    const [reservaHoraSaida, setReservaHoraSaida] = useState(null);
+    useEffect(() => {
+        if (criarOuEditar == "Editar") {
+            setIdCondominio(reserva.idCondominio);
+            setIdAmbiente(reserva.idAmbiente);
+            setDataReserva(reserva.dataReserva);
+            setHoraInicio(reserva.horaInicio);
+            setHoraFim(reserva.horaFim);
+            setStatusReserva(reserva.statusReserva);
+            setInfoReserva(reserva.infoReserva);
+        }
+    },[])
 
-    //Variaveis do Apt e torre
-    const [apt, setApt] = useState("");
-    const [torre, setTorre] = useState("");
-
-    //Variavel descricao
-    const [descricaoReserva, setDescricaoReserva] = useState("");
-
-    const handleChange = (e) => {
-        setEspaco(e.target.value)
-    }
+    useEffect(() => {
+        if (!idCondominio) return;
+        api.get(`/sindico/ambiente/${idCondominio}`)
+            .then((res) => {
+                setListaAmbientes(res.data.ambientes || []);
+            })
+            .catch((err) => {
+                console.log("erro get ambientes", err);
+                setListaAmbientes([]);
+            })
+    }, [idCondominio])
 
     const handleClick = () => {
-        setEspaco("");
+        setIdCondominio("");
+        setIdAmbiente("");
         setDataReserva(null);
-        setReservaHoraEntrada(null);
-        setReservaHoraSaida(null);
-        setApt('');
-        setTorre('');
-        setDescricaoReserva("");
+        setHoraInicio(null);
+        setHoraFim(null);
+        setStatusReserva('');
+        setInfoReserva('');
 
         fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
     }
 
     const submitForm = (e) => {
         e.preventDefault();
-        // Lógica para enviar o formulário
-        fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
-        const reserva = {
-            espaco,
-            dataReserva,
-            reservaHoraEntrada,
-            reservaHoraSaida,
-            descricaoReserva,
-            apt,
-            torre
+
+        const body = {
+            idAmbiente: idAmbiente,
+            dataReserva: dataReserva.format('YYYY-MM-DD'),
+            horaInicio: horaInicio.format('HH:mm'),
+            horaFim: horaFim.format('HH:mm'),
+            status: statusReserva,
         }
 
-        criarReserva(reserva)
+        api.post(`/sindico/reserva/${idCondominio}`, body)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log("Erro na requisição:", err.response?.data);
+            })
+
+            fecharModal();
     }
-
-    // ## monta o formulario ao ser aberto o modal com os dados da reserva para editar
-    useEffect(() => {
-        if (editar) {
-            setApt("202");
-            setTorre("B");
-            setEspaco(reserva.espaco);
-            setDataReserva(reserva.dataReserva);
-            setReservaHoraEntrada(reserva.reservaHoraEntrada);
-            setReservaHoraSaida(reserva.reservaHoraSaida);
-            setDescricaoReserva(reserva.descricaoReserva);
-        } 
-    }, []);
-
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
-            <TextField
-                required
-                id="outlined-basic"
-                label="Apartemento"
-                variant="outlined"
-                size='small'
-                value={apt}
-                onChange={(e) => setApt(e.target.value)}
-                disabled={!sindico} // Morador não pode editar o apt
-            />
-
-            <TextField
-                required
-                id="outlined-basic"
-                label="Torre"
-                variant="outlined"
-                size='small'
-                value={torre}
-                onChange={(e) => setTorre(e.target.value)}
-                disabled={!sindico} // Morador não pode editar a torre
-            />
-
-            <TextField
-                required
-                select
-                label='Espaços'
-                size='small'
-                value={espaco}
-                onChange={handleChange}
-            >
-                <MenuItem value={'Salao de festas'} >Salão de Festas</MenuItem>
-                <MenuItem value={'Area da piscina'} >Area da Piscina </MenuItem>
-                <MenuItem value={'Campo socity'} >Campo Socity</MenuItem>
-                <MenuItem value={'Quadra de tênis'} >Quadra de Tênis</MenuItem>
-                <MenuItem value={'Deck secundario'} >Deck Secundario</MenuItem>
-            </TextField>
+            <SelectSmall list={listCondomonio} change={setIdCondominio} />
+            
+            <SelectSmall list={listaAmbientes} change={setIdAmbiente} label="Ambiente" />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     slotProps={{
-                        textField: { size: 'small',  required:"true", }
+                        textField: { size: 'small',  required: true, }
                     }}
                     label='Data Reversa'
                     format='DD/MM/YYYY'
@@ -131,59 +99,61 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
 
                 <TimePicker
                     slotProps={{
-                        textField: { size: 'small',  required:"true", }
+                        textField: { size: 'small',  required: true, }
                     }}
                     label="Entrada"
                     format="HH:mm"
                     ampm={false}
-                    value={reservaHoraEntrada}
-                    onChange={(newValue) => setReservaHoraEntrada(newValue)}
+                    value={horaInicio}
+                    onChange={(newValue) => setHoraInicio(newValue)}
                     minTime={dayjs().hour(6).minute(29)}
                     maxTime={dayjs().hour(22).minute(59)}
                 />
 
                 <TimePicker
                     slotProps={{
-                        textField: { size: 'small',  required:"true", }
+                        textField: { size: 'small',  required: true, }
                     }}
                     label="Saida"
                     format="HH:mm"
                     ampm={false}
-                    value={reservaHoraSaida}
-                    onChange={(newValue) => setReservaHoraSaida(newValue)}
-                    minTime={reservaHoraEntrada || dayjs().hour(6).minute(29)}
+                    value={horaFim}
+                    onChange={(newValue) => setHoraFim(newValue)}
+                    minTime={dayjs().hour(6).minute(29)}
                     maxTime={dayjs().hour(22).minute(59)}
                 />
-
-
             </LocalizationProvider>
 
             <TextField
                 required
                 id="outlined-basic"
-                label="Descrição da reserva" variant="outlined"
-                multiline
-                maxRows={3}
-                value={descricaoReserva}
-                onChange={(e) => setDescricaoReserva(e.target.value)}
+                label="Status Reserva"
+                variant="outlined"
+                size='small'
+                value={statusReserva}
+                onChange={(e) => setStatusReserva(e.target.value)}
+            />
+
+            <TextField
+                required
+                id="outlined-basic"
+                label="Descrição"
+                variant="outlined"
+                size='small'
+                value={infoReserva}
+                onChange={(e) => setInfoReserva(e.target.value)}
             />
 
             <div className='flex flex-col justify-between gap-4'>
-
                 <Button
                     variant="contained"
                     type='submit'
                     color='success'>
-                    {(editar && sindico)|| criarOuEditar== "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
 
-                <Button
-                    variant="contained"
-                    color='error'
-                    onClick={handleClick} >
-                    Cancelar
+                <Button variant="contained" color='error' onClick={handleClick}> Cancelar
                 </Button>
-
             </div>
         </form>
     );
