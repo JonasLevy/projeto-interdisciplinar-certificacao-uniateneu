@@ -1,14 +1,14 @@
 import React from 'react';
 import { formatData } from '../hooks/formatData';
 import { formatHora } from '../hooks/formatHora';
+import dayjs from 'dayjs';
+
 
 export default function CardReserva({ clickEditar, reserva }) {
 
     const OnClickDetalhe = () => {
         clickEditar();
     }
-
-    console.log(reserva)
 
     const {
         espaco,
@@ -26,8 +26,8 @@ export default function CardReserva({ clickEditar, reserva }) {
             <div className="flex items-center mb-4">
                 <div className="">
                     <h2 className="text-lg font-semibold text-gray-900">Reserva - {espaco}</h2>
-                    <p className="text-sm text-gray-500">Reserva para {formatData(dataReserva)}</p>
-                    <p className="text-sm text-gray-500">Horario: {formatHora(reservaHoraEntrada)} as {formatHora(reservaHoraSaida)}</p>
+                    <p className="text-sm text-gray-500">Reserva para {formatData(dayjs(dataReserva))}</p>
+                    <p className="text-sm text-gray-500">Horario: {formatHora(dayjs(reservaHoraEntrada))} as {formatHora(dayjs(reservaHoraSaida))}</p>
                 </div>
             </div>
             <p className="mb-4 text-gray-700">"{descricaoReserva}."</p>

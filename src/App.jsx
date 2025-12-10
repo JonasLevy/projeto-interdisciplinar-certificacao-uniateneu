@@ -10,7 +10,6 @@ function App() {
 
   return (
     <AppProvider>
-
       <div className="w-full h-svh flex p-0 m-0">
         <MenuAside />
         <Header />

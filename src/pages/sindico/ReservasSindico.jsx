@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardReserva from '../../componets/CardReserva';
 import FormReserva from '../../componets/FormReserva';
+import { AppContext } from '../../context/AppContext';
 
 
 const ReservasSindico = () => {
+    const { reservas } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
     
@@ -22,7 +24,8 @@ const ReservasSindico = () => {
 
     // ## Função para abrir o modal no modo editar reserva
     const clickEditar = (id) => {
-        setReservaTemp(listaReservaRenderizacao[id])
+        const buscarReserva = reservas.find(reserv => reserv.id == id)
+        setReservaTemp(buscarReserva)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     // fazer logica para buscar a reserva pelo idReserva
@@ -32,8 +35,6 @@ const ReservasSindico = () => {
     const criarReserva = (reserva) => {
         setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
     }
-
-    console.log(reservaTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -57,8 +58,8 @@ const ReservasSindico = () => {
             </div>
 
             <section className='p-8'>
-                {listaReservaRenderizacao?.map((reserva, i) => (
-                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(i)} />
+                {reservas?.map((reserva, i) => (
+                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(reserva.id)} />
                 ))}
                 
             </section>

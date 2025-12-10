@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   List,
   ListItem,
@@ -18,28 +18,34 @@ import { useLocation, useNavigate } from "react-router-dom";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WcIcon from '@mui/icons-material/Wc';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import { AppContext } from "../context/AppContext";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const menuItems = {
   sindico: [
     {
-      label: "Apartamentos",
-      icon: <ApartmentIcon className="text-slate-400" />,
+      label: "Moradores",
+      icon: <PeopleIcon className="text-slate-400" />
+    },
+    {
+      label: "Ambientes",
+      icon: <WcIcon className="text-slate-400" />
+    },
+    {
+      label: "Reservas",
+      icon: <MeetingRoomIcon className="text-slate-400" />
     },
     {
       label: "Encomendas",
       icon: <MeetingRoomIcon className="text-slate-400" />,
     },
     {
+      label: "Apartamentos",
+      icon: <ApartmentIcon className="text-slate-400" />,
+    },
+    {
       label: "Serviços",
       icon: <HomeWorkIcon className="text-slate-400" />,
-    },
-    {
-      label: "Moradores",
-      icon: <PeopleIcon className="text-slate-400" />
-    },
-    {
-      label: "Reservas",
-      icon: <MeetingRoomIcon className="text-slate-400" />
     },
     {
       label: "Visitas",
@@ -103,6 +109,9 @@ const MenuAside = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
 
+  const { usuarioLogado } = useContext(AppContext);
+
+
   const clickMenu = (label) => {
 
     let labelFormatada = label
@@ -112,6 +121,13 @@ const MenuAside = () => {
     const route = `/${path}/${labelFormatada.toLowerCase()}`
     setOpen(false);
     navegate(route);
+  }
+
+  const logout = () => {
+    localStorage.removeItem("usuarioLog")
+    navegate("/")
+    setUsuario(null)
+    return null
   }
 
   const drawerContent = (
@@ -138,6 +154,15 @@ const MenuAside = () => {
               <ListItemText primary={item.label} />
             </ListItem>
           ))}
+          <ListItem
+            button
+            key={"Sair"}
+            className="hover:bg-blue-600 hover:font-bold transition-colors cursor-pointer fixed bottom-0"
+            onClick={logout}
+          >
+            <ListItemIcon> <LogoutIcon className="text-slate-400" /> </ListItemIcon>
+            <ListItemText primary={"Sair"} />
+          </ListItem>
         </List>
       </nav>
     </div>
@@ -168,6 +193,7 @@ const MenuAside = () => {
       ) : (
         <aside className="h-full w-64 bg-gray-900 text-white shadow-lg flex flex-col">
           {drawerContent}
+
         </aside>
       )}
     </>

@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import { AppContext } from '../context/AppContext';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
 
@@ -47,15 +49,14 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
         setEmail('')
         setApt('');
         setTorre('');
-
         fecharModal();
     }
 
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        fecharModal();
         const inquilino = {
+            id: uuidv4(),
             nome,
             email,
             senha,
@@ -68,7 +69,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
 
         criarMorador(inquilino);
         addUsuario(inquilino);
-
+        fecharModal();
 
     }
 
@@ -82,19 +83,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             setApt(inquilino.apt);
             setTorre(inquilino.torre);
         }
-    })
-
-
-    useEffect(() => {
-        if (editar) {
-            setNome("Antonio Nunes");
-            setEmail("AntonioNunes123@gmail.com");
-            setCpf("0878765433");
-            setTelefone("(85)99234-5540");
-            setApt('101');
-            setTorre('A');
-        }
-    }, []);
+    }, [])
 
     return (
         <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">

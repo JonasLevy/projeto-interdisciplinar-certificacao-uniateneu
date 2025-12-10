@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -6,8 +6,11 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import { v4 } from 'uuid';
+import { AppContext } from '../context/AppContext';
 
 const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
+    const { adicionarReserva, ambientes } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -51,6 +54,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
         // Lógica para enviar o formulário
         fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
         const reserva = {
+            id: v4(),
             espaco,
             dataReserva,
             reservaHoraEntrada,
@@ -60,7 +64,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             torre
         }
 
-        criarReserva(reserva)
+        adicionarReserva(reserva)
     }
 
     // ## monta o formulario ao ser aberto o modal com os dados da reserva para editar
@@ -109,11 +113,11 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
                 value={espaco}
                 onChange={handleChange}
             >
-                <MenuItem value={'Salao de festas'} >Salão de Festas</MenuItem>
-                <MenuItem value={'Area da piscina'} >Area da Piscina </MenuItem>
-                <MenuItem value={'Campo socity'} >Campo Socity</MenuItem>
-                <MenuItem value={'Quadra de tênis'} >Quadra de Tênis</MenuItem>
-                <MenuItem value={'Deck secundario'} >Deck Secundario</MenuItem>
+                {ambientes?.map(amb => {
+                    return (
+                        <MenuItem value={amb.nome} >{amb.nome}</MenuItem>
+                    )
+                })}
             </TextField>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -123,7 +127,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
                     }}
                     label='Data Reversa'
                     format='DD/MM/YYYY'
-                    value={dataReserva}
+                    value={dayjs(dataReserva)}
                     onChange={(newValue) => setDataReserva(newValue)}
                     disablePast
                     minDate={dayjs()}
@@ -136,7 +140,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
                     label="Entrada"
                     format="HH:mm"
                     ampm={false}
-                    value={reservaHoraEntrada}
+                    value={dayjs(reservaHoraEntrada)}
                     onChange={(newValue) => setReservaHoraEntrada(newValue)}
                     minTime={dayjs().hour(6).minute(29)}
                     maxTime={dayjs().hour(22).minute(59)}
@@ -149,9 +153,9 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
                     label="Saida"
                     format="HH:mm"
                     ampm={false}
-                    value={reservaHoraSaida}
+                    value={dayjs(reservaHoraSaida)}
                     onChange={(newValue) => setReservaHoraSaida(newValue)}
-                    minTime={reservaHoraEntrada || dayjs().hour(6).minute(29)}
+                    minTime={dayjs(reservaHoraEntrada) || dayjs().hour(6).minute(29)}
                     maxTime={dayjs().hour(22).minute(59)}
                 />
 

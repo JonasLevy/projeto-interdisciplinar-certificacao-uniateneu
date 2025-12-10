@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import BasicChildModal from '../componets/ChildModal';
@@ -8,9 +8,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
+import { AppContext } from '../context/AppContext';
 
 const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
+    const { adicionarServico } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -20,12 +22,12 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
     const [nomeEmpresa, setNomeEmpresa] = useState("");
 
     //Variaveis das datas de inicio e fim
-    const [dataInicio, setDataInicio] = useState(null);
-    const [dataFim, setDataFim] = useState(null);
+    const [dataInicio, setDataInicio] = useState(dayjs());
+    const [dataFim, setDataFim] = useState(dayjs());
 
     //Variaveis dos horarios de entrada e saida
-    const [horaEntrada, setHoraEntrada] = useState(null);
-    const [horaSaida, setHoraSaida] = useState(null);
+    const [horaEntrada, setHoraEntrada] = useState(dayjs());
+    const [horaSaida, setHoraSaida] = useState(dayjs());
 
     //Variaveis Apt e torre
     const [apt, setApt] = useState("");
@@ -61,7 +63,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             torre,
             descricao
         }
-        criarServico(servico)
+        adicionarServico(servico)
         fecharModal()
     }
 
@@ -102,7 +104,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         }}
                         label='Data Inicio'
                         format='DD/MM/YYYY'
-                        value={dataInicio}
+                        value={dayjs(dataInicio)}
                         onChange={(newValue) => setDataInicio(newValue)}
                         disablePast
                         minDate={dayjs()}
@@ -116,7 +118,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         }}
                         label='Data Fim'
                         format='DD/MM/YYYY'
-                        value={dataFim}
+                        value={dayjs(dataFim)}
                         onChange={(newValue) => setDataFim(newValue)}
                         disablePast
                         minDate={dataInicio || dayjs()}
@@ -133,7 +135,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         label="Entrada"
                         format="HH:mm"
                         ampm={false}
-                        value={horaEntrada}
+                        value={dayjs(horaEntrada)}
                         onChange={(newValue) => setHoraEntrada(newValue)}
                         minTime={dayjs().hour(7).minute(29)}
                         maxTime={dayjs().hour(17).minute(0)}
@@ -148,9 +150,9 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         label="Saida"
                         format="HH:mm"
                         ampm={false}
-                        value={horaSaida}
+                        value={dayjs(horaSaida)}
                         onChange={(newValue) => setHoraSaida(newValue)}
-                        minTime={horaEntrada || dayjs().hour(7).minute(29)}
+                        minTime={dayjs(horaEntrada) || dayjs().hour(7).minute(29)}
                         maxTime={dayjs().hour(19).minute(30)}
                     />
                 </div>

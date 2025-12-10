@@ -1,11 +1,12 @@
 import { Button, Fab, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardMorador from '../../componets/CardMorador';
 import FormMoradores from '../../componets/FormMoradores';
+import { AppContext } from '../../context/AppContext';
 
 const MoradoresSindico = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -15,13 +16,20 @@ const MoradoresSindico = () => {
     const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
     const [moradorTemp, setMoradorTemp] = useState(null);
 
+    const { usuarios } = useContext(AppContext)
+
+    useEffect(() => {
+        setListaMoradorRenderizacao(usuarios)
+    }, [usuarios])
+
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
     const clickEditar = (id) => {
-        setMoradorTemp(listaMoradorRenderizacao[id])
+        const buscamorador = listaMoradorRenderizacao.find(user => user.id == id)
+        setMoradorTemp(buscamorador)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -30,7 +38,6 @@ const MoradoresSindico = () => {
         setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
     }
 
-    console.log(moradorTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -45,8 +52,6 @@ const MoradoresSindico = () => {
                         label="Apartamento"
                         variant="outlined"
                         size='small'
-                    //value={apt}
-                    // onChange={(e) => setApt(e.target.value)}
                     />
                     <Button variant="contained" aria-label="search" size='small' color='success'>
                         <SearchIcon />
@@ -54,8 +59,8 @@ const MoradoresSindico = () => {
                 </div>
             </div>
             <section className='p-8'>
-                {listaMoradorRenderizacao?.map((morador, i) => (
-                    <CardMorador morador={morador} clickEditar={() => clickEditar(i)}/>
+                {listaMoradorRenderizacao?.filter((user => user.tipo == "morador")).map((morador, i) => (
+                    <CardMorador morador={morador} clickEditar={() => clickEditar(morador.id)} />
                 ))
                 }
 

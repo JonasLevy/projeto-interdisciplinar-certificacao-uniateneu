@@ -21,6 +21,7 @@ import MoradoresPortaria from "../pages/portaria/MoradoresPortaria"
 import RecebidosPortaria from "../pages/portaria/RecebidosPortaria"
 import ServicosPortaria from "../pages/portaria/ServicosPortaria"
 import VisitasPortaria from "../pages/portaria/VisitasPortaria"
+import AmbientesSindico from "../pages/sindico/AmbienteSinidico"
 
 const Router = () => {
 
@@ -38,6 +39,7 @@ const Router = () => {
                 <Route path="moradores" element={<MoradoresSindico />} />
                 <Route path="funcionarios" element={<FuncionariosSindico />} />
                 <Route path="notificacao" element={<Notificacoes />} />
+                <Route path="ambientes" element={<AmbientesSindico />} />
 
             </Route>
             <Route path="morador" element={<App />}>

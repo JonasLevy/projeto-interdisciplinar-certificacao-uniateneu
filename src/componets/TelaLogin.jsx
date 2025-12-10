@@ -13,35 +13,24 @@ function TelaLogin() {
 
     const navigate = useNavigate();
 
-    const [usuario, setUsuario] = useState("");
+    const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [tipoUsuario, setTipoUsuario] = useState("sindico");
 
     const [validacao, setValidacao] = useState(null);
 
-    const { usuarios } = useContext(AppContext);
+    const { usuarios, setUsuarioLogado } = useContext(AppContext);
 
     const login = () => {
-        const usuarioEncontrado = usuarios.find((user) => user.nome === usuario && user.senha === senha && user.tipo === tipoUsuario);
-
-        if (usuarioEncontrado && tipoUsuario === 'sindico') {
-            navigate("/sindico");
-        }
-
-        if (usuarioEncontrado && tipoUsuario === 'morador') {
-            navigate("/morador");
-        }
-
-        if (usuarioEncontrado && tipoUsuario === 'porteiro') {
-            navigate("/portaria");
-        }
-
+        const usuarioEncontrado = usuarios.find((user) => user.email == email && user.senha == senha);
+        if (!usuarioEncontrado) return alert("Usuario não encontrado!")
+        localStorage.setItem("usuarioLog", JSON.stringify(usuarioEncontrado))
+        setUsuarioLogado(usuarioEncontrado)
+        usuarioEncontrado && navigate(`/${usuarioEncontrado.tipo}`);
     }
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         login();
 
     }
@@ -63,8 +52,8 @@ function TelaLogin() {
                         label="Usuario"
                         variant="outlined"
                         sx={{ minWidth: 300 }}
-                        value={usuario}
-                        onChange={(e) => setUsuario(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <TextField
@@ -76,39 +65,7 @@ function TelaLogin() {
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)}
                     />
-
-                    <div className='flex justify-around'>
-                        <p>Sindico
-                            <Checkbox
-                                checked={tipoUsuario == 'sindico'}
-                                value="sindico"
-                                onChange={(e) => setTipoUsuario(e.target.value)}
-                                name='tipoUsuario'
-                            />
-
-                        </p>
-                        <p>Morador
-                            <Checkbox
-                                checked={tipoUsuario == 'morador'}
-                                value="morador"
-                                onChange={(e) => setTipoUsuario(e.target.value)}
-                                name='tipoUsuario'
-                            />
-
-                        </p>
-                        <p>Portaria
-                            <Checkbox
-                                checked={tipoUsuario == 'porteiro'}
-                                value="porteiro"
-                                onChange={(e) => setTipoUsuario(e.target.value)}
-                                name='tipoUsuario'
-                            />
-
-                        </p>
-                    </div>
-
                     <Link href="#">Esqueceu a senha</Link>
-
                     <Button
                         type='submit'
                         sx={{ bgcolor: "rgb(30 64 175)" }}
@@ -116,28 +73,6 @@ function TelaLogin() {
                         Entrar
                     </Button>
                 </form>
-                {/* <div className='mt-2 w-full flex  gap-2' >
-
-                    <Button
-                        className='flex-1'
-                        type='submit'
-                        sx={{ bgcolor: "rgb(30 64 175)" }}
-                        variant="contained"
-                        onClick={() => navigate('/sindico')}
-                    >
-                        Sindico
-                    </Button>
-                    <Button
-                        className='flex-1'
-                        type='submit'
-                        sx={{ bgcolor: "rgb(30 64 175)" }}
-                        variant="contained"
-                        onClick={() => navigate('/portaria')}
-                    >
-                        Portaria
-                    </Button>
-                </div> */}
-
             </Box>
         </div>
 
