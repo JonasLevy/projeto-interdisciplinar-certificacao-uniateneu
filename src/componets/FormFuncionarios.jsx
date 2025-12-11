@@ -44,7 +44,7 @@ const FormFuncionarios = ({ tipoUsuario, criarOuEditar, fecharModal, criarFuncio
             setEmail(funcionario.email);
             setTelefone(funcionario.telefone);
             setCpf(funcionario.cpf);
-            setCargo(funcionario.cargo);
+            setCargo(funcionario.tipo);
         }
     }, []);
 

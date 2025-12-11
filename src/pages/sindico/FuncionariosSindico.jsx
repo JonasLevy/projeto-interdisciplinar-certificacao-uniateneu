@@ -1,13 +1,15 @@
 import { Button, Fab, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardFuncionarios from '../../componets/CardFuncionarios';
 import FormFuncionarios from '../../componets/FormFuncionarios';
+import { AppContext } from '../../context/AppContext';
 
 
 const FuncionariosSindico = () => {
+    const { usuarios } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -20,8 +22,8 @@ const FuncionariosSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setFuncionarioTemp(listaFuncionarioRenderizacao[id])
+    const clickEditar = (funcionario) => {
+        setFuncionarioTemp(funcionario)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -29,8 +31,6 @@ const FuncionariosSindico = () => {
    const criarFuncionario = (funcionario) => {
         setListaFuncionarioRenderizacao([funcionario, ...listaFuncionarioRenderizacao])
     }
-
-    console.log(funcionarioTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -55,8 +55,8 @@ const FuncionariosSindico = () => {
             </div>
 
             <section className='p-8'>
-                {listaFuncionarioRenderizacao?.map((funcionario, i) => (
-                    <CardFuncionarios funcionario={funcionario} clickEditar={() => clickEditar(i)} />
+                {usuarios?.filter(user => user.funcionario == true).map((funcionario, i) => (
+                    <CardFuncionarios funcionario={funcionario} clickEditar={() => clickEditar(funcionario)} />
                 ))
                 }
             </section>

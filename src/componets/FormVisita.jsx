@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import { AppContext } from '../context/AppContext';
+import { v4 } from 'uuid';
 
 const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visita }) => {
 
@@ -12,17 +14,20 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-
+    const { adicionarVisita, usuarioLogado } = useContext(AppContext)
+    const portaria = usuarioLogado.tipo == "portaria"
     //Variaveis dados da visita
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [apartamento, setApartamento] = useState('');
+    const [torre, setTorre] = useState('');
 
     //Variavel horario visita
-    const [horaVisita, setHoraVisita] = useState(null)
+    const [horaVisita, setHoraVisita] = useState(dayjs())
 
     //Variavel data vista
-    const [dataVisita, setDataVisita] = useState(null);
+    const [dataVisita, setDataVisita] = useState(dayjs());
 
     const handleChangeCpf = (e) => {
         const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
@@ -54,16 +59,21 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        fecharModal();
         const visita = {
+            id: v4(),
             nome,
             cpf,
             telefone,
             dataVisita,
-            horaVisita
-        }
+            horaVisita,
+            apto: portaria ? apartamento : usuarioLogado.apt,
+            torre: portaria ? torre : usuarioLogado.torre,
+            responsavel: usuarioLogado.nome,
+            tipo: usuarioLogado.tipo
 
-        criarVisita(visita)
+        }
+        adicionarVisita(visita)
+        fecharModal();
 
     }
 
@@ -108,6 +118,24 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                 value={telefone}
                 onChange={(handleChangeTelefone)}
             />
+            {portaria && <TextField
+                required
+                id="outlined-basic"
+                label="apartamento"
+                variant="outlined"
+                size='small'
+                value={apartamento}
+                onChange={(e) => setApartamento(e.target.value)}
+            />}
+            {portaria && <TextField
+                required
+                id="outlined-basic"
+                label="torre"
+                variant="outlined"
+                size='small'
+                value={torre}
+                onChange={(e) => setTorre(e.target.value)}
+            />}
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker
@@ -117,7 +145,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                     label='Horario Visita'
                     format="HH:mm"
                     ampm={false}
-                    value={horaVisita}
+                    value={dayjs(horaVisita)}
                     onChange={(newValue) => setHoraVisita(newValue)}
                     minTime={dayjs().hour(7).minute(50)}
                     maxTime={dayjs().hour(22).minute(0)}
@@ -130,7 +158,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                     }}
                     label='Data Visita'
                     format='DD/MM/YYYY'
-                    value={dataVisita}
+                    value={dayjs(dataVisita)}
                     onChange={(newValue) => setDataVisita(newValue)}
                     disablePast
                     minDate={dayjs()}

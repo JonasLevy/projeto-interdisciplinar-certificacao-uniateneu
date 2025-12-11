@@ -9,6 +9,8 @@ export const AppProvider = ({ children }) => {
     const [reservas, setReservas] = useState([])
     const [encomendas, setEncomendas] = useState([])
     const [servicos, setServico] = useState([])
+    const [visitas, setVisitas] = useState([])
+    const [notificacao, setnotificacao] = useState([])
 
     const [usuarios, setUsuarios] = useState([
         {
@@ -19,7 +21,8 @@ export const AppProvider = ({ children }) => {
             cpf: "203201256325",
             tipo: "sindico",
             condominio: "A",
-            apt: "123"
+            apt: "123",
+            telefone: "(85) 98585-8585"
         },
         {
             id: 2,
@@ -28,6 +31,22 @@ export const AppProvider = ({ children }) => {
             senha: "12345",
             cpf: "0325698544",
             tipo: "portaria",
+            funcionario: true,
+            telefone: "(85) 98585-8585",
+            ativo: true
+
+        },
+        {
+            id: 3,
+            nome: "Levy",
+            email: "levy@gmail.com",
+            senha: "12345",
+            cpf: "20242119743",
+            tipo: "morador",
+            torre: "A",
+            apt: "404 ",
+            telefone: "(85) 98585-8585",
+            ativo: true 
         }
     ]);
 
@@ -51,12 +70,29 @@ export const AppProvider = ({ children }) => {
         const listaDeEncomendasLocalStorage = localStorage.getItem("encomendas");
         listaDeEncomendasLocalStorage && setEncomendas(JSON.parse(listaDeEncomendasLocalStorage))
         const listaDeServicosLocalStorage = localStorage.getItem("servicos");
-        listaDeServicosLocalStorage && setEncomendas(JSON.parse(listaDeServicosLocalStorage))
+        listaDeServicosLocalStorage && setServico(JSON.parse(listaDeServicosLocalStorage))
+        const listaDeVisitasLocalStorage = localStorage.getItem("visitas");
+        listaDeVisitasLocalStorage && setVisitas(JSON.parse(listaDeVisitasLocalStorage))
+        const listaDenotificacoesLocalStorage = localStorage.getItem("notificacao");
+        listaDenotificacoesLocalStorage && setnotificacao(JSON.parse(listaDenotificacoesLocalStorage))
+
 
         const listaDeReservas = localStorage.getItem("reservas");
         listaDeReservas && setReservas(JSON.parse(listaDeReservas))
 
     }, []);
+
+    const adicionarNotificacao = (novaNotificacao) => {
+        const novalista = [...notificacao, novaNotificacao]
+        setnotificacao(novalista)
+        localStorage.setItem("notificacao", JSON.stringify(novalista))
+    }
+
+    const adicionarVisita = (novaVisita) => {
+        const novalista = [...visitas, novaVisita]
+        setVisitas(novalista)
+        localStorage.setItem("visitas", JSON.stringify(novalista))
+    }
 
     const adicionarServico = (novoServico) => {
         const novalista = [...servicos, novoServico]
@@ -91,7 +127,7 @@ export const AppProvider = ({ children }) => {
 
 
     return (
-        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico }}>
+        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao }}>
             {children}
         </AppContext.Provider>
     );

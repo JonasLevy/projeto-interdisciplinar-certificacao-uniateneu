@@ -22,6 +22,7 @@ import RecebidosPortaria from "../pages/portaria/RecebidosPortaria"
 import ServicosPortaria from "../pages/portaria/ServicosPortaria"
 import VisitasPortaria from "../pages/portaria/VisitasPortaria"
 import AmbientesSindico from "../pages/sindico/AmbienteSinidico"
+import VisitasSindico from "../pages/sindico/VisitasSindico"
 
 const Router = () => {
 
@@ -33,7 +34,7 @@ const Router = () => {
                 <Route path="portaria" element={<PortariaSindico />} />
                 <Route path="reservas" element={<ReservasSindico />} />
                 <Route path="servicos" element={<ServicosSindico />} />
-                <Route path="visitas" element={<VisitasMorador />} />
+                <Route path="visitas" element={<VisitasSindico />} />
                 <Route path="encomendas" element={<EncomendasSindico />} />
                 <Route path="apartamentos" element={<Apartamentos />} />
                 <Route path="moradores" element={<MoradoresSindico />} />
