@@ -7,7 +7,6 @@ import HomeMorador from "../pages/moradores"
 import ReservasMorador from "../pages/moradores/ReservasMorador"
 import ServicosMorador from "../pages/moradores/ServiçosMorador"
 import VisitasMorador from "../pages/moradores/VisitasMorador"
-import DeliveryMorador from "../pages/moradores/DeliveryMorador"
 import EncomendasMorador from "../pages/moradores/EncomendasMorador"
 import ServicosSindico from "../pages/sindico/ServiçosSindico"
 import MoradoresSindico from "../pages/sindico/MoradoresSindico"
@@ -47,7 +46,6 @@ const Router = () => {
                 <Route path="reservas" element={<ReservasMorador />} />
                 <Route path="servicos" element={<ServicosMorador />} />
                 <Route path="visitas" element={<VisitasMorador />} />
-                <Route path="delivery" element={<DeliveryMorador /> } />
                 <Route path="encomendas" element={<EncomendasMorador/>} />
             </Route>
             <Route path="portaria" element={<App />}>   

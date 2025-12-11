@@ -51,7 +51,7 @@ export const AppProvider = ({ children }) => {
         const listaDeEncomendasLocalStorage = localStorage.getItem("encomendas");
         listaDeEncomendasLocalStorage && setEncomendas(JSON.parse(listaDeEncomendasLocalStorage))
         const listaDeServicosLocalStorage = localStorage.getItem("servicos");
-        listaDeServicosLocalStorage && setEncomendas(JSON.parse(listaDeServicosLocalStorage))
+        listaDeServicosLocalStorage && setServico(JSON.parse(listaDeServicosLocalStorage))
 
         const listaDeReservas = localStorage.getItem("reservas");
         listaDeReservas && setReservas(JSON.parse(listaDeReservas))

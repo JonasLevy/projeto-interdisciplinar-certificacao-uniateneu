@@ -26,7 +26,7 @@ const CardEncomenda = ({ clickEditar, encomenda }) => {
                 </div>
             </div>
             <p className="mb-4 text-gray-700">Data Recebimento: {formatData(dayjs(dataRecebimento))}</p>
-            {codigoEntrega.trim() === "" ? (<p></p>):(<p className="mb-4 text-gray-700">Codigo: {codigoEntrega}</p>)}
+            {codigoEntrega === "" ? (<p></p>):(<p className="mb-4 text-gray-700">Codigo: {codigoEntrega}</p>)}
             <p className="mb-4 text-gray-700">Descrição: {descricao}</p>
             <div className="flex justify-between items-center">
                 <button 
