@@ -7,6 +7,7 @@ import FormSevico from '../../componets/FormSevico';
 import CardServico from '../../componets/CardServico';
 import { AppContext } from '../../context/AppContext';
 
+
 const ServicosMorador = () => {
     const { servicos } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
@@ -62,8 +63,8 @@ const ServicosMorador = () => {
             <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
             <BasicModal openModal={openModal} title={`${tipoModal} Serviço`} close={() => setOpenModal(false)}>
                 <FormSevico
-                    tipoUsuario={"Morador"} // Passa o tipo de usuário para o formulário
-                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
+                    tipoUsuario={"Morador"}
+                    criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
                     criarServico={criarServico}
                     servico={servico}

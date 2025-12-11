@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
@@ -7,18 +7,18 @@ import CardReserva from '../../componets/CardReserva';
 import FormReserva from '../../componets/FormReserva';
 import { AppContext } from '../../context/AppContext';
 
-
-
 const ReservasMorador = () => {
     const { reservas } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
 
-    const [listaReservaRenderizacao, setListaReservaRenderizacao] = useState([]);
-    const [reservaTemp, setReservaTemp] = useState(null);
+    const [reservasTemp, setReservasTemp] = useState(null); // Quado u usuario clicar em editar, armazena o objeto da reserva
+    const [listaReservas, setListasReservas] = useState([])
+    console.log(listaReservas)
 
     const criarReserva = (reserva) => {
-        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
+        alert("sdasd")
+        setListasReservas([reserva, ...listaReservas])
     }
 
     // ## Função para abrir o modal de criar ou editar reserva
@@ -29,13 +29,14 @@ const ReservasMorador = () => {
 
     // ## Função para abrir o modal no modo editar reserva
     const clickEditar = (id) => {
+        const buscaReservas = reservas.find(res => res.id == id)
+        setReservasTemp(buscaReservas)
         setTipoModal("Editar");
-        setReservaTemp(listaReservas[id])
+        setReserva(listaReservas[id])
         setOpenModal(!openModal);
-    // fazer logica para buscar a reserva pelo idReserva
-    //setIdReserva(idReserva);
     }
 
+    console.log("reservasTemp:", reservasTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -56,13 +57,13 @@ const ReservasMorador = () => {
                 </div>
             </div>
             <section className='p-8 gap-4 flex flex-col'>
-                {reservas?.map((reserva, i) => (
+                {listaReservas?.map((reserva, i) => (
                     <CardReserva reserva={reserva} key={reserva.id} clickEditar={() => clickEditar(i)} />
                 ))
                 }
             </section>
 
-            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} /> {/* ##função  */}
+            <ButtonModal click={() => clickOpenModal()} tipoModal={tipoModal} />
 
             <BasicModal
                 openModal={openModal}
@@ -70,11 +71,11 @@ const ReservasMorador = () => {
                 close={() => setOpenModal(false)}
             >
                 <FormReserva
-                    tipoUsuario="morador" // Passa o tipo de usuário para o formulário
-                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
-                    fecharModal={() => setOpenModal(!openModal)}
+                    tipoUsuario="Morador" // Passa o tipo de usuário para o formulário
+                    objetoReserva={reservas}
                     criarReserva={criarReserva}
-                    reserva={reservaTemp}/>
+                    criarOuEditar={tipoModal} // Indica se é para criar ou editar
+                    fecharModal={() => setOpenModal(!openModal)} />
             </BasicModal >
         </div>
     );

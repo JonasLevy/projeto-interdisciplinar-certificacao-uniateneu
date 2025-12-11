@@ -10,6 +10,7 @@ import CardEncomenda from '../../componets/CardEncomenda';
 import { AppContext } from '../../context/AppContext';
 
 const EncomendasMorador = () => {
+    // Estados para controle de modal e lista de encomendas
     const { encomendas } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null);
@@ -23,7 +24,8 @@ const EncomendasMorador = () => {
     }
 
     const clickEditar = (id) => {
-        setEncomendaTemp(listaEncomendaRenderizacao[id])
+        const buscaEncomenda = encomendas.find(enco => enco.id == id)
+        setEncomendaTemp(buscaEncomenda)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -32,7 +34,7 @@ const EncomendasMorador = () => {
         setListaEncomendaRenderizacao([encomenda, ...listaEncomendaRenderizacao]);
     }
 
-    console.log(encomendaTemp);
+    console.log("encomendaTemp", encomendaTemp);
 
     return (
         <div className="min-h-full w-full ">
@@ -54,6 +56,9 @@ const EncomendasMorador = () => {
             <section className='p-8 flex flex-col gap-4'> 
                 {encomendas?.map((encomenda, i) => (
                     <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(i)}/>
+                ))}
+                {listaEncomendaRenderizacao?.map((encomenda, i) => (
+                    <CardEncomenda encomendas={encomenda} clickEditar={() => clickEditar(encomenda.i)}/>
                 ))}
 
             </section>

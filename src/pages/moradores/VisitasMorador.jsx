@@ -22,8 +22,9 @@ const VisitasMorador = () => {
     }
 
     const clickEditar = (id) => {
-        setVisitaTemp(listaVisitasRenderizacao[id])
-        setTipoModal("Editar");
+        const buscaServicos = visitas.find(vis => vis.id == id)
+        setVisitaTemp(buscaServicos)
+        setServicoTemp("Editar");
         setOpenModal(!openModal);
     }
 
@@ -31,7 +32,7 @@ const VisitasMorador = () => {
         setListaVisitasRenderizacao([visita, ...listaVisitasRenderizacao])
     }
 
-    console.log(visitaTemp)
+    console.log("visitaTemp:", visitaTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -52,7 +53,7 @@ const VisitasMorador = () => {
                 </div>
             </div>
             <section className='p-8 flex flex-col gap-4'>
-                {visitas?.map((visita, i) => (
+                {listaVisitasRenderizacao?.map((visita, i) => (
                     <CardVisita visita={visita} clickEditar={() => clickEditar(i)} />
                 ))
                 }
