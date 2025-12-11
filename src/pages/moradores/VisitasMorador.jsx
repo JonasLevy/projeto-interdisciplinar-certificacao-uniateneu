@@ -53,7 +53,7 @@ const VisitasMorador = () => {
                 </div>
             </div>
             <section className='p-8 flex flex-col gap-4'>
-                {listaVisitasRenderizacao?.map((visita, i) => (
+                {visitas?.map((visita, i) => (
                     <CardVisita visita={visita} clickEditar={() => clickEditar(i)} />
                 ))
                 }

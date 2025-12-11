@@ -1,18 +1,23 @@
 import { Button, Fab, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import FormNotificacoes from '../../componets/FormNotificacoes';
 import CardNotificacao from '../../componets/CardNotificacao';
+import { AppContext } from '../../context/AppContext';
 
 const Notificacoes = () => {
+    const { notificacao } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     
     const [tipoModal, setTipoModal] = useState(null);
 
     const [listaNotificacaoRenderizacao, setListaNotificacaoRenderizacao] = useState([]);
+    useEffect(() => {
+        setListaNotificacaoRenderizacao(notificacao)
+    }, [notificacao])
     const [notificacaoTemp, setNotificacaoTemp] = useState(null);
 
     const clickOpenModal = () => {
@@ -30,7 +35,7 @@ const Notificacoes = () => {
         setListaNotificacaoRenderizacao([notificacao, ...listaNotificacaoRenderizacao])
     }
 
-    console.log(notificacaoTemp);
+    console.log(notificacao);
 
     return (
         <div className="min-h-full w-full ">

@@ -18,9 +18,6 @@ const HomeMorador = () => {
                 className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box p-8"
                 style={{ maxWidth: "100vw" }}
             >
-                <ButtonPages name="Delivery" click='/morador/delivery'>
-                    <DeliveryDiningIcon />
-                </ButtonPages>
                 <ButtonPages name="Encomendas" click={'/morador/encomendas'}>
                     <MarkunreadMailboxIcon />
                 </ButtonPages>

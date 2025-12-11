@@ -57,7 +57,7 @@ const ReservasMorador = () => {
                 </div>
             </div>
             <section className='p-8 gap-4 flex flex-col'>
-                {listaReservas?.map((reserva, i) => (
+                {reservas?.map((reserva, i) => (
                     <CardReserva reserva={reserva} key={reserva.id} clickEditar={() => clickEditar(i)} />
                 ))
                 }

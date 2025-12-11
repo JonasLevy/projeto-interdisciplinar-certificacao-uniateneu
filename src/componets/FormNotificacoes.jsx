@@ -1,8 +1,12 @@
 import { Button, Fab, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { v4 } from 'uuid';
 
 const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotificacao, notificacao }) => {
+
+    const { usuarios, adicionarNotificacao } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -26,12 +30,12 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
         fecharModal();
 
         const notificacao = {
-            nomeMorador,
+            id: v4(),
             mensagem,
             destinatario
         }
 
-        criarNotificacao(notificacao);
+        adicionarNotificacao(notificacao)
     }
 
     useEffect(() => {
@@ -50,21 +54,17 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
                 label='Destinatario'
                 value={destinatario}
                 onChange={(e) => setDestinatario(e.target.value)}
-            >
-                <MenuItem value={"Um"}>Morador</MenuItem>
-                <MenuItem value={"Todos"}>Todos os Moradores</MenuItem>
 
+            >
+                <MenuItem value={"todos"}>"Todos"</MenuItem>
+                {usuarios?.filter(user => user.tipo == "morador").map(user => {
+                    return (
+                        <MenuItem value={user.id}>{user.nome}</MenuItem>
+
+                    )
+                })}
             </TextField>
 
-            <TextField
-                id="outlined-basic"
-                label="Nome Morador"
-                value={nomeMorador}
-                onChange={(e) => setNomeMorador(e.target.value)}
-                variant="outlined"
-                disabled={destinatario === "Todos"}
-                required={destinatario === "Um"}
-            />
 
             <TextField
                 required
