@@ -258,10 +258,30 @@ export const AppProvider = ({ children }) => {
         localStorage.setItem("usuarios", JSON.stringify(novaLista))
     };
 
+    const editarUsuario = (id, modificação) => {
+        const novaLista = usuarios.map(user => {
+            if (user.id == id) {
+                const { nome,
+                    email,
+                    senha,
+                    cpf,
+                    telefone,
+                    apt,
+                    torre } = modificação
+                return { ...user, nome, email, senha, cpf, telefone, apt, torre }
+            }
+
+            return user
+        })
+
+        setUsuarios(novaLista);
+        localStorage.setItem("usuarios", JSON.stringify(novaLista))
+    }
+
 
 
     return (
-        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente }}>
+        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente, editarUsuario }}>
             {children}
         </AppContext.Provider>
     );

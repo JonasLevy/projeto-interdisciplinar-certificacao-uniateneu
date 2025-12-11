@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
 
-    const { addUsuario } = useContext(AppContext);
+    const { addUsuario, editarUsuario } = useContext(AppContext);
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -55,7 +55,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        const inquilino = {
+        const novoUsuario = {
             id: uuidv4(),
             nome,
             email,
@@ -67,8 +67,10 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
             torre
         }
 
-        criarMorador(inquilino);
-        addUsuario(inquilino);
+        if (editar) {
+            editarUsuario(inquilino.id, novoUsuario);
+        }
+        editar || addUsuario(novoUsuario);
         fecharModal();
 
     }

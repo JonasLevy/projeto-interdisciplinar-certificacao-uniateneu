@@ -27,9 +27,8 @@ const MoradoresSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        const buscamorador = listaMoradorRenderizacao.find(user => user.id == id)
-        setMoradorTemp(buscamorador)
+    const clickEditar = (morador) => {
+        setMoradorTemp(morador)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -59,8 +58,8 @@ const MoradoresSindico = () => {
                 </div>
             </div>
             <section className='p-8'>
-                {listaMoradorRenderizacao?.filter((user => user.tipo == "morador")).map((morador, i) => (
-                    <CardMorador morador={morador} clickEditar={() => clickEditar(morador.id)} />
+                {usuarios?.filter((user => user.tipo == "morador")).map((morador, i) => (
+                    <CardMorador morador={morador} clickEditar={() => clickEditar(morador)} />
                 ))
                 }
 
