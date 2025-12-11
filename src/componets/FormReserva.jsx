@@ -10,7 +10,7 @@ import { v4 } from 'uuid';
 import { AppContext } from '../context/AppContext';
 
 const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
-    const { adicionarReserva, ambientes, editarReserva } = useContext(AppContext)
+    const { adicionarReserva, ambientes, editarReserva, usuarioLogado } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -61,7 +61,8 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             reservaHoraSaida,
             descricaoReserva,
             apt,
-            torre
+            torre,
+            idUsuario: usuarioLogado.id
         }
 
         if (editar) {

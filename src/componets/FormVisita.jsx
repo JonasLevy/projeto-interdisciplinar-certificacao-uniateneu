@@ -69,8 +69,8 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
             apto: portaria ? apartamento : usuarioLogado.apt,
             torre: portaria ? torre : usuarioLogado.torre,
             responsavel: usuarioLogado.nome,
-            tipo: usuarioLogado.tipo
-
+            tipo: usuarioLogado.tipo,
+            idUsuario: usuarioLogado.id
         }
 
         if (editar) {

@@ -13,7 +13,7 @@ import { v4 } from 'uuid';
 
 const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
-    const { adicionarServico, editarServico } = useContext(AppContext)
+    const { adicionarServico, editarServico, usuarioLogado } = useContext(AppContext)
     console.log(servico)
 
     let editar = criarOuEditar === "Editar";
@@ -64,7 +64,8 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             horaSaida,
             apt,
             torre,
-            descricao
+            descricao,
+            idUsuario: usuarioLogado.id
         }
         if (editar) {
             editarServico(servico.id, novoServico)

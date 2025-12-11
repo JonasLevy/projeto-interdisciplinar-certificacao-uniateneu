@@ -13,7 +13,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-    const { adicionarEncomendas, editarEncomendas } = useContext(AppContext)
+    const { adicionarEncomendas, editarEncomendas, usuarioLogado } = useContext(AppContext)
     const [dateType, setDateType] = useState("text");
     const [empresa, setEmpresa] = useState('');
     const [dataRecebimento, setDataRecebimento] = useState(dayjs());
@@ -43,7 +43,8 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
             empresa,
             dataRecebimento,
             descricao,
-            codigoEntrega
+            codigoEntrega,
+            idUsuario: usuarioLogado.id
         }
 
         if (editar) {
