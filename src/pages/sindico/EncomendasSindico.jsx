@@ -24,9 +24,8 @@ const EncomendasSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        const buscaEncomenda = encomendas.find(enco => enco.id == id)
-        setEncomendaTemp(buscaEncomenda)
+    const clickEditar = (encomenda) => {
+        setEncomendaTemp(encomenda)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -53,7 +52,7 @@ const EncomendasSindico = () => {
 
             <section className='p-8 flex flex-col gap-4'>
                 {encomendas?.map((encomenda, i) => (
-                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(encomenda.id)} />
+                    <CardEncomenda encomenda={encomenda} clickEditar={() => clickEditar(encomenda)} />
                 ))}
 
             </section>

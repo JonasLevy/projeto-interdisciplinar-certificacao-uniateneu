@@ -9,10 +9,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
 import { AppContext } from '../context/AppContext';
+import { v4 } from 'uuid';
 
 const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
-    const { adicionarServico } = useContext(AppContext)
+    const { adicionarServico, editarServico } = useContext(AppContext)
+    console.log(servico)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -53,7 +55,8 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        const servico = {
+        const novoServico = {
+            id: v4(),
             nomeEmpresa,
             dataInicio,
             dataFim,
@@ -63,7 +66,10 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             torre,
             descricao
         }
-        adicionarServico(servico)
+        if (editar) {
+            editarServico(servico.id, novoServico)
+        }
+        editar || adicionarServico(novoServico)
         fecharModal()
     }
 

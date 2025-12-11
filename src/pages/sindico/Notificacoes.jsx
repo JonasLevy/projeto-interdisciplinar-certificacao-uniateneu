@@ -25,8 +25,8 @@ const Notificacoes = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setNotificacaoTemp(listaNotificacaoRenderizacao[id])
+    const clickEditar = (notificacao) => {
+        setNotificacaoTemp(notificacao)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -60,7 +60,7 @@ const Notificacoes = () => {
 
             <section className='p-8 flex flex-col gap-4'>
                 {listaNotificacaoRenderizacao?.map((notificacao, i) => (
-                    <CardNotificacao notificacao={notificacao} clickEditar={() => clickEditar(i)} />
+                    <CardNotificacao notificacao={notificacao} clickEditar={() => clickEditar(notificacao)} />
                 ))
                 }
 

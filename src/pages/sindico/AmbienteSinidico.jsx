@@ -22,9 +22,8 @@ const AmbientesSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        const buscaAmbiente = ambientes.find(amb=> amb.id == id)
-        setAmbienteTemp(buscaAmbiente)
+    const clickEditar = (ambiente) => {
+        setAmbienteTemp(ambiente)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -54,7 +53,7 @@ const AmbientesSindico = () => {
             </div>
             <section className='p-8'>
                 {ambientes?.map((ambientemap, i) => (
-                    <CardAmbientes ambientes={ambientemap} clickEditar={() => clickEditar(ambientemap.id)} />
+                    <CardAmbientes ambientes={ambientemap} clickEditar={() => clickEditar(ambientemap)} />
                 ))
                 }
 
@@ -67,7 +66,7 @@ const AmbientesSindico = () => {
                     criarOuEditar={tipoModal}
                     fecharModal={() => setOpenModal(!openModal)}
                     criarAmbiente={criarAmbiente}
-                    inquilino={ambienteTemp}
+                    ambiente={ambienteTemp}
                  />
             </BasicModal>
 

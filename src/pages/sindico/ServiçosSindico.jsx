@@ -21,9 +21,9 @@ const ServicosSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
+    const clickEditar = (servico) => {
         setTipoModal("Editar");
-        setServico(listaServicoRenderizacao[id]);
+        setServico(servico);
         setOpenModal(!openModal);
     }
 
@@ -54,7 +54,7 @@ const ServicosSindico = () => {
 
             <section className='p-8'>
                 {servicos?.map((servico, i) => (
-                    <CardServico servico={servico} clickEditar={() => clickEditar(i)} />
+                    <CardServico servico={servico} clickEditar={() => clickEditar(servico)} />
                 ))}
                 
 

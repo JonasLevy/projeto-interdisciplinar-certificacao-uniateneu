@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotificacao, notificacao }) => {
 
-    const { usuarios, adicionarNotificacao } = useContext(AppContext)
+    const { usuarios, adicionarNotificacao, editarNotificação } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -29,22 +29,28 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
         e.preventDefault();
         fecharModal();
 
-        const notificacao = {
+
+        const novaNotificacao = {
             id: v4(),
             mensagem,
             destinatario
         }
 
-        adicionarNotificacao(notificacao)
+
+        if (editar) {
+            return editarNotificação(notificacao.id, { mensagem, destinatario })
+        }
+        adicionarNotificacao(novaNotificacao)
     }
+
+
 
     useEffect(() => {
         if(editar) {
-            setNomeMorador(notificacao.nomeMorador);
+            setDestinatario(notificacao.destinatario);
             setMensagem(notificacao.mensagem)
         }
     }, [])
-
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
@@ -82,7 +88,7 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
                     variant="contained" 
                     type='submit' 
                     color='success'>
-                    {(editar && !sindico)|| criarOuEditar== "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
                 <Button 
                     variant="contained"

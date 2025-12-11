@@ -23,13 +23,15 @@ const FormApt = ({ tipoUsuario, criarOuEditar, fecharModal, criarApt, apt }) => 
         e.preventDefault();
         fecharModal()
 
-        const apt = {
+        const novoApt = {
             andar,
             apartamento,
             torre
         }
+        if (editar) {
 
-        criarApt(apt);
+        }
+        editar || criarApt(novoApt);
     }
 
     useEffect(() => {

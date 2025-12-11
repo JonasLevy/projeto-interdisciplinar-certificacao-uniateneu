@@ -13,7 +13,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-    const { adicionarEncomendas } = useContext(AppContext)
+    const { adicionarEncomendas, editarEncomendas } = useContext(AppContext)
     const [dateType, setDateType] = useState("text");
     const [empresa, setEmpresa] = useState('');
     const [dataRecebimento, setDataRecebimento] = useState(dayjs());
@@ -37,7 +37,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
     const submitForm = (e) => {
         e.preventDefault();
 
-        const encomenda = {
+        const novaEncomenda = {
             id: v4(),
             tipoEncomenda,
             empresa,
@@ -45,7 +45,11 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
             descricao,
             codigoEntrega
         }
-        adicionarEncomendas(encomenda)
+
+        if (editar) {
+            editarEncomendas(encomenda.id, novaEncomenda)
+        }
+        editar || adicionarEncomendas(novaEncomenda)
         fecharModal();
     }
 
@@ -104,12 +108,10 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
 
             <TextField
                 id="outlined-basic"
-                label="Codigo Entrega"
+                label="Codigo"
                 value={codigoEntrega}
                 onChange={(e) => setCodigoEntrga(e.target.value)}
                 variant="outlined"
-                disabled={tipoEncomenda == 'Entrega'}
-                required={tipoEncomenda == 'Delivery'}
                 size='small'
             />
 

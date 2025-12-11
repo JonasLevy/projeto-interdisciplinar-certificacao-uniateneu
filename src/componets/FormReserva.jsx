@@ -10,7 +10,7 @@ import { v4 } from 'uuid';
 import { AppContext } from '../context/AppContext';
 
 const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
-    const { adicionarReserva, ambientes } = useContext(AppContext)
+    const { adicionarReserva, ambientes, editarReserva } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -53,7 +53,7 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
         e.preventDefault();
         // Lógica para enviar o formulário
         fecharModal(); // ## Fecha o modal ao cancelar - prop passada pela pagina pai
-        const reserva = {
+        const novaReserva = {
             id: v4(),
             espaco,
             dataReserva,
@@ -64,7 +64,11 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             torre
         }
 
-        adicionarReserva(reserva)
+        if (editar) {
+            editarReserva(reserva.id, novaReserva)
+        }
+
+        editar || adicionarReserva(novaReserva)
     }
 
     // ## monta o formulario ao ser aberto o modal com os dados da reserva para editar

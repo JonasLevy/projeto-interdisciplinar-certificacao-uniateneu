@@ -88,10 +88,53 @@ export const AppProvider = ({ children }) => {
         localStorage.setItem("notificacao", JSON.stringify(novalista))
     }
 
+    const editarNotificação = (id, modificação) => {
+        const novaLista = notificacao.map(notif => {
+            if (notif.id == id) {
+                const { mensagem, destinatario } = modificação
+                return { ...notif, mensagem, destinatario }
+            }
+            return notif
+        })
+
+        setnotificacao(novaLista)
+        localStorage.setItem("notificacao", JSON.stringify(novaLista))
+    }
+
     const adicionarVisita = (novaVisita) => {
         const novalista = [...visitas, novaVisita]
         setVisitas(novalista)
         localStorage.setItem("visitas", JSON.stringify(novalista))
+    }
+
+    const editarVisita = (id, modificacao) => {
+        const novaLista = visitas.map(visit => {
+            if (visit.id == id) {
+                const { nome,
+                    cpf,
+                    telefone,
+                    dataVisita,
+                    horaVisita,
+                    apto,
+                    torre,
+                    responsavel } = modificacao
+                return {
+                    ...visit,
+                    nome,
+                    cpf,
+                    telefone,
+                    dataVisita,
+                    horaVisita,
+                    apto,
+                    torre,
+                    responsavel
+                }
+            }
+            return visit
+        })
+
+        setVisitas(novaLista)
+        localStorage.setItem("visitas", JSON.stringify(novaLista))
     }
 
     const adicionarServico = (novoServico) => {
@@ -100,10 +143,61 @@ export const AppProvider = ({ children }) => {
         localStorage.setItem("servicos", JSON.stringify(novalista))
     }
 
+    const editarServico = (id, modificação) => {
+        const novaLista = servicos.map(serv => {
+            if (serv.id == id) {
+                const { nomeEmpresa,
+                    dataInicio,
+                    dataFim,
+                    horaEntrada,
+                    horaSaida,
+                    apt,
+                    torre,
+                    descricao } = modificação
+                return {
+                    ...serv, nomeEmpresa,
+                    dataInicio,
+                    dataFim,
+                    horaEntrada,
+                    horaSaida,
+                    apt,
+                    torre,
+                    descricao
+                }
+            }
+            return serv
+        })
+
+        setServico(novaLista)
+        localStorage.setItem("servicos", JSON.stringify(novaLista))
+    }
+
     const adicionarEncomendas = (novaEncomenda) => {
         const novalista = [...encomendas, novaEncomenda]
         setEncomendas(novalista)
         localStorage.setItem("encomendas", JSON.stringify(novalista))
+    }
+
+    const editarEncomendas = (id, modificação) => {
+        const novaLista = encomendas.map(encom => {
+            if (encom.id == id) {
+                const { tipoEncomenda,
+                    empresa,
+                    dataRecebimento,
+                    descricao,
+                    codigoEntrega } = modificação
+                return {
+                    ...encom, tipoEncomenda,
+                    empresa,
+                    dataRecebimento,
+                    descricao,
+                    codigoEntrega
+                }
+            }
+            return encom
+        })
+        setEncomendas(novaLista)
+        localStorage.setItem("encomendas", JSON.stringify(novaLista))
     }
 
     const adicionarReserva = (novaReserva) => {
@@ -112,11 +206,51 @@ export const AppProvider = ({ children }) => {
         localStorage.setItem("reservas", JSON.stringify(novalista))
     }
 
+    const editarReserva = (id, modificação) => {
+        const novaLista = reservas.map(reserv => {
+            if (reserv.id == id) {
+                const { espaco,
+                    dataReserva,
+                    reservaHoraEntrada,
+                    reservaHoraSaida,
+                    descricaoReserva,
+                    apt,
+                    torre } = modificação
+                return {
+                    ...reserv, espaco,
+                    dataReserva,
+                    reservaHoraEntrada,
+                    reservaHoraSaida,
+                    descricaoReserva,
+                    apt,
+                    torre
+                }
+            }
+            return reserv
+        })
+        setReservas(novaLista)
+        localStorage.setItem("reservas", JSON.stringify(novaLista))
+    }
+
     const adicionarAmbientes = (novoAmbiente) => {
         const novalista = [...ambientes, novoAmbiente]
         setAmbientes(novalista)
         localStorage.setItem("ambientes", JSON.stringify(novalista))
     }
+
+    const editarAmbiente = (id, modificação) => {
+        const novaLista = ambientes.map(amb => {
+            if (amb.id == id) {
+                const { nome, info } = modificação
+                return { ...amb, nome, info }
+            }
+            return amb
+        })
+
+        setAmbientes(novaLista)
+        localStorage.setItem("ambientes", JSON.stringify(novaLista))
+    }
+
 
     const addUsuario = (novoUsuario) => {
         const novaLista = [...usuarios, novoUsuario]
@@ -127,7 +261,7 @@ export const AppProvider = ({ children }) => {
 
 
     return (
-        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao }}>
+        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente }}>
             {children}
         </AppContext.Provider>
     );

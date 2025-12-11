@@ -3,21 +3,22 @@ import { Button, Fab, TextField } from '@mui/material';
 import { v4 } from 'uuid';
 import { AppContext } from '../context/AppContext';
 
-const FormAmbientes = ({ criarOuEditar, fecharModal, inquilino, listCondomonio }) => {
+const FormAmbientes = ({ criarOuEditar, fecharModal, ambiente, listCondomonio }) => {
 
     const [nome, setNome] = useState('');
     const [info, setInfo] = useState('');
     const [idCondominio, setIdCondominio] = useState('');
 
-    const { adicionarAmbientes } = useContext(AppContext)
+    const { adicionarAmbientes, editarAmbiente } = useContext(AppContext)
 
     useEffect(() => {
         if (criarOuEditar == "Editar") {
-            setNome(inquilino.nome);
-            setInfo(inquilino.info);
+            setNome(ambiente.nome);
+            setInfo(ambiente.info);
         }
     }, [])
 
+    console.log(ambiente)
     const handleClick = () => {
         setNome('');
         setInfo('');
@@ -35,8 +36,11 @@ const FormAmbientes = ({ criarOuEditar, fecharModal, inquilino, listCondomonio }
             id: v4(),
         }
 
-        adicionarAmbientes(novoAmbiente)
+        if (criarOuEditar == "Editar") {
+            editarAmbiente(ambiente.id, novoAmbiente)
+        }
 
+        criarOuEditar == "Editar" || adicionarAmbientes(novoAmbiente)
         fecharModal()
         //criarMorador(body)
     }

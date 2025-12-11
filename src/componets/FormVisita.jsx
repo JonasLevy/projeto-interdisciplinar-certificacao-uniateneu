@@ -14,7 +14,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-    const { adicionarVisita, usuarioLogado } = useContext(AppContext)
+    const { adicionarVisita, usuarioLogado, editarVisita } = useContext(AppContext)
     const portaria = usuarioLogado.tipo == "portaria"
     //Variaveis dados da visita
     const [nome, setNome] = useState('');
@@ -59,7 +59,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        const visita = {
+        const novaVisita = {
             id: v4(),
             nome,
             cpf,
@@ -72,7 +72,22 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
             tipo: usuarioLogado.tipo
 
         }
-        adicionarVisita(visita)
+
+        if (editar) {
+            editarVisita(visita.id, {
+                nome,
+                cpf,
+                telefone,
+                dataVisita,
+                horaVisita,
+                apto: portaria ? apartamento : usuarioLogado.apt,
+                torre: portaria ? torre : usuarioLogado.torre,
+                responsavel: usuarioLogado.nome,
+                tipo: usuarioLogado.tipo
+            })
+            fecharModal();
+        }
+        editar || adicionarVisita(novaVisita)
         fecharModal();
 
     }
@@ -85,7 +100,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
             setHoraVisita(visita.horaVisita);
             setDataVisita(visita.dataVisita);
         }
-    }, [])
+    }, []) 
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
