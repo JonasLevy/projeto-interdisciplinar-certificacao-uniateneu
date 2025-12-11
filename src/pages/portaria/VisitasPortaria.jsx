@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CardVisita from '../../componets/CardVisita';
 import FormVisita from '../../componets/FormVisita';
+import { AppContext } from '../../context/AppContext';
 
 
 const VisitasPortaria = () => {
+    const { visitas } = useContext(AppContext);
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -21,7 +23,8 @@ const VisitasPortaria = () => {
     }
 
     const clickEditar = (id) => {
-        setVisitaTemp(listaVisitasRenderizacao[id])
+        const buscarVisita = visitas.find(vis => vis.id == id)
+        setVisitaTemp(buscarVisita)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -51,8 +54,8 @@ const VisitasPortaria = () => {
                 </div>
             </div>
             <section className='p-8 flex flex-col gap-4'>
-                {listaVisitasRenderizacao?.map((visita, i) => (
-                    <CardVisita visita={visita} clickEditar={() => clickEditar(i)} />
+                {visitas?.map((visita, i) => (
+                    <CardVisita visita={visita} clickEditar={() => clickEditar(visita.id)} />
                 ))
                 }
             </section>

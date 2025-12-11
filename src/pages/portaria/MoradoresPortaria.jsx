@@ -1,11 +1,19 @@
 import { Button, Fab, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CardMorador from '../../componets/CardMorador';
+import { AppContext } from '../../context/AppContext';
 
 const MoradoresPortaria = () => {
-    const [listaMoradorRenderizacao] = useState([]);
+    const { usuarios } = useContext(AppContext);
+
+    const [listaMoradorRenderizacao, setListaMoradorRenderizacao] = useState([]);
     const [moradorTemp, setMoradorTemp] = useState(null);
+
+    useEffect(() => {
+        setListaMoradorRenderizacao(usuarios)
+    }, [usuarios])
+
 
     const clickEditar = (id) => {
         setMoradorTemp(listaMoradorRenderizacao[id])
