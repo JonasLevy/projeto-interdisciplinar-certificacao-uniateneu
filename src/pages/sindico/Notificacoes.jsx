@@ -15,6 +15,7 @@ const Notificacoes = () => {
     const [tipoModal, setTipoModal] = useState(null);
 
     const [listaNotificacaoRenderizacao, setListaNotificacaoRenderizacao] = useState([]);
+
     useEffect(() => {
         setListaNotificacaoRenderizacao(notificacao)
     }, [notificacao])
@@ -35,9 +36,8 @@ const Notificacoes = () => {
         setListaNotificacaoRenderizacao([notificacao, ...listaNotificacaoRenderizacao])
     }
 
-    console.log(notificacao);
 
-    return (
+    return ( 
         <div className="min-h-full w-full ">
             <div className='flex  h-16 bg-slate-300 p-3 items-center justify-between'>
                 <h1>Notificações</h1>

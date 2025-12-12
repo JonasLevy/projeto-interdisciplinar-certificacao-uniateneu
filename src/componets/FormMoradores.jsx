@@ -168,7 +168,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                     variant="contained"
                     type='submit'
                     color='success'>
-                    {(editar && !sindico) || criarOuEditar == "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
 
                 <Button variant="contained" color='error' onClick={handleClick}> Cancelar

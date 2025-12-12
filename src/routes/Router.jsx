@@ -12,6 +12,8 @@ import ServicosSindico from "../pages/sindico/ServiçosSindico"
 import MoradoresSindico from "../pages/sindico/MoradoresSindico"
 import ReservasSindico from "../pages/sindico/ReservasSindico"
 import Notificacoes from "../pages/sindico/Notificacoes"
+import PortalTransparencia from "../pages/sindico/PortalTransparencia"
+import InformacoesSindico from "../pages/sindico/InformacoesSindico"
 import PortariaSindico from "../pages/sindico/PortariaSindico"
 import Apartamentos from "../pages/sindico/Apartamentos"
 import FuncionariosSindico from "../pages/sindico/FuncionariosSindico"
@@ -22,13 +24,17 @@ import ServicosPortaria from "../pages/portaria/ServicosPortaria"
 import VisitasPortaria from "../pages/portaria/VisitasPortaria"
 import AmbientesSindico from "../pages/sindico/AmbienteSinidico"
 import VisitasSindico from "../pages/sindico/VisitasSindico"
+import PrivateRoute from "../componets/RotaProtegida"
+import NotificacaoMorador from "../pages/moradores/NotificacaoMorador"
+import PortalTransparenciaMorador from "../pages/moradores/PortalTransparenciaMorador"
+import InformacoesMorador from "../pages/moradores/InformacoesMorador"
 
 const Router = () => {
 
     return (
         <Routes>
-            <Route index element={<TelaLogin/>} />
-            <Route path="/sindico" element={<App />}>
+            <Route index element={<TelaLogin />} />
+            <Route path="/sindico" element={<PrivateRoute> <App /></PrivateRoute>}>
                 <Route index element={<Index />} />
                 <Route path="portaria" element={<PortariaSindico />} />
                 <Route path="reservas" element={<ReservasSindico />} />
@@ -40,16 +46,21 @@ const Router = () => {
                 <Route path="funcionarios" element={<FuncionariosSindico />} />
                 <Route path="notificacao" element={<Notificacoes />} />
                 <Route path="ambientes" element={<AmbientesSindico />} />
+                <Route path="transparencia" element={<PortalTransparencia />} />
+                <Route path="informacoes" element={<InformacoesSindico />} />
 
             </Route>
-            <Route path="morador" element={<App />}>
+            <Route path="morador" element={<PrivateRoute><App /></PrivateRoute>}>
                 <Route index  element={<HomeMorador />} />
                 <Route path="reservas" element={<ReservasMorador />} />
                 <Route path="servicos" element={<ServicosMorador />} />
                 <Route path="visitas" element={<VisitasMorador />} />
-                <Route path="encomendas" element={<EncomendasMorador/>} />
+                <Route path="encomendas" element={<EncomendasMorador />} />
+                <Route path="notificacao" element={<NotificacaoMorador />} />
+                <Route path="transparencia" element={<PortalTransparenciaMorador />} />
+                <Route path="informacoes" element={<InformacoesMorador />} />
             </Route>
-            <Route path="portaria" element={<App />}>   
+            <Route path="portaria" element={<PrivateRoute><App /></PrivateRoute>}>   
                 <Route index  element={<Portaria />} />
                 <Route path="moradores" element={<MoradoresPortaria />} />
                 <Route path="encomendas" element={<RecebidosPortaria />} />

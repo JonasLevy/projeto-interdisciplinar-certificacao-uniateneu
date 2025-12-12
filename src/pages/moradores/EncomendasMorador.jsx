@@ -36,24 +36,12 @@ const EncomendasMorador = () => {
         setListaEncomendaRenderizacao([encomenda, ...listaEncomendaRenderizacao]);
     }
 
-    console.log("encomendaTemp", encomendaTemp);
 
     return (
         <div className="min-h-full w-full ">
             <div className='flex  h-16 bg-slate-300 p-3 items-center justify-between'>
                 <h1>Encomendas</h1>
 
-                <div className='flex gap-1'>
-                    <TextField
-                        id="outlined-basic"
-                        label="Apartamento"
-                        variant="outlined"
-                        size='small'
-                    />
-                    <Button variant="contained" aria-label="search" size='small' color='success'>
-                        <SearchIcon />
-                    </Button>
-                </div>
             </div>
             <section className='p-8'>
                 {encomendas?.filter((encom => encom.idUsuario == usuarioLogado.id)).map((encomenda, i) => (

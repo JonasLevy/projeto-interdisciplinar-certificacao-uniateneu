@@ -33,7 +33,8 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
         const novaNotificacao = {
             id: v4(),
             mensagem,
-            destinatario
+            destinatario,
+            isOpen: false
         }
 
 

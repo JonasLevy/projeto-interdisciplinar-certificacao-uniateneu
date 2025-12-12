@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Fab, TextField } from '@mui/material';
+import { Button, Fab, MenuItem, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import dayjs from 'dayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -13,13 +13,14 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-    const { adicionarEncomendas, editarEncomendas, usuarioLogado } = useContext(AppContext)
+    const { adicionarEncomendas, editarEncomendas, usuarioLogado, usuarios } = useContext(AppContext)
     const [dateType, setDateType] = useState("text");
     const [empresa, setEmpresa] = useState('');
     const [dataRecebimento, setDataRecebimento] = useState(dayjs());
     const [tipoEncomenda, setTipoEncomenda] = React.useState('Delivery');
     const [codigoEntrega, setCodigoEntrga] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [destinatario, setDestinatario] = useState('');
 
     const handleChange = (e) => {
         setTipoEncomenda(e.target.value);
@@ -44,7 +45,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
             dataRecebimento,
             descricao,
             codigoEntrega,
-            idUsuario: usuarioLogado.id
+            idUsuario: usuarioLogado.tipo == "portaria" ? destinatario : usuarioLogado.id
         }
 
         if (editar) {
@@ -83,6 +84,24 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
                 /></p>
             </div>
 
+            {usuarioLogado.tipo == "portaria" && <TextField
+                required
+                select
+                label='Destinatario'
+                value={destinatario}
+                onChange={(e) => setDestinatario(e.target.value)}
+                size='small'
+
+
+            >
+                {usuarios?.filter(user => user.tipo != "portaria").map(user => {
+                    return (
+                        <MenuItem value={user.id}>{`${user.nome} - apto: ${user.apt} - ${user.torre && user.torre}`}</MenuItem>
+
+                    )
+                })}
+            </TextField>}
+
             <TextField
                 required
                 id="outlined-basic"
@@ -98,7 +117,7 @@ const FormEncomendas = ({ tipoUsuario, criarOuEditar, fecharModal, criarEncomend
                     slotProps={{
                         textField: { size: 'small', required: "true", }
                     }}
-                    label='Data Reversa'
+                    label='Data'
                     format='DD/MM/YYYY'
                     value={dayjs(dataRecebimento)}
                     onChange={(newValue) => setDataRecebimento(newValue)}

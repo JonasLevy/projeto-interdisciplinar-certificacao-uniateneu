@@ -10,7 +10,7 @@ import { v4 } from 'uuid';
 import { AppContext } from '../context/AppContext';
 
 const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, reserva }) => {
-    const { adicionarReserva, ambientes, editarReserva, usuarioLogado } = useContext(AppContext)
+    const { adicionarReserva, ambientes, editarReserva, usuarioLogado, usuarios } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -20,11 +20,11 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
     const [espaco, setEspaco] = useState('');
 
     //Variavel data reserva
-    const [dataReserva, setDataReserva] = useState(null);
+    const [dataReserva, setDataReserva] = useState(dayjs());
 
     //Variaveis do horario
-    const [reservaHoraEntrada, setReservaHoraEntrada] = useState(null);
-    const [reservaHoraSaida, setReservaHoraSaida] = useState(null);
+    const [reservaHoraEntrada, setReservaHoraEntrada] = useState(dayjs());
+    const [reservaHoraSaida, setReservaHoraSaida] = useState(dayjs());
 
     //Variaveis do Apt e torre
     const [apt, setApt] = useState("");
@@ -62,7 +62,8 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             descricaoReserva,
             apt,
             torre,
-            idUsuario: usuarioLogado.id
+            idUsuario: usuarioLogado.id,
+            status: editar ? reserva.status : "Pendente",
         }
 
         if (editar) {
@@ -74,9 +75,14 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
 
     // ## monta o formulario ao ser aberto o modal com os dados da reserva para editar
     useEffect(() => {
+        if (!editar) {
+            setApt(usuarioLogado.apt);
+            setTorre(usuarioLogado.torre);
+        }
         if (editar) {
-            setApt("202");
-            setTorre("B");
+            const morador = usuarios.find(user => user.id == reserva?.idUsuario)
+            setApt(morador.apt);
+            setTorre(morador.torre);
             setEspaco(reserva.espaco);
             setDataReserva(reserva.dataReserva);
             setReservaHoraEntrada(reserva.reservaHoraEntrada);
@@ -168,7 +174,6 @@ const FormReserva = ({ tipoUsuario, criarOuEditar, fecharModal, criarReserva, re
             </LocalizationProvider>
 
             <TextField
-                required
                 id="outlined-basic"
                 label="Descrição da reserva" variant="outlined"
                 multiline

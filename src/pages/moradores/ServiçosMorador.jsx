@@ -42,17 +42,7 @@ const ServicosMorador = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Serviços </h1>
-                <div className='flex gap-1'>
-                    <TextField
-                        id="outlined-basic"
-                        label="Apartamento"
-                        variant="outlined"
-                        size='small'
-                    />
-                    <Button variant="contained" aria-label="search" size='small' color='success'>
-                        <SearchIcon />
-                    </Button>
-                </div>
+
             </div>
 
             <section className='p-8'>

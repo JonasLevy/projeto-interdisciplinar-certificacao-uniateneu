@@ -13,7 +13,7 @@ const CardApartamentos = ({clickEditar, apt}) => {
     } = apt
     
     return(
-        <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200">
+        <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-200 mb-4">
             <div className="flex items-center mb-4 ">
                 <div className="">
                     <h2 className="text-lg font-semibold text-gray-900">Ap-{apt.apt} - Torre {torre}</h2>

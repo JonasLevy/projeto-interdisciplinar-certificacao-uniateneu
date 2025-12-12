@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
     const [servicos, setServico] = useState([])
     const [visitas, setVisitas] = useState([])
     const [notificacao, setnotificacao] = useState([])
+    const [gastos, setGastos] = useState([])
 
     const [usuarios, setUsuarios] = useState([
         {
@@ -21,7 +22,8 @@ export const AppProvider = ({ children }) => {
             cpf: "203201256325",
             tipo: "sindico",
             condominio: "A",
-            apt: "123",
+            apt: "Escritorio",
+            torre: "a",
             telefone: "(85) 98585-8585"
         },
         {
@@ -79,6 +81,8 @@ export const AppProvider = ({ children }) => {
 
         const listaDeReservas = localStorage.getItem("reservas");
         listaDeReservas && setReservas(JSON.parse(listaDeReservas))
+        const listaDeGastos = localStorage.getItem("gastos");
+        listaDeGastos && setGastos(JSON.parse(listaDeGastos))
 
     }, []);
 
@@ -86,6 +90,30 @@ export const AppProvider = ({ children }) => {
         const novalista = [...notificacao, novaNotificacao]
         setnotificacao(novalista)
         localStorage.setItem("notificacao", JSON.stringify(novalista))
+    }
+
+    const adicionarGasto = (novoGasto) => {
+        const novalista = [...gastos, novoGasto]
+        setGastos(novalista)
+        localStorage.setItem("gastos", JSON.stringify(novalista))
+    }
+
+    const editarGasto = (id, modificacao) => {
+        const novaLista = gastos.map(g => {
+            if (g.id == id) {
+                const { titulo, descricao, valor, data, categoria } = modificacao
+                return { ...g, titulo, descricao, valor, data, categoria }
+            }
+            return g
+        })
+        setGastos(novaLista)
+        localStorage.setItem("gastos", JSON.stringify(novaLista))
+    }
+
+    const removerGasto = (id) => {
+        const novaLista = gastos.filter(g => g.id != id)
+        setGastos(novaLista)
+        localStorage.setItem("gastos", JSON.stringify(novaLista))
     }
 
     const editarNotificação = (id, modificação) => {
@@ -99,6 +127,19 @@ export const AppProvider = ({ children }) => {
 
         setnotificacao(novaLista)
         localStorage.setItem("notificacao", JSON.stringify(novaLista))
+    }
+
+    const marcarNotificacoesLidas = (usuarioId) => {
+        const novaLista = notificacao.map(notif => {
+            const isForAll = (notif.destinatario === 'Todos' || notif.destinatario === 'todos');
+            const isForUser = notif.destinatario == usuarioId;
+            if (isForAll || isForUser) {
+                return { ...notif, isOpen: true };
+            }
+            return notif;
+        });
+        setnotificacao(novaLista);
+        localStorage.setItem("notificacao", JSON.stringify(novaLista));
     }
 
     const adicionarVisita = (novaVisita) => {
@@ -232,6 +273,20 @@ export const AppProvider = ({ children }) => {
         localStorage.setItem("reservas", JSON.stringify(novaLista))
     }
 
+    const aprovarReserva = (id, statusReserva) => {
+        alert(`Reserva ${statusReserva} com sucesso!`)
+        const novaLista = reservas.map(reserv => {
+            if (reserv.id == id) {
+                return {
+                    ...reserv, status: statusReserva
+                }
+            }
+            return reserv
+        })
+        setReservas(novaLista)
+        localStorage.setItem("reservas", JSON.stringify(novaLista))
+    }
+
     const adicionarAmbientes = (novoAmbiente) => {
         const novalista = [...ambientes, novoAmbiente]
         setAmbientes(novalista)
@@ -281,7 +336,7 @@ export const AppProvider = ({ children }) => {
 
 
     return (
-        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente, editarUsuario }}>
+        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, marcarNotificacoesLidas, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente, editarUsuario, aprovarReserva, gastos, adicionarGasto, editarGasto, removerGasto }}>
             {children}
         </AppContext.Provider>
     );

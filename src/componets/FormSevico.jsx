@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
-import { Button, Fab, TextField } from '@mui/material';
+import { Button, Fab, MenuItem, TextField } from '@mui/material';
 import BasicChildModal from '../componets/ChildModal';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -13,12 +13,10 @@ import { v4 } from 'uuid';
 
 const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
-    const { adicionarServico, editarServico, usuarioLogado } = useContext(AppContext)
-    console.log(servico)
+    const { adicionarServico, editarServico, usuarioLogado, usuarios } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
-    let morador = tipoUsuario === "Morador";
 
     //Variavel nome da empresa
     const [nomeEmpresa, setNomeEmpresa] = useState("");
@@ -34,9 +32,41 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
     //Variaveis Apt e torre
     const [apt, setApt] = useState("");
     const [torre, setTorre] = useState("");
+    const [destinatario, setDestinatario] = useState("");
 
     //Variavel da descrição do serviço
     const [descricao, setDescricao] = useState('');
+
+    useEffect(() => {
+        if (usuarioLogado != "portaria") {
+            setApt(usuarioLogado.apt)
+            setTorre(usuarioLogado.torre)
+        }
+        if (editar) {
+            setNomeEmpresa(servico.nomeEmpresa);
+            setDataInicio(dayjs(servico.dataInicio));
+            setDataFim(dayjs(servico.dataFim));
+            setHoraEntrada(dayjs(servico.horaEntrada));
+            setHoraSaida(dayjs(servico.horaSaida));
+            setApt(servico.apt);
+            setTorre(servico.torre);
+            setDescricao(servico.descricao);
+            if (usuarioLogado.tipo == "portaria") {
+                setDestinatario(servico.idUsuario)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        const morador = usuarios.find(user => user.id == destinatario)
+        if (morador) {
+            setApt(morador.apt)
+            setTorre(morador.torre)
+        }
+    }, [destinatario])
+
+
+
 
 
     const handleClick = () => {
@@ -64,8 +94,8 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             horaSaida,
             apt,
             torre,
-            descricao,
-            idUsuario: usuarioLogado.id
+            descricao, 
+            idUsuario: usuarioLogado.tipo == "portaria" ? destinatario : usuarioLogado.id
         }
         if (editar) {
             editarServico(servico.id, novoServico)
@@ -74,21 +104,24 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
         fecharModal()
     }
 
-    useEffect(() => {
-        if (editar) {
-            setNomeEmpresa(servico.nomeEmpresa);
-            setDataInicio(dayjs(servico.dataInicio))
-            setDataFim(dayjs(servico.dataFim));
-            setHoraEntrada(servico.horaEntrada);
-            setHoraSaida(servico.horaSaida);
-            setApt("101");
-            setTorre("A");
-            setDescricao(servico.descricao);
-        }
-    }, []);
-
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
+            {usuarioLogado.tipo == "portaria" &&
+                <TextField
+                    required
+                    select
+                    label='Destinatario'
+                    value={destinatario}
+                    onChange={(e) => setDestinatario(e.target.value)}
+                    size='small'
+                >
+                    {usuarios?.filter(user => user.tipo != "portaria").map(user => {
+                        return (
+                            <MenuItem value={user.id}>{`${user.nome} - apto: ${user.apt} - ${user.torre && user.torre}`}</MenuItem>
+
+                        )
+                    })}
+                </TextField>}
             <TextField
                 required
                 id="outlined-basic"
@@ -191,7 +224,6 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
 
 
             <TextField
-                required
                 id="outlined-multiline-flexible"
                 label="Descrição do Serviço"
                 multiline

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button, Fab, TextField } from '@mui/material';
+import { Button, Fab, MenuItem, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -14,7 +14,7 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     let sindico = tipoUsuario === "Sindico";
     let morador = tipoUsuario === "Morador";
 
-    const { adicionarVisita, usuarioLogado, editarVisita } = useContext(AppContext)
+    const { adicionarVisita, usuarioLogado, editarVisita, usuarios } = useContext(AppContext)
     const portaria = usuarioLogado.tipo == "portaria"
     //Variaveis dados da visita
     const [nome, setNome] = useState('');
@@ -22,12 +22,33 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
     const [telefone, setTelefone] = useState('');
     const [apartamento, setApartamento] = useState('');
     const [torre, setTorre] = useState('');
+    const [destinatario, setDestinatario] = useState("");
+    const [responsavel, setResponsavel] = useState("");
+
 
     //Variavel horario visita
     const [horaVisita, setHoraVisita] = useState(dayjs())
 
     //Variavel data vista
     const [dataVisita, setDataVisita] = useState(dayjs());
+
+    useEffect(() => {
+        if (usuarioLogado != "portaria") {
+            setApartamento(usuarioLogado.apt)
+            setTorre(usuarioLogado.torre)
+            setResponsavel(usuarioLogado.id)
+        }
+    }, [])
+
+    useEffect(() => {
+        const morador = usuarios.find(user => user.id == destinatario)
+        if (morador) {
+            setApartamento(morador.apt)
+            setTorre(morador.torre)
+            setResponsavel(morador.id)
+
+        }
+    }, [destinatario])
 
     const handleChangeCpf = (e) => {
         const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
@@ -66,11 +87,12 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
             telefone,
             dataVisita,
             horaVisita,
-            apto: portaria ? apartamento : usuarioLogado.apt,
-            torre: portaria ? torre : usuarioLogado.torre,
-            responsavel: usuarioLogado.nome,
+            apto: apartamento,
+            torre,
+            responsavel,
             tipo: usuarioLogado.tipo,
-            idUsuario: usuarioLogado.id
+            idUsuario: usuarioLogado.tipo == "portaria" ? destinatario : usuarioLogado.id
+
         }
 
         if (editar) {
@@ -104,6 +126,24 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
+
+            {usuarioLogado.tipo == "portaria" &&
+                <TextField
+                    required
+                    select
+                    label='Destinatario'
+                    value={destinatario}
+                    onChange={(e) => setDestinatario(e.target.value)}
+                    size='small'
+                >
+                    {usuarios?.filter(user => user.tipo != "portaria").map(user => {
+                        return (
+                            <MenuItem value={user.id}>{`${user.nome} - apto: ${user.apt} - ${user.torre && user.torre}`}</MenuItem>
+
+                        )
+                    })}
+                </TextField>}
+
             <TextField
                 required
                 id="outlined-basic"
@@ -141,6 +181,8 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                 size='small'
                 value={apartamento}
                 onChange={(e) => setApartamento(e.target.value)}
+                disabled={true}
+
             />}
             {portaria && <TextField
                 required
@@ -150,6 +192,8 @@ const FormVisita = ({ tipoUsuario, criarOuEditar, fecharModal, criarVisita, visi
                 size='small'
                 value={torre}
                 onChange={(e) => setTorre(e.target.value)}
+                disabled={true}
+
             />}
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>

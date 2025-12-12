@@ -1,4 +1,4 @@
-import { useState, React, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -6,6 +6,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 import { AppContext } from '../context/AppContext';
 
 
@@ -20,6 +26,21 @@ function TelaLogin() {
     const [validacao, setValidacao] = useState(null);
 
     const { usuarios, setUsuarioLogado } = useContext(AppContext);
+    const [mostrarUsuarios, setMostrarUsuarios] = useState(false);
+
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLog"))
+
+    useEffect(() => {
+        try {
+            if (usuarioLogado.tipo) {
+                navigate(`/${usuarioLogado.tipo}`)
+            }
+
+        } catch (error) {
+            navigate(`/`)
+
+        }
+    }, [])
 
     const login = () => {
         const usuarioEncontrado = usuarios.find((user) => user.email == email && user.senha == senha);
@@ -27,6 +48,12 @@ function TelaLogin() {
         localStorage.setItem("usuarioLog", JSON.stringify(usuarioEncontrado))
         setUsuarioLogado(usuarioEncontrado)
         usuarioEncontrado && navigate(`/${usuarioEncontrado.tipo}`);
+    }
+
+    const preencherUsuario = (user) => {
+        setEmail(user.email);
+        setSenha(user.senha);
+        setTipoUsuario(user.tipo);
     }
 
     const handleSubmit = (e) => {
@@ -73,6 +100,23 @@ function TelaLogin() {
                         Entrar
                     </Button>
                 </form>
+                <div className='mt-4'>
+                    <Button size='small' variant='outlined' onClick={() => setMostrarUsuarios(!mostrarUsuarios)}>
+                        {mostrarUsuarios ? 'Ocultar usuários' : 'Mostrar usuários (teste)'}
+                    </Button>
+                    {mostrarUsuarios && (
+                        <List className='mt-3 w-72'>
+                            {usuarios?.map((user) => (
+                                <ListItem key={user.id} className='bg-slate-100 rounded mb-2'>
+                                    <ListItemText primary={`${user.nome} (${user.tipo})`} secondary={`Apt: ${user.apt || '-'}  —  ${user.email}`} />
+                                    <IconButton edge='end' aria-label='usar' onClick={() => preencherUsuario(user)} sx={{ ml: 'auto' }}>
+                                        <ContentPasteGoIcon />
+                                    </IconButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    )}
+                </div>
             </Box>
         </div>
 

@@ -35,7 +35,6 @@ const VisitasMorador = () => {
         setListaVisitasRenderizacao([visita, ...listaVisitasRenderizacao])
     }
 
-    console.log("visitaTemp:", visitaTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -43,17 +42,7 @@ const VisitasMorador = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Visitas</h1>
-                <div className='flex gap-1'>
-                    <TextField
-                        id="outlined-basic"
-                        label="Apartamento"
-                        variant="outlined"
-                        size='small'
-                    />
-                    <Button variant="contained" aria-label="search" size='small' color='success'>
-                        <SearchIcon />
-                    </Button>
-                </div>
+
             </div>
             <section className='p-8'>
                 {visitas?.filter((vis => vis.idUsuario == usuarioLogado.id)).map((visita, i) => (

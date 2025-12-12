@@ -33,8 +33,20 @@ const ReservasSindico = () => {
     }
 
     const criarReserva = (reserva) => {
-        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
-    }
+        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao]);
+    };
+
+    // Ordena a lista para que reservas com status 'pendente' apareçam primeiro
+    const listaOrdenada = React.useMemo(() => {
+        const base = [...listaReservaRenderizacao, ...(reservas || [])];
+        return base.sort((a, b) => {
+            const aPend = (a?.status || '').toString().toLowerCase() === 'pendente';
+            const bPend = (b?.status || '').toString().toLowerCase() === 'pendente';
+            if (aPend && !bPend) return -1;
+            if (!aPend && bPend) return 1;
+            return 0; // mantém ordem relativa entre itens do mesmo tipo
+        });
+    }, [listaReservaRenderizacao, reservas]);
 
     return (
         <div className="min-h-full w-full ">
@@ -58,8 +70,12 @@ const ReservasSindico = () => {
             </div>
 
             <section className='p-8'>
-                {reservas?.map((reserva, i) => (
-                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(reserva.id)} />
+                {listaOrdenada?.map((reserva, i) => (
+                    <CardReserva
+                        key={reserva?.id ?? i}
+                        reserva={reserva}
+                        clickEditar={() => clickEditar(reserva.id)}
+                    />
                 ))}
                 
             </section>
