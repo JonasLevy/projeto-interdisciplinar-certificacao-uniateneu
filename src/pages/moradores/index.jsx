@@ -1,30 +1,39 @@
 import ButtonPages from "../../componets/ButtonPages"
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
-import HandymanIcon from '@mui/icons-material/Handyman';
-import { useNavigate } from "react-router-dom";
-
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import RoomServiceIcon from '@mui/icons-material/RoomService';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const HomeMorador = () => {
+
     return (
-        <div className="text-center">
+        <div className="text-center ">
             <div
                 className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 justify-items-center gap-4 border-box p-8"
                 style={{ maxWidth: "100vw" }}
             >
-                <ButtonPages name="Delivery" click='/morador/delivery'>
-                    <DeliveryDiningIcon />
-                </ButtonPages>
                 <ButtonPages name="Encomendas" click={'/morador/encomendas'}>
-                    <MarkunreadMailboxIcon />
+                    <LocalShippingIcon />
                 </ButtonPages>
                 <ButtonPages name="Serviços" click={'/morador/servicos'}>
-                    <HandymanIcon />
+                    <RoomServiceIcon />
                 </ButtonPages>
                 <ButtonPages name="Reservas" click={'/morador/reservas'}>
-                    <HandymanIcon />
+                    <EventAvailableIcon />
                 </ButtonPages>
                 <ButtonPages name="Visitas" click={'/morador/visitas'}>
-                    <HandymanIcon />
+                    <PersonAddIcon />
+                </ButtonPages>
+                <ButtonPages name="Notificação" click={'/morador/notificacao'}>
+                    <CampaignIcon />
+                </ButtonPages>
+                <ButtonPages name="Transparencia" click={'/morador/transparencia'}>
+                    <AccountBalanceWalletIcon />
+                </ButtonPages>
+                <ButtonPages name="Informacoes" click={'/morador/informacoes'}>
+                    <AccountCircleIcon />
                 </ButtonPages>
             </div>
         </div>

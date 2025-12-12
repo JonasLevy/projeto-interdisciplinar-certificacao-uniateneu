@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
+import { AppContext } from '../context/AppContext';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, inquilino }) => {
+
+    const { addUsuario, editarUsuario } = useContext(AppContext);
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -11,6 +16,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [cpf, setCpf] = useState('');
+    const [senha, setSenha] = useState('');
     const [telefone, setTelefone] = useState('');
 
     //Variaveis do Apt e torre
@@ -43,48 +49,43 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
         setEmail('')
         setApt('');
         setTorre('');
-
         fecharModal();
     }
 
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        fecharModal();
-        const inquilino = {
-            nome, 
-            email, 
+        const novoUsuario = {
+            id: uuidv4(),
+            nome,
+            email,
+            senha,
             cpf,
+            tipo: 'morador',
             telefone,
             apt,
-            torre 
+            torre
         }
 
-        criarMorador(inquilino)
+        if (editar) {
+            editarUsuario(inquilino.id, novoUsuario);
+        }
+        editar || addUsuario(novoUsuario);
+        fecharModal();
+
     }
 
     useEffect(() => {
-        if(editar) {
+        if (editar) {
             setNome(inquilino.nome);
             setEmail(inquilino.email);
             setCpf(inquilino.cpf);
+            setSenha(inquilino.senha)
             setTelefone(inquilino.telefone);
             setApt(inquilino.apt);
             setTorre(inquilino.torre);
         }
-    })
-
-
-    useEffect(() => {
-        if (editar) {
-            setNome("Antonio Nunes");
-            setEmail("AntonioNunes123@gmail.com");
-            setCpf("0878765433");
-            setTelefone("(85)99234-5540");
-            setApt('101');
-            setTorre('A');
-        }
-    }, []);
+    }, [])
 
     return (
         <form onSubmit={submitForm} className="border p-3 flex flex-col gap-5 mb-3 ">
@@ -118,8 +119,21 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                 placeholder='Somente os numeros'
                 value={cpf}
                 onChange={handleChangeCpf}
-
             />
+
+            <TextField
+                required
+                id="outlined-password-input"
+                label="Senha"
+                size='small'
+                type="password"
+                autoComplete="current-password"
+                sx={{ minWidth: 300 }}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+            />
+
+
             <TextField
                 required
                 label="Telefone"
@@ -154,7 +168,7 @@ const FormMoradores = ({ tipoUsuario, criarOuEditar, fecharModal, criarMorador, 
                     variant="contained"
                     type='submit'
                     color='success'>
-                    {(editar && !sindico) || criarOuEditar == "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
 
                 <Button variant="contained" color='error' onClick={handleClick}> Cancelar

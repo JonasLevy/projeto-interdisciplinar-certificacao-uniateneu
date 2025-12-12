@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { Button, IconButton, InputBase, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FormSevico from '../../componets/FormSevico';
 import CardServico from '../../componets/CardServico';
+import { AppContext } from '../../context/AppContext';
 
 const ServicosSindico = () => {
+    const { servicos } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -19,9 +21,9 @@ const ServicosSindico = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
+    const clickEditar = (servico) => {
         setTipoModal("Editar");
-        setServico(listaServicoRenderizacao[id]);
+        setServico(servico);
         setOpenModal(!openModal);
     }
 
@@ -51,8 +53,8 @@ const ServicosSindico = () => {
             </div>
 
             <section className='p-8'>
-                {listaServicoRenderizacao?.map((servico, i) => (
-                    <CardServico servico={servico} clickEditar={() => clickEditar(i)} />
+                {servicos?.map((servico, i) => (
+                    <CardServico servico={servico} clickEditar={() => clickEditar(servico)} />
                 ))}
                 
 

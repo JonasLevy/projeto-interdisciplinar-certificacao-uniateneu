@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Fab, TextField } from '@mui/material';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardReserva from '../../componets/CardReserva';
 import FormReserva from '../../componets/FormReserva';
+import { AppContext } from '../../context/AppContext';
 
 
 const ReservasSindico = () => {
+    const { reservas } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
     
@@ -22,7 +24,8 @@ const ReservasSindico = () => {
 
     // ## Função para abrir o modal no modo editar reserva
     const clickEditar = (id) => {
-        setReservaTemp(listaReservaRenderizacao[id])
+        const buscarReserva = reservas.find(reserv => reserv.id == id)
+        setReservaTemp(buscarReserva)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     // fazer logica para buscar a reserva pelo idReserva
@@ -30,10 +33,20 @@ const ReservasSindico = () => {
     }
 
     const criarReserva = (reserva) => {
-        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao])
-    }
+        setListaReservaRenderizacao([reserva, ...listaReservaRenderizacao]);
+    };
 
-    console.log(reservaTemp);
+    // Ordena a lista para que reservas com status 'pendente' apareçam primeiro
+    const listaOrdenada = React.useMemo(() => {
+        const base = [...listaReservaRenderizacao, ...(reservas || [])];
+        return base.sort((a, b) => {
+            const aPend = (a?.status || '').toString().toLowerCase() === 'pendente';
+            const bPend = (b?.status || '').toString().toLowerCase() === 'pendente';
+            if (aPend && !bPend) return -1;
+            if (!aPend && bPend) return 1;
+            return 0; // mantém ordem relativa entre itens do mesmo tipo
+        });
+    }, [listaReservaRenderizacao, reservas]);
 
     return (
         <div className="min-h-full w-full ">
@@ -57,8 +70,12 @@ const ReservasSindico = () => {
             </div>
 
             <section className='p-8'>
-                {listaReservaRenderizacao?.map((reserva, i) => (
-                    <CardReserva reserva={reserva} clickEditar={() => clickEditar(i)} />
+                {listaOrdenada?.map((reserva, i) => (
+                    <CardReserva
+                        key={reserva?.id ?? i}
+                        reserva={reserva}
+                        clickEditar={() => clickEditar(reserva.id)}
+                    />
                 ))}
                 
             </section>

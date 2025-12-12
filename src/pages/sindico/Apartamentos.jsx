@@ -1,13 +1,20 @@
 import { Button, Fab, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import CardApartamentos from '../../componets/CardApartamentos';
 import FormApt from '../../componets/FormApt';
+import { AppContext } from '../../context/AppContext';
 
 
 const Apartamentos = () => {
+    const { usuarios } = useContext(AppContext)
+    const moradores = usuarios.filter(u => u.tipo === "morador");
+    const apartamentos = [...new Set(moradores.map(m => m))];
+    console.log(apartamentos)
+
+
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -21,8 +28,8 @@ const Apartamentos = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setAptTemp(listaAptRenderizacao[id]);
+    const clickEditar = (apt) => {
+        setAptTemp(apt);
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -56,8 +63,8 @@ const Apartamentos = () => {
             </div>
 
             <section className='p-8'>
-                {listaAptRenderizacao?.map((apt, i) => (
-                    <CardApartamentos apt={apt} clickEditar={() => clickEditar(i)} />
+                {apartamentos?.map((apt, i) => (
+                    <CardApartamentos apt={apt} clickEditar={() => clickEditar(apt)} />
                 ))}
             </section>
 

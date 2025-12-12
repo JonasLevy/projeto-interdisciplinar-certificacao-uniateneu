@@ -1,6 +1,7 @@
 import React from 'react';
 import { formatData } from '../hooks/formatData';
 import { formatHora } from '../hooks/formatHora';
+import dayjs from 'dayjs';
 
 
 const CardVisita = ({ clickEditar, visita }) => {
@@ -8,8 +9,6 @@ const CardVisita = ({ clickEditar, visita }) => {
     const OnClickDetalhe = () => {
         clickEditar();
     }
-
-    console.log(visita)
 
     const {
         nome,
@@ -20,13 +19,12 @@ const CardVisita = ({ clickEditar, visita }) => {
     } = visita
 
     return (
-        <article className="border p-4 rounded shadow-md bg-white">
-            <h2 className="text-lg font-semibold mb-2">Visita</h2>
-            <p className="text-gray-600 text-xs">Detalhes da visita serão exibidos aqui.</p>
-            <p className="text-gray-600 text-xs">Nome: {nome}</p>
-            <p className="text-gray-600 text-xs">Data: {formatData(dataVisita)}</p>
-            <p className="text-gray-600 text-xs">Hora de Entrada: {formatHora(horaVisita)}</p>
-            <p className="text-gray-600 text-xs">Apartamento: 101</p>
+        <article className="border p-4 rounded shadow-md bg-white mb-4">
+            <h2 className="text-lg font-semibold mb-2">{nome}</h2>
+            <p className="text-gray-700 text-xs">Detalhes da visita serão exibidos aqui.</p>
+            <p className="text-gray-700 text-xs">Data: {formatData(dayjs(dataVisita))}</p>
+            <p className="text-gray-700 text-xs">Hora de Entrada: {formatHora(dayjs(horaVisita))}</p>
+            <p className="text-gray-700 text-xs">Apartamento: 101</p>
 
             <div className="flex justify-end ">
                 <button

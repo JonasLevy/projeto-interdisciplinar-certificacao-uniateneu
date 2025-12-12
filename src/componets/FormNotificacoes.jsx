@@ -1,8 +1,12 @@
 import { Button, Fab, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { v4 } from 'uuid';
 
 const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotificacao, notificacao }) => {
+
+    const { usuarios, adicionarNotificacao, editarNotificação } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
@@ -25,22 +29,29 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
         e.preventDefault();
         fecharModal();
 
-        const notificacao = {
-            nomeMorador,
+
+        const novaNotificacao = {
+            id: v4(),
             mensagem,
-            destinatario
+            destinatario,
+            isOpen: false
         }
 
-        criarNotificacao(notificacao);
+
+        if (editar) {
+            return editarNotificação(notificacao.id, { mensagem, destinatario })
+        }
+        adicionarNotificacao(novaNotificacao)
     }
+
+
 
     useEffect(() => {
         if(editar) {
-            setNomeMorador(notificacao.nomeMorador);
+            setDestinatario(notificacao.destinatario);
             setMensagem(notificacao.mensagem)
         }
     }, [])
-
 
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
@@ -50,21 +61,17 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
                 label='Destinatario'
                 value={destinatario}
                 onChange={(e) => setDestinatario(e.target.value)}
-            >
-                <MenuItem value={"Um"}>Morador</MenuItem>
-                <MenuItem value={"Todos"}>Todos os Moradores</MenuItem>
 
+            >
+                <MenuItem value={"todos"}>"Todos"</MenuItem>
+                {usuarios?.filter(user => user.tipo == "morador").map(user => {
+                    return (
+                        <MenuItem value={user.id}>{user.nome}</MenuItem>
+
+                    )
+                })}
             </TextField>
 
-            <TextField
-                id="outlined-basic"
-                label="Nome Morador"
-                value={nomeMorador}
-                onChange={(e) => setNomeMorador(e.target.value)}
-                variant="outlined"
-                disabled={destinatario === "Todos"}
-                required={destinatario === "Um"}
-            />
 
             <TextField
                 required
@@ -82,7 +89,7 @@ const FormNotificacoes = ({ tipoUsuario, criarOuEditar, fecharModal, criarNotifi
                     variant="contained" 
                     type='submit' 
                     color='success'>
-                    {(editar && !sindico)|| criarOuEditar== "Criar" ? "Salvar" : "Solicitar Edição"}
+                    Salvar
                 </Button>
                 <Button 
                     variant="contained"

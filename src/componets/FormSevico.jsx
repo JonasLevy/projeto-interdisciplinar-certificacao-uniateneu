@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
-import { Button, Fab, TextField } from '@mui/material';
+import { Button, Fab, MenuItem, TextField } from '@mui/material';
 import BasicChildModal from '../componets/ChildModal';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -8,31 +8,65 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import FormPrestadorServico from './FormPrestadorServico';
+import { AppContext } from '../context/AppContext';
+import { v4 } from 'uuid';
 
 const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, servico }) => {
     const [openChildModal, setOpenChildModal] = useState(false);
+    const { adicionarServico, editarServico, usuarioLogado, usuarios } = useContext(AppContext)
 
     let editar = criarOuEditar === "Editar";
     let sindico = tipoUsuario === "Sindico";
-    let morador = tipoUsuario === "Morador";
 
     //Variavel nome da empresa
     const [nomeEmpresa, setNomeEmpresa] = useState("");
 
     //Variaveis das datas de inicio e fim
-    const [dataInicio, setDataInicio] = useState(null);
-    const [dataFim, setDataFim] = useState(null);
+    const [dataInicio, setDataInicio] = useState(dayjs());
+    const [dataFim, setDataFim] = useState(dayjs());
 
     //Variaveis dos horarios de entrada e saida
-    const [horaEntrada, setHoraEntrada] = useState(null);
-    const [horaSaida, setHoraSaida] = useState(null);
+    const [horaEntrada, setHoraEntrada] = useState(dayjs());
+    const [horaSaida, setHoraSaida] = useState(dayjs());
 
     //Variaveis Apt e torre
     const [apt, setApt] = useState("");
     const [torre, setTorre] = useState("");
+    const [destinatario, setDestinatario] = useState("");
 
     //Variavel da descrição do serviço
     const [descricao, setDescricao] = useState('');
+
+    useEffect(() => {
+        if (usuarioLogado != "portaria") {
+            setApt(usuarioLogado.apt)
+            setTorre(usuarioLogado.torre)
+        }
+        if (editar) {
+            setNomeEmpresa(servico.nomeEmpresa);
+            setDataInicio(dayjs(servico.dataInicio));
+            setDataFim(dayjs(servico.dataFim));
+            setHoraEntrada(dayjs(servico.horaEntrada));
+            setHoraSaida(dayjs(servico.horaSaida));
+            setApt(servico.apt);
+            setTorre(servico.torre);
+            setDescricao(servico.descricao);
+            if (usuarioLogado.tipo == "portaria") {
+                setDestinatario(servico.idUsuario)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        const morador = usuarios.find(user => user.id == destinatario)
+        if (morador) {
+            setApt(morador.apt)
+            setTorre(morador.torre)
+        }
+    }, [destinatario])
+
+
+
 
 
     const handleClick = () => {
@@ -51,7 +85,8 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
     const submitForm = (e) => {
         e.preventDefault();
         // Lógica para enviar o formulário
-        const servico = {
+        const novoServico = {
+            id: v4(),
             nomeEmpresa,
             dataInicio,
             dataFim,
@@ -59,27 +94,34 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
             horaSaida,
             apt,
             torre,
-            descricao
+            descricao, 
+            idUsuario: usuarioLogado.tipo == "portaria" ? destinatario : usuarioLogado.id
         }
-        criarServico(servico)
+        if (editar) {
+            editarServico(servico.id, novoServico)
+        }
+        editar || adicionarServico(novoServico)
         fecharModal()
     }
 
-    useEffect(() => {
-        if (editar) {
-            setNomeEmpresa(servico.nomeEmpresa);
-            setDataInicio(dayjs(servico.dataInicio))
-            setDataFim(dayjs(servico.dataFim));
-            setHoraEntrada(servico.horaEntrada);
-            setHoraSaida(servico.horaSaida);
-            setApt("101");
-            setTorre("A");
-            setDescricao(servico.descricao);
-        }
-    }, []);
-
     return (
         <form onSubmit={submitForm} className='border p-3 flex flex-col gap-5 mb-3 '>
+            {usuarioLogado.tipo == "portaria" &&
+                <TextField
+                    required
+                    select
+                    label='Destinatario'
+                    value={destinatario}
+                    onChange={(e) => setDestinatario(e.target.value)}
+                    size='small'
+                >
+                    {usuarios?.filter(user => user.tipo != "portaria").map(user => {
+                        return (
+                            <MenuItem value={user.id}>{`${user.nome} - apto: ${user.apt} - ${user.torre && user.torre}`}</MenuItem>
+
+                        )
+                    })}
+                </TextField>}
             <TextField
                 required
                 id="outlined-basic"
@@ -102,7 +144,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         }}
                         label='Data Inicio'
                         format='DD/MM/YYYY'
-                        value={dataInicio}
+                        value={dayjs(dataInicio)}
                         onChange={(newValue) => setDataInicio(newValue)}
                         disablePast
                         minDate={dayjs()}
@@ -116,7 +158,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         }}
                         label='Data Fim'
                         format='DD/MM/YYYY'
-                        value={dataFim}
+                        value={dayjs(dataFim)}
                         onChange={(newValue) => setDataFim(newValue)}
                         disablePast
                         minDate={dataInicio || dayjs()}
@@ -133,7 +175,7 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         label="Entrada"
                         format="HH:mm"
                         ampm={false}
-                        value={horaEntrada}
+                        value={dayjs(horaEntrada)}
                         onChange={(newValue) => setHoraEntrada(newValue)}
                         minTime={dayjs().hour(7).minute(29)}
                         maxTime={dayjs().hour(17).minute(0)}
@@ -148,9 +190,9 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
                         label="Saida"
                         format="HH:mm"
                         ampm={false}
-                        value={horaSaida}
+                        value={dayjs(horaSaida)}
                         onChange={(newValue) => setHoraSaida(newValue)}
-                        minTime={horaEntrada || dayjs().hour(7).minute(29)}
+                        minTime={dayjs(horaEntrada) || dayjs().hour(7).minute(29)}
                         maxTime={dayjs().hour(19).minute(30)}
                     />
                 </div>
@@ -182,7 +224,6 @@ const FormSevico = ({ tipoUsuario, criarOuEditar, fecharModal, criarServico, ser
 
 
             <TextField
-                required
                 id="outlined-multiline-flexible"
                 label="Descrição do Serviço"
                 multiline

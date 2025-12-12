@@ -1,18 +1,24 @@
 import { Button, Fab, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import FormNotificacoes from '../../componets/FormNotificacoes';
 import CardNotificacao from '../../componets/CardNotificacao';
+import { AppContext } from '../../context/AppContext';
 
 const Notificacoes = () => {
+    const { notificacao } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
     
     const [tipoModal, setTipoModal] = useState(null);
 
     const [listaNotificacaoRenderizacao, setListaNotificacaoRenderizacao] = useState([]);
+
+    useEffect(() => {
+        setListaNotificacaoRenderizacao(notificacao)
+    }, [notificacao])
     const [notificacaoTemp, setNotificacaoTemp] = useState(null);
 
     const clickOpenModal = () => {
@@ -20,8 +26,8 @@ const Notificacoes = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setNotificacaoTemp(listaNotificacaoRenderizacao[id])
+    const clickEditar = (notificacao) => {
+        setNotificacaoTemp(notificacao)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -30,9 +36,8 @@ const Notificacoes = () => {
         setListaNotificacaoRenderizacao([notificacao, ...listaNotificacaoRenderizacao])
     }
 
-    console.log(notificacaoTemp);
 
-    return (
+    return ( 
         <div className="min-h-full w-full ">
             <div className='flex  h-16 bg-slate-300 p-3 items-center justify-between'>
                 <h1>Notificações</h1>
@@ -55,7 +60,7 @@ const Notificacoes = () => {
 
             <section className='p-8 flex flex-col gap-4'>
                 {listaNotificacaoRenderizacao?.map((notificacao, i) => (
-                    <CardNotificacao notificacao={notificacao} clickEditar={() => clickEditar(i)} />
+                    <CardNotificacao notificacao={notificacao} clickEditar={() => clickEditar(notificacao)} />
                 ))
                 }
 

@@ -1,27 +1,32 @@
-import { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CardVisita from '../../componets/CardVisita';
 import FormVisita from '../../componets/FormVisita';
+import { AppContext } from '../../context/AppContext';
 
 
 const VisitasMorador = () => {
+    const { usuarioLogado, visitas } = useContext(AppContext)
     const [openModal, setOpenModal] = useState(false);
-
     const [tipoModal, setTipoModal] = useState(null); // Criar ou Editar
 
     const [listaVisitasRenderizacao, setListaVisitasRenderizacao] = useState([])
     const [visitaTemp, setVisitaTemp] = useState(null) //variavel temporaria para armazenar a visita  especifica para edição
+
+    useEffect(() => {
+        setListaVisitasRenderizacao(visitas)
+    }, [visitas])
 
     const clickOpenModal = () => {
         setTipoModal("Criar");
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
-        setVisitaTemp(listaVisitasRenderizacao[id])
+    const clickEditar = (visita) => {
+        setVisitaTemp(visita)
         setTipoModal("Editar");
         setOpenModal(!openModal);
     }
@@ -30,7 +35,6 @@ const VisitasMorador = () => {
         setListaVisitasRenderizacao([visita, ...listaVisitasRenderizacao])
     }
 
-    console.log(visitaTemp)
 
     return (
         <div className="min-h-full w-full ">
@@ -38,23 +42,11 @@ const VisitasMorador = () => {
                 className='flex  h-16 bg-slate-300 p-3 items-center justify-between'
             >
                 <h1>Visitas</h1>
-                <div className='flex gap-1'>
-                    <TextField
-                        id="outlined-basic"
-                        label="Apartamento"
-                        variant="outlined"
-                        size='small'
-                    //value={apt}
-                    // onChange={(e) => setApt(e.target.value)}
-                    />
-                    <Button variant="contained" aria-label="search" size='small' color='success'>
-                        <SearchIcon />
-                    </Button>
-                </div>
+
             </div>
-            <section className='p-8 flex flex-col gap-4'>
-                {listaVisitasRenderizacao?.map((visita, i) => (
-                    <CardVisita visita={visita} clickEditar={() => clickEditar(i)} />
+            <section className='p-8'>
+                {visitas?.filter((vis => vis.idUsuario == usuarioLogado.id)).map((visita, i) => (
+                    <CardVisita visita={visita} clickEditar={() => clickEditar(visita)} />
                 ))
                 }
             </section>
