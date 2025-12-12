@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ButtonModal from '../../componets/ButtonModal';
 import BasicModal from '../../componets/Modal';
 import { Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CardServico from '../../componets/CardServico';
 import FormSevico from '../../componets/FormSevico';
-
+import { AppContext } from '../../context/AppContext';
 
 const ServicosMorador = () => {
+    const {servicos} = useContext(AppContext);
+
     const [openModal, setOpenModal] = useState(false);
 
     const [tipoModal, setTipoModal] = useState(null);
@@ -24,9 +26,9 @@ const ServicosMorador = () => {
         setOpenModal(!openModal);
     }
 
-    const clickEditar = (id) => {
+    const clickEditar = (servico) => {
         setTipoModal("Editar");
-        setServico(listaServicoRenderizacao[id])
+        setServico(servico)
         setOpenModal(!openModal)
     }
 
@@ -50,10 +52,11 @@ const ServicosMorador = () => {
             </div>
 
             <section className='p-8 flex flex-col gap-4 '>
-                {listaServicoRenderizacao?.map((servico, i) => (
+                {servicos?.map((servico, i) => (
                     <CardServico
-                        clickEditar={() => clickEditar(i)}
                         servico={servico} 
+                        clickEditar={() => clickEditar(servico)}
+                         
                     />
                 ))}
 
