@@ -71,7 +71,7 @@ const menuItems = {
       icon: <HomeWorkIcon className="text-slate-400" />
     },
     {
-      label: "Moradores",
+      label: "Reservas",
       icon: <ApartmentIcon className="text-slate-400" />,
     },
     {
