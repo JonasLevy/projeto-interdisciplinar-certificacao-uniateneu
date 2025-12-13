@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext();
 
@@ -308,10 +309,13 @@ export const AppProvider = ({ children }) => {
 
 
     const addUsuario = (novoUsuario) => {
-        const novaLista = [...usuarios, novoUsuario]
-        setUsuarios(novaLista);
-        localStorage.setItem("usuarios", JSON.stringify(novaLista))
+        setUsuarios((prev) => {
+            const novaLista = [...prev, novoUsuario];
+            localStorage.setItem("usuarios", JSON.stringify(novaLista));
+            return novaLista;
+        });
     };
+
 
     const editarUsuario = (id, modificação) => {
         const novaLista = usuarios.map(user => {
@@ -332,11 +336,22 @@ export const AppProvider = ({ children }) => {
         setUsuarios(novaLista);
         localStorage.setItem("usuarios", JSON.stringify(novaLista))
     }
+    const navigate = useNavigate();
 
+    const logout = () => {
+        localStorage.removeItem("usuarioLog")
+        setUsuarioLogado(null)
+        setTimeout(() => {
+            navigate("/", { replace: true });
 
+        }, 2);
+        return null
+    }
 
     return (
-        <AppContext.Provider value={{ usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, marcarNotificacoesLidas, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente, editarUsuario, aprovarReserva, gastos, adicionarGasto, editarGasto, removerGasto }}>
+        <AppContext.Provider value={{
+            usuarios, addUsuario, setUsuarioLogado, usuarioLogado, condominio, adicionarAmbientes, ambientes, adicionarReserva, reservas, encomendas, adicionarEncomendas, servicos, adicionarServico, visitas, adicionarVisita, notificacao, adicionarNotificacao, editarNotificação, marcarNotificacoesLidas, editarVisita, editarServico, editarEncomendas, editarReserva, editarAmbiente, editarUsuario, aprovarReserva, gastos, adicionarGasto, editarGasto, removerGasto, logout
+        }}>
             {children}
         </AppContext.Provider>
     );

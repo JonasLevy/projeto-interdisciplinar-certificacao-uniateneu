@@ -137,7 +137,7 @@ const MenuAside = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
 
-  const { usuarioLogado, notificacao, marcarNotificacoesLidas, setUsuarioLogado } = useContext(AppContext);
+  const { usuarioLogado, notificacao, marcarNotificacoesLidas, logout } = useContext(AppContext);
 
 
   const clickMenu = (label) => {
@@ -153,13 +153,6 @@ const MenuAside = () => {
       marcarNotificacoesLidas(usuarioLogado?.id);
     }
     navegate(route);
-  }
-
-  const logout = () => {
-    localStorage.removeItem("usuarioLog")
-    navegate("/")
-    setUsuarioLogado(null)
-    return null
   }
 
   const drawerContent = (

@@ -3,19 +3,19 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 const PrivateRoute = ({ children }) => {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLog"))
-  const { usuarioLogado } = useContext(AppContext)
-
-
+  const { usuarioLogado } = useContext(AppContext);
   const location = useLocation();
-  const path = location.pathname.split("/")[1].toLowerCase();
-  if (usuario && usuario.tipo != path) {
-    return <Navigate to={`/${usuario.tipo}`} replace />;
+
+  // Não logado → login
+  if (!usuarioLogado) {
+    return <Navigate to="/" replace />;
   }
 
-  // Sem login → volta ao login
-  if (!usuario) {
-    return <Navigate to="/" replace />;
+  const path = location.pathname.split("/")[1];
+
+  // Tipo errado → redireciona para o módulo correto
+  if (usuarioLogado.tipo !== path) {
+    return <Navigate to={`/${usuarioLogado.tipo}`} replace />;
   }
 
   return children;

@@ -25,7 +25,8 @@ function TelaLogin() {
 
     const [validacao, setValidacao] = useState(null);
 
-    const { usuarios, setUsuarioLogado } = useContext(AppContext);
+    const { setUsuarioLogado } = useContext(AppContext);
+    const usuarios = JSON.parse(localStorage.getItem('usuarios'))
     const [mostrarUsuarios, setMostrarUsuarios] = useState(false);
 
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLog"))
@@ -43,13 +44,19 @@ function TelaLogin() {
     }, [])
 
     const login = () => {
-        const usuarioEncontrado = usuarios.find((user) => user.email == email && user.senha == senha);
+        if (!JSON.parse(localStorage.getItem('usuarios'))) {
+            window.location.reload()
+            return
+        }
+        const usuarioEncontrado = usuarios.find((user) => {
+            if (user.email == email && user.senha == senha) return user
+        });
+
         if (!usuarioEncontrado) return alert("Usuario não encontrado!")
         localStorage.setItem("usuarioLog", JSON.stringify(usuarioEncontrado))
         setUsuarioLogado(usuarioEncontrado)
         usuarioEncontrado && navigate(`/${usuarioEncontrado.tipo}`);
     }
-
     const preencherUsuario = (user) => {
         setEmail(user.email);
         setSenha(user.senha);

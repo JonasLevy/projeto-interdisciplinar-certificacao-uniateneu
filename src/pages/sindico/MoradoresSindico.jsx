@@ -37,7 +37,6 @@ const MoradoresSindico = () => {
         setListaMoradorRenderizacao([morador, ...listaMoradorRenderizacao])
     }
 
-
     return (
         <div className="min-h-full w-full ">
 
