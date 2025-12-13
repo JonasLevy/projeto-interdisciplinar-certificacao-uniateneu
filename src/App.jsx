@@ -1,12 +1,12 @@
 import './App.css'
 import MenuAside from './componets/MenuAside'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Header from './componets/Header'
 import { useMediaQuery } from '@mui/material';
-import { AppProvider } from './context/AppContext';
+import { AppContext, AppProvider } from './context/AppContext';
+import { useContext, useEffect } from 'react';
 
 function App() {
-
 
   return (
     <AppProvider>

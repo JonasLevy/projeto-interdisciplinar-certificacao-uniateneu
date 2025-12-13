@@ -29,7 +29,7 @@ const CardMorador = ({ clickEditar, morador }) => {
             <p className="mb-1 text-gray-700">Telefone: {telefone}</p>
             <p className="mb-2 text-gray-700">Cpf: {cpf}</p>
             <div className="flex justify-between items-center">
-                {usuarioLogado.tipo == "sindico" && <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" onClick={() => OnClickDetalhe("123")} >Editar</button>}
+                {usuarioLogado?.tipo == "sindico" && <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" onClick={() => OnClickDetalhe("123")} >Editar</button>}
             </div>
         </article>
     );

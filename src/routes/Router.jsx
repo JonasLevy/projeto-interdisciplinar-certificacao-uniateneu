@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import App from "../App"
 import Index from "../pages/sindico/index"
 import TelaLogin from "../componets/TelaLogin"
@@ -33,7 +33,7 @@ const Router = () => {
 
     return (
         <Routes>
-            <Route index element={<TelaLogin />} />
+            <Route path="/" element={<TelaLogin />} />
             <Route path="/sindico" element={<PrivateRoute> <App /></PrivateRoute>}>
                 <Route index element={<Index />} />
                 <Route path="portaria" element={<PortariaSindico />} />
